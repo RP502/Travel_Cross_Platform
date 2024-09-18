@@ -28,7 +28,7 @@ const Login: React.FC = () => {
         style={styles.image}
       />
       <View style={styles.content}>
-        <Text style={styles.textHeader}>Login Account</Text>
+        <Text style={styles.textHeader}>ĐĂNG NHẬP</Text>
         <View style={styles.inputContainer}>
           {/* email */}
           <View style={[styles.inputItem, styles.inputEmail]}>
@@ -63,21 +63,21 @@ const Login: React.FC = () => {
             </View>
           </View>
           <TouchableOpacity style={styles.forgotPassword}>
-            <Text style={styles.textForgotPassword}>Forgot Password?</Text>
+            <Text style={styles.textForgotPassword}>Quên mật khẩu?</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.btnSigin}>
-          <Text style={styles.btnText}>Sign In</Text>
+          <Text style={styles.btnText}>Đăng nhập</Text>
         </TouchableOpacity>
         <View style={styles.orContainer}>
           <View style={styles.orView} />
-          <Text style={styles.orText}>Or Sigin With</Text>
+          <Text style={styles.orText}>Hoặc</Text>
           <View style={styles.orView} />
         </View>
         <TouchableOpacity style={styles.btnGoogle}>
           <Image
-            source={require("@/assets/images/logo_google.jpg")}
-            style={styles.image}
+            source={require("@/assets/images/google_icon.jpg")}
+            style={{ width: 28, height: 28 }}
           />
           <Text style={styles.textGoogle}>Google</Text>
         </TouchableOpacity>
@@ -93,10 +93,10 @@ const Login: React.FC = () => {
             style={{
               fontSize: 14,
               fontFamily: "Poppins",
-              color: Colors.light.neutral_04,
+              color: Colors.light.text_secondary,
             }}
           >
-            Don't have an account?{" "}
+            Bạn không có tài khoản?{" "}
           </Text>
           <Link
             href="/register"
@@ -106,7 +106,7 @@ const Login: React.FC = () => {
               color: Colors.light.primary_01,
             }}
           >
-            Register
+            Đăng ký
           </Link>
         </View>
       </View>
@@ -196,12 +196,12 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     padding: 10,
     marginTop: 30,
-    backgroundColor: Colors.light.neutral_04,
+    backgroundColor: 'white',
   },
   textGoogle: {
     fontSize: 16,
     fontFamily: "Poppins-Bold",
-    color: "white",
+    color: Colors.light.text,
   },
   orContainer: {
     display: "flex",
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   orView: {
     flex: 1,
     height: 2,
-    backgroundColor: Colors.light.text_secondary,
+    backgroundColor: Colors.light.neutral_04,
   },
   orText: {
     textAlign: "center",
