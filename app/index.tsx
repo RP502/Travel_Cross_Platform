@@ -2,6 +2,8 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { useFonts } from 'expo-font'
 import Login from './(auth)/login'
+import { Colors } from '@/constants/Colors'
+import Onborading from './onboardring'
 
 
 
@@ -18,7 +20,7 @@ const index: React.FC = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <Login />
+      <Onborading />
     </View>
   )
 }
