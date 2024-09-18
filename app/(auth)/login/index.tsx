@@ -10,7 +10,7 @@ import {
   Touchable,
 } from "react-native";
 
-import { Link } from 'expo-router';
+import { Link } from "expo-router";
 
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -75,12 +75,39 @@ const Login: React.FC = () => {
           <View style={styles.orView} />
         </View>
         <TouchableOpacity style={styles.btnGoogle}>
-          <AntDesign name="google" size={24} color={Colors.light.primary_01} />
+          <Image
+            source={require("@/assets/images/logo_google.jpg")}
+            style={styles.image}
+          />
           <Text style={styles.textGoogle}>Google</Text>
         </TouchableOpacity>
-        <View style={{flexDirection: 'row', marginTop: 20, alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={{fontSize: 14, fontFamily: 'Poppins', color: Colors.light.neutral_04}}>Don't have an account? </Text>
-            <Link  href="/register" style={{fontSize: 16, fontFamily: 'Poppins-Bold', color: Colors.light.primary_01}}>Register</Link>
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 20,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: "Poppins",
+              color: Colors.light.neutral_04,
+            }}
+          >
+            Don't have an account?{" "}
+          </Text>
+          <Link
+            href="/register"
+            style={{
+              fontSize: 16,
+              fontFamily: "Poppins-Bold",
+              color: Colors.light.primary_01,
+            }}
+          >
+            Register
+          </Link>
         </View>
       </View>
     </View>
@@ -117,7 +144,7 @@ const styles = StyleSheet.create({
   labelInput: {
     fontSize: 16,
     fontFamily: "Poppins",
-    color: Colors.light.neutral_04,
+    color: Colors.light.text_secondary,
   },
   input: {
     width: "100%",
@@ -186,7 +213,7 @@ const styles = StyleSheet.create({
   orView: {
     flex: 1,
     height: 2,
-    backgroundColor: Colors.light.neutral_04,
+    backgroundColor: Colors.light.text_secondary,
   },
   orText: {
     textAlign: "center",
