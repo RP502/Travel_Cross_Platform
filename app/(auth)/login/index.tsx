@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { Link, useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -15,11 +16,18 @@ import { ParamListBase } from "@react-navigation/native";
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const Login: React.FC = () => {
+const Login: React.FC = (props: any) => {
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const handleLogin = () => {
+    // Add your authentication logic here (e.g. API call)
+    // If successful, navigate to HomeScreen
+    // const navigation = useNavigation();
+    navigation.navigate("Home");
+  };
   return (
     <View style={styles.container}>
       <Image
@@ -70,13 +78,7 @@ const Login: React.FC = () => {
         </View>
 
         <View>
-          <TouchableOpacity
-            style={styles.btnSigin}
-            onPress={() => {
-              // Navigate to HomeScreen
-              navigation.navigate("Bottom");
-            }}
-          >
+          <TouchableOpacity style={styles.btnSigin} onPress={handleLogin}>
             <Text style={styles.btnText}>Đăng nhập</Text>
           </TouchableOpacity>
         </View>

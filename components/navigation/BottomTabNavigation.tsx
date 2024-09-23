@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import NotificationScreen from "@/screens/Notification/NotificationScreen";
-import HomeScreen from "@/screens/home/HomeScreen";
-import ProfileScreen from "@/screens/profile/ProfileScreen";
+import NotificationScreen from "@/app/(main)/Notification/NotificationScreen";
+import HomeScreen from "@/components/home/HomeScreen";
+import ProfileScreen from "@/app/(main)/profile/ProfileScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 
