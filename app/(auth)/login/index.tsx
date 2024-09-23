@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,20 +7,19 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Touchable,
 } from "react-native";
-
-import { Link } from "expo-router";
-
+import { Link, useNavigation } from "@react-navigation/native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "@/constants/Colors";
+import { ParamListBase } from "@react-navigation/native";
+
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 const Login: React.FC = () => {
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   return (
     <View style={styles.container}>
       <Image
@@ -30,7 +29,7 @@ const Login: React.FC = () => {
       <View style={styles.content}>
         <Text style={styles.textHeader}>ĐĂNG NHẬP</Text>
         <View style={styles.inputContainer}>
-          {/* email */}
+          {/* Email Input */}
           <View style={[styles.inputItem, styles.inputEmail]}>
             <Text style={styles.labelInput}>Email</Text>
             <View style={styles.input}>
@@ -38,10 +37,12 @@ const Login: React.FC = () => {
                 value={email}
                 style={styles.textInput}
                 onChangeText={(text) => setEmail(text)}
+                keyboardType="email-address"
+                autoCapitalize="none"
               />
             </View>
           </View>
-          {/* password */}
+          {/* Password Input */}
           <View style={styles.inputItem}>
             <Text style={styles.labelInput}>Password</Text>
             <View style={[styles.input, styles.inputPassword]}>
@@ -52,28 +53,41 @@ const Login: React.FC = () => {
                 secureTextEntry={!isShowPassword}
               />
               <TouchableOpacity
-                onPressIn={() => setIsShowPassword((pre) => !pre)}
+                onPress={() => setIsShowPassword((prev) => !prev)}
               >
                 <MaterialCommunityIcons
-                  name="eye-off"
+                  name={isShowPassword ? "eye" : "eye-off"}
                   size={20}
                   color={Colors.light.neutral_04}
                 />
               </TouchableOpacity>
             </View>
           </View>
+          {/* Forgot Password */}
           <TouchableOpacity style={styles.forgotPassword}>
             <Text style={styles.textForgotPassword}>Quên mật khẩu?</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.btnSigin}>
-          <Text style={styles.btnText}>Đăng nhập</Text>
-        </TouchableOpacity>
+
+        <View>
+          <TouchableOpacity
+            style={styles.btnSigin}
+            onPress={() => {
+              // Navigate to HomeScreen
+              navigation.navigate("Bottom");
+            }}
+          >
+            <Text style={styles.btnText}>Đăng nhập</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Or separator */}
         <View style={styles.orContainer}>
           <View style={styles.orView} />
           <Text style={styles.orText}>Hoặc</Text>
           <View style={styles.orView} />
         </View>
+        {/* Google Sign In Button */}
         <TouchableOpacity style={styles.btnGoogle}>
           <Image
             source={require("@/assets/images/google_icon.jpg")}
@@ -81,31 +95,10 @@ const Login: React.FC = () => {
           />
           <Text style={styles.textGoogle}>Google</Text>
         </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: 20,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 14,
-              fontFamily: "Poppins",
-              color: Colors.light.text_secondary,
-            }}
-          >
-            Bạn không có tài khoản?{" "}
-          </Text>
-          <Link
-            href="/register"
-            style={{
-              fontSize: 16,
-              fontFamily: "Poppins-Bold",
-              color: Colors.light.primary_01,
-            }}
-          >
+        {/* Register Link */}
+        <View style={styles.registerContainer}>
+          <Text style={styles.registerText}>Bạn không có tài khoản? </Text>
+          <Link to="/register" style={styles.registerLink}>
             Đăng ký
           </Link>
         </View>
@@ -115,6 +108,7 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -156,8 +150,8 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   inputPassword: {
-    display: "flex",
     flexDirection: "row",
+    alignItems: "center",
   },
   textInput: {
     width: "90%",
@@ -174,50 +168,59 @@ const styles = StyleSheet.create({
     color: Colors.light.primary_01,
   },
   btnSigin: {
-    width: "100%",
     backgroundColor: Colors.light.primary_01,
     padding: 15,
     borderRadius: 10,
-    marginTop: 20,
-    marginBottom: 30,
     alignItems: "center",
+    marginVertical: 30,
   },
   btnText: {
     color: "white",
     fontSize: 16,
     fontFamily: "Poppins-Bold",
   },
-  btnGoogle: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 5,
-    borderRadius: 999,
-    padding: 10,
-    marginTop: 30,
-    backgroundColor: 'white',
-  },
-  textGoogle: {
-    fontSize: 16,
-    fontFamily: "Poppins-Bold",
-    color: Colors.light.text,
-  },
   orContainer: {
-    display: "flex",
     flexDirection: "row",
-    gap: 10,
-    justifyContent: "center",
     alignItems: "center",
   },
   orView: {
     flex: 1,
-    height: 2,
+    height: 1,
     backgroundColor: Colors.light.neutral_04,
   },
   orText: {
-    textAlign: "center",
+    marginHorizontal: 10,
     fontSize: 16,
     fontFamily: "Poppins",
+  },
+  btnGoogle: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 999,
+    marginTop: 30,
+  },
+  textGoogle: {
+    marginLeft: 10,
+    fontSize: 16,
+    fontFamily: "Poppins-Bold",
+    color: Colors.light.text,
+  },
+  registerContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  registerText: {
+    fontSize: 14,
+    fontFamily: "Poppins",
+    color: Colors.light.text_secondary,
+  },
+  registerLink: {
+    fontSize: 16,
+    fontFamily: "Poppins-Bold",
+    color: Colors.light.primary_01,
   },
 });

@@ -1,11 +1,10 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-import { Text } from 'react-native';
+import { Image, StyleSheet, Platform } from "react-native";
+import { Text } from "react-native";
 
-export default function HomeScreen() {
+export default function Honme() {
   return (
     <>
       <Text>Hello</Text>
     </>
-  )
+  );
 }
-

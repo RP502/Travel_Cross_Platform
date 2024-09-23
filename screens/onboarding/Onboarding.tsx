@@ -1,6 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import { useNavigation } from "expo-router";
-import { router } from 'expo-router';
+import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
   View,
@@ -12,11 +12,11 @@ import {
   Image,
 } from "react-native";
 
-import { OnboardingItem, onboardingData } from "@/constants/Onboarding"
+import { OnboardingItem, onboardingData } from "@/constants/Onboarding";
 
 const Onboarding: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const flatListRef = useRef<FlatList>(null); 
+  const flatListRef = useRef<FlatList>(null);
   const navigation = useNavigation();
   let { width } = Dimensions.get("window");
   width = width - 32;
@@ -109,7 +109,10 @@ const Onboarding: React.FC = () => {
 
       {currentIndex === 2 ? (
         <View style={[styles.btnContainer]}>
-          <TouchableOpacity style={[styles.btn, styles.btnPrimary]} onPress={() => router.push('/login')}>
+          <TouchableOpacity
+            style={[styles.btn, styles.btnPrimary]}
+            onPress={() => router.push("/login")}
+          >
             <Text style={styles.btnText}>Bắt đầu</Text>
           </TouchableOpacity>
         </View>
@@ -118,7 +121,10 @@ const Onboarding: React.FC = () => {
           {/* <TouchableOpacity style={[styles.btn, styles.btnPrimary]} onPress={() => handleNext()}>
             <Text style={styles.btnText}>Tiếp theo</Text>
           </TouchableOpacity> */}
-          <TouchableOpacity style={[styles.btn, styles.btnSecondary]} onPress={() => router.push('/login')}>
+          <TouchableOpacity
+            style={[styles.btn, styles.btnSecondary]}
+            onPress={() => router.push("/login")}
+          >
             <Text style={styles.btnText}>Bỏ qua</Text>
           </TouchableOpacity>
         </View>
