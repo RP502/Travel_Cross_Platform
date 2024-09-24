@@ -123,7 +123,7 @@ const Onboarding: React.FC = () => {
           </TouchableOpacity> */}
           <TouchableOpacity
             style={[styles.btn, styles.btnSecondary]}
-            onPress={() => router.push("/login")}
+            onPress={() => router.push("/(auth)/login")}
           >
             <Text style={styles.btnText}>Bỏ qua</Text>
           </TouchableOpacity>

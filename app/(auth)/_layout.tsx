@@ -25,6 +25,7 @@ export default function AuthLayout() {
         name="login/index"
         options={{
           headerShown: false,
+          title: "Đăng nhập",
         }}
       />
       <Stack.Screen
