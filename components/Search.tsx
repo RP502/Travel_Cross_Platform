@@ -29,8 +29,12 @@ const Search = () => {
         />
       </View>
       <View style={styles.rightContainer}>
-        <Feather name="shopping-cart" size={24} color="black" />
-        <AntDesign name="message1" size={24} color="black" />
+        <TouchableOpacity>
+          <Feather name="shopping-cart" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <AntDesign name="message1" size={24} color="black" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -41,7 +45,6 @@ export default Search;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    paddingHorizontal: 16,
     paddingVertical: 8,
     marginBottom: 16,
     justifyContent: "space-between",
