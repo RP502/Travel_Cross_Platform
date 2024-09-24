@@ -26,9 +26,7 @@ const Categories: React.FC = () => {
 export default Categories;
 
 const styles = StyleSheet.create({
-    container: {
-       
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-    }
+  container: {
+    paddingVertical: 8,
+  },
 });

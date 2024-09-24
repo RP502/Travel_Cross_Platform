@@ -6,7 +6,7 @@ import { Colors } from '@/constants/Colors'
 const CatItem: React.FC<CategoryProps> = (cat: CategoryProps) => {
 
   let { width } = Dimensions.get("window");
-  width = Math.floor((width - 32)/4)
+  width = Math.floor((width - 62)/4)
 
   return (
     <TouchableOpacity style={[styles.container, { width }]}>
