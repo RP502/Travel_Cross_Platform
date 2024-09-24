@@ -4,7 +4,7 @@ import React from "react";
 const About = () => {
   return (
     <SafeAreaView>
-      <Text>Home page</Text>
+      <Text>About page</Text>
     </SafeAreaView>
   );
 };

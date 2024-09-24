@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
+import { FontAwesome, Entypo, MaterialIcons, Feather } from '@expo/vector-icons'
 
 import { Colors } from "../../constants/Colors"
-import { FontAwesome } from "@expo/vector-icons";
+
 
 const TabLayout = () => {
   return (
@@ -24,16 +25,40 @@ const TabLayout = () => {
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
         }}
       />
-      <Tabs.Screen
-        name="about/index"
+     
+        <Tabs.Screen
+        name="discount/index"
         options={{
-          headerShown: false,
+          title: 'Ưu đãi',
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="discount" size={24} color={color} />
+          ),
+        }}
+      />
+      
+        <Tabs.Screen
+        name="wishlist/WishlistScreen"
+        options={{
+          title: "Yêu thích",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="favorite" size={24} color={color} /> // Corrected "wishlist" to "favorite" as MaterialIcons doesn't have a "wishlist" icon
+          ),
         }}
       />
       <Tabs.Screen
+        name="notification/NotificationScreen"
+        options={{
+          title: "Thông báo",
+          tabBarIcon: ({ color }) => (
+            <Feather name="bell" size={24} color={color} /> // Corrected "notification" to "bell"
+          ),
+        }}
+      />
+       <Tabs.Screen
         name="profile/index"
         options={{
-          headerShown: false,
+          title: "Tài khoản",
+          tabBarIcon: ({ color }) => <FontAwesome name="user" size={24} color={color} />,
         }}
       />
     </Tabs>
