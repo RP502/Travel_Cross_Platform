@@ -17,7 +17,7 @@ const Categories: React.FC = () => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        ItemSeparatorComponent={() => <View style={{ width: 50 }} />}
+        ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
       />
     </View>
   );
@@ -27,7 +27,7 @@ export default Categories;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: Colors.light.white,
+       
         paddingHorizontal: 16,
         paddingVertical: 8,
     }

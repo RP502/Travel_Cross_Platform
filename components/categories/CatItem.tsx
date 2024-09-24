@@ -1,11 +1,15 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native'
 import React from 'react'
 import {CategoryProps }  from '@/constants/Category'
 import { Colors } from '@/constants/Colors'
 
 const CatItem: React.FC<CategoryProps> = (cat: CategoryProps) => {
+
+  let { width } = Dimensions.get("window");
+  width = Math.floor((width - 32)/4)
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={[styles.container, { width }]}>
         <Image 
              source={{
                 uri: cat.image,
@@ -23,15 +27,14 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "column",
         gap: 6,
-        justifyContent: "center",
-        alignContent: "center",
     },
     image: {
-        width: 36,
+        width: '100%',
         height: 36,
     },
     title: {
         fontFamily: "Poppins-Medium",
         color: Colors.light.text_secondary,
+        textAlign: "center",
     }
 })
