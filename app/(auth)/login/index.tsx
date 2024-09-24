@@ -9,24 +9,24 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import { Link, useNavigation } from "@react-navigation/native";
+import { Link } from "@react-navigation/native";
+import { router } from 'expo-router';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Colors } from "@/constants/Colors";
-import { ParamListBase } from "@react-navigation/native";
 
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 const Login: React.FC = (props: any) => {
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
   const handleLogin = () => {
     // Add your authentication logic here (e.g. API call)
     // If successful, navigate to HomeScreen
     // const navigation = useNavigation();
-    navigation.navigate("Home");
+    router.push("/(tabs)")
+    
   };
   return (
     <View style={styles.container}>

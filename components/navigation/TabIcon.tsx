@@ -1,14 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const ProfileScreen = () => {
+interface TabIconProps {
+
+}
+
+const TabIcon: React.FC<TabIconProps> = () => {
   return (
     <View>
-      <Text>ProfileScreen</Text>
+      <Text>TabIcon</Text>
     </View>
   )
 }
 
-export default ProfileScreen
+export default TabIcon
 
 const styles = StyleSheet.create({})
