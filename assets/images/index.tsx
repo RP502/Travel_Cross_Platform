@@ -11,6 +11,9 @@ const IMAGES = {
   PROFILE: require("./profile.jpg"),
   WISHLIST: require("./wishlist.jpg"),
   SALES: require("./sale.jpg"),
+  SEARCH: require("./search.jpg"),
+  CART: require("./cart.jpg"),
+  CHAT_AI: require("./chat-ai.jpg"),
 };
 
 export default IMAGES;

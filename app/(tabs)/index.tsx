@@ -1,10 +1,13 @@
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import Search from '@/components/Search'
+import Categories from '@/components/categories'
 
 const Home = () => {
   return (
    <SafeAreaView>
-      <Text>Home page</Text>
+      <Search />
+      <Categories />
    </SafeAreaView>
   )
 }
