@@ -17,7 +17,6 @@ import { OnboardingItem, onboardingData } from "@/constants/Onboarding";
 const Onboarding: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const flatListRef = useRef<FlatList>(null);
-  const navigation = useNavigation();
   let { width } = Dimensions.get("window");
   width = width - 32;
 

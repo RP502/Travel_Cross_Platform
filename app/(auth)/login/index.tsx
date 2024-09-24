@@ -26,7 +26,6 @@ const Login: React.FC = (props: any) => {
     // If successful, navigate to HomeScreen
     // const navigation = useNavigation();
     router.push("/(tabs)")
-    
   };
   return (
     <View style={styles.container}>
