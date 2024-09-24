@@ -17,6 +17,11 @@ export const Colors = {
     neutral_04: '#E0E0E0',
     primary_01: '#FF7E01',
     white: '#fff',
+    
+    tabbarBackground: '#FFF',
+    tabbarActiveColor: 'orange',
+    tabbarInactiveColor: '#000',
+    separator: '#A5A5A5',
 
   },
   dark: {

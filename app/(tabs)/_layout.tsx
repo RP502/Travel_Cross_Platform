@@ -1,10 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
-import { FontAwesome, Entypo, MaterialIcons, Feather } from '@expo/vector-icons'
+import {
+  FontAwesome,
+  Entypo,
+  MaterialIcons,
+  Feather,
+} from "@expo/vector-icons";
 
-import { Colors } from "../../constants/Colors"
-
+import { Colors } from "../../constants/Colors";
+import IMAGES from "../../assets/images"; // Ensure this is the correct path
 
 const TabLayout = () => {
   return (
@@ -12,7 +17,7 @@ const TabLayout = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.light.primary_01,
         tabBarLabelStyle: {
-          fontSize: 14, 
+          fontSize: 14,
           fontFamily: "Poppins-Bold",
         },
       }}
@@ -21,30 +26,33 @@ const TabLayout = () => {
         name="index"
         options={{
           headerShown: false,
-          title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+          title: "Home",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="home" color={color} />
+          ),
         }}
       />
-     
-        <Tabs.Screen
+
+      <Tabs.Screen
         name="discount/index"
         options={{
-          title: 'Ưu đãi',
+          title: "Ưu đãi",
           tabBarIcon: ({ color }) => (
             <MaterialIcons name="discount" size={24} color={color} />
           ),
         }}
       />
-      
-        <Tabs.Screen
+
+      <Tabs.Screen
         name="wishlist/WishlistScreen"
         options={{
           title: "Yêu thích",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="favorite" size={24} color={color} /> // Corrected "wishlist" to "favorite" as MaterialIcons doesn't have a "wishlist" icon
+            <MaterialIcons name="favorite" size={24} color={color} /> // Using "favorite" instead of "wishlist"
           ),
         }}
       />
+
       <Tabs.Screen
         name="notification/NotificationScreen"
         options={{
@@ -54,11 +62,21 @@ const TabLayout = () => {
           ),
         }}
       />
-       <Tabs.Screen
+
+      <Tabs.Screen
         name="profile/index"
         options={{
           title: "Tài khoản",
-          tabBarIcon: ({ color }) => <FontAwesome name="user" size={24} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Image
+              source={IMAGES.HOME} // Ensure this points to the correct image
+              style={{
+                width: 24, // Updated for correct size
+                height: 24,
+                // Apply the color to the image
+              }}
+            />
+          ),
         }}
       />
     </Tabs>
