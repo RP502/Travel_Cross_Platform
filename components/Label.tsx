@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 5,
+        paddingHorizontal: 11,
     },
     icon: {
 

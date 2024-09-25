@@ -10,6 +10,7 @@ export interface AddressProps {
   isActived: boolean;
 }
 
+
 export const AddressListData: AddressProps[] = [
     {
         name: "Phong Nha",
@@ -68,4 +69,38 @@ export const AddressListData: AddressProps[] = [
         isActived: false,
     },
 
+];
+export const AddressListDataTicket: AddressProps[] = [
+    {
+        name: "Phong Nha",
+        textColor: Colors.light.white,
+        textColorActive: Colors.light.white,
+        backgroudBtnNormal: Colors.light.white,
+        backgroundBtnActive: Colors.light.red,
+        isActived: true,
+    },
+    {
+        name: "Phong Nha",
+        textColor: Colors.light.text,
+        textColorActive: Colors.light.white,
+        backgroudBtnNormal: Colors.light.addressNormal,
+        backgroundBtnActive: Colors.light.green,
+        isActived: false,
+    },
+    {
+        name: "Phong Nha",
+        textColor: Colors.light.text,
+        textColorActive: Colors.light.white,
+        backgroudBtnNormal: Colors.light.addressNormal,
+        backgroundBtnActive: Colors.light.green,
+        isActived: false,
+    },
+    {
+        name: "Phong Nha",
+        textColor: Colors.light.text,
+        textColorActive: Colors.light.white,
+        backgroudBtnNormal: Colors.light.addressNormal,
+        backgroundBtnActive: Colors.light.green,
+        isActived: false,
+    },
 ];

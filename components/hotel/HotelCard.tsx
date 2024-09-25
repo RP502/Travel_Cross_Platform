@@ -9,42 +9,63 @@ import {
 import React from "react";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { CardTourProps } from "@/constants/Tour";
+import { CardHotelProps } from "@/constants/Hotel";
 import { Colors } from "@/constants/Colors";
 import IMAGES from "@/assets/images";
 
-const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
+const HotelCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
   let { width } = Dimensions.get("window");
-  width = Math.floor((width - 45) / 2);
+  width = Math.floor((width - 20) / 2);
   return (
     <View style={[styles.container, { width }]}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: tour.image }} style={{ width, height: 140,   borderTopLeftRadius: 10,
-    borderTopRightRadius: 10, }}  />
+        <Image
+          source={{ uri: hotel.image }}
+          style={{
+            width,
+            height: 140,
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+          }}
+        />
         <TouchableOpacity style={styles.whislist}>
           <Fontisto
             name="heart-alt"
             size={20}
-            color={tour.isWhislist ? Colors.light.primary_01 : Colors.light.red}
+            color={
+              hotel.isWhislist ? Colors.light.primary_01 : Colors.light.red
+            }
           />
         </TouchableOpacity>
-        {tour.sale && (
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            backgroundColor: Colors.light.green,
+            borderTopLeftRadius: 10,
+            borderBottomRightRadius: 5,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 10,
+              fontFamily: "Poppins-Medium",
+              color: Colors.light.white,
+              padding: 2,
+            }}
+          >
+            {hotel.provine}
+          </Text>
+        </View>
+        {hotel.sale && (
           <View style={[styles.sale]}>
-            <Text style={styles.textSale}>Tiết kiệm {tour.sale}%</Text>
+            <Text style={styles.textSale}>Tiết kiệm {hotel.sale}%</Text>
           </View>
         )}
       </View>
 
       <View style={styles.contentContainer}>
-        <Text
-          style={{
-            color: Colors.light.neutral_04,
-            fontSize: 10,
-            fontFamily: "Poppins-Regular",
-          }}
-        >
-          {tour.type}
-        </Text>
         <Text
           style={{
             color: Colors.light.text,
@@ -55,7 +76,7 @@ const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
           numberOfLines={1}
           ellipsizeMode="tail"
         >
-          {tour.name}
+          {hotel.name}
         </Text>
 
         <View
@@ -81,7 +102,7 @@ const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
               fontFamily: "Poppins-Regular",
             }}
           >
-            {tour.evaluation}
+            {hotel.evaluation}
           </Text>
           <Text
             style={{
@@ -90,7 +111,7 @@ const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
               fontFamily: "Poppins-Regular",
             }}
           >
-            ({tour.evaluationCount})
+            ({hotel.evaluationCount})
           </Text>
           <AntDesign
             name="caretright"
@@ -104,7 +125,7 @@ const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
               fontFamily: "Poppins-Regular",
             }}
           >
-            {tour.booking} Đã được đặt
+            {hotel.booking} Đã được đặt
           </Text>
         </View>
 
@@ -116,9 +137,9 @@ const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
               fontFamily: "Poppins-Medium",
             }}
           >
-            Từ đ {tour.price}
+            Từ đ {hotel.price}
           </Text>
-          {tour.sale && (
+          {hotel.sale && (
             <Text
               style={{
                 color: Colors.light.text_secondary,
@@ -127,38 +148,16 @@ const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
                 textDecorationLine: "line-through",
               }}
             >
-              đ{(tour.price * tour.sale) / 100}
+              đ{(hotel.price * hotel.sale) / 100}
             </Text>
           )}
-        </View>
-
-        <View>
-          <View
-            style={{
-              padding: 3,
-              borderRadius: 5,
-              borderWidth: 1,
-              borderColor: Colors.light.primary_01,
-              alignSelf: "flex-start",
-            }}
-          >
-            <Text
-              style={{
-                color: Colors.light.primary_01,
-                fontSize: 8,
-                fontFamily: "Poppins-Regular",
-              }}
-            >
-              Chính sách đảm bảo giá tốt
-            </Text>
-          </View>
         </View>
       </View>
     </View>
   );
 };
 
-export default TourCard;
+export default HotelCard;
 
 const styles = StyleSheet.create({
   container: {

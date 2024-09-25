@@ -8,7 +8,6 @@ interface AddressListProps {
 }
 
 const AddressList: React.FC<AddressListProps> = ({ addresList }) => {
-  console.log(addresList);
   return (
     <View style={styles.container}>
       <FlatList
@@ -18,7 +17,7 @@ const AddressList: React.FC<AddressListProps> = ({ addresList }) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         pagingEnabled
-        ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+        ItemSeparatorComponent={() => <View style={{ width: 6 }} />}
       />
     </View>
   );
