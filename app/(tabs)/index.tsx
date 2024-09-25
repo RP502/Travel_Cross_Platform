@@ -5,6 +5,10 @@ import Categories from "@/components/categories";
 import { Colors } from "@/constants/Colors";
 import Slider from "@/components/slider";
 import SlideList from "@/components/slider";
+import Label from "@/components/Label";
+import { AddressListData } from "@/constants/Address";
+import AddressList from "@/components/address/AddressList";
+
 
 
 const Home = () => {
@@ -19,6 +23,15 @@ const Home = () => {
           <SlideList />
         </View>
         <View style={styles.contenContainer}>
+            <View style={styles.tourContainer}>
+              <Label 
+                title="Tour trải nghiệm"
+                icon="flag"
+                iconColor={Colors.light.primary_01}
+                textColor={Colors.light.text}
+              />
+              <AddressList addresList={AddressListData} />
+            </View>
           
         </View>
       </ScrollView>
@@ -41,6 +54,13 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
   },
   contenContainer: {
-   
+    paddingHorizontal: 16,
+    backgroundColor: Colors.light.background,
+    paddingTop: 10,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   },
+  tourContainer: {
+
+  }
 });

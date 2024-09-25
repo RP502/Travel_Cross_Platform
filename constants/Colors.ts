@@ -21,6 +21,9 @@ export const Colors = {
     tabbarActiveColor: 'orange',
     tabbarInactiveColor: '#000',
     separator: '#A5A5A5',
+    green: '#219653',
+    addressNormal: '#C9D4E4',
+    red: '#EB5757'
 
   },
   dark: {
