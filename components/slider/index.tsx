@@ -48,6 +48,7 @@ const SlideList: React.FC = () => {
               }
             />
           )}
+          keyExtractor={(item, index) => index.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
           pagingEnabled
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.light.white,
     borderRadius: 15,
-    marginVertical: 16,
+    marginVertical: 10,
   },
   indexContainer: {
     position: "absolute",

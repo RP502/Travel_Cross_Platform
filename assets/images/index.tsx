@@ -14,6 +14,7 @@ const IMAGES = {
   SEARCH: require("./search.jpg"),
   CART: require("./cart.jpg"),
   CHAT_AI: require("./chat-ai.jpg"),
+  EVALUATION: require("./evaluation.jpg"),
 };
 
 export default IMAGES;
