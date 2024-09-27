@@ -9,18 +9,18 @@ import {
 import React from "react";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { CardHotelProps } from "@/constants/Hotel";
+import { CardTicketProps } from "@/constants/Ticket";
 import { Colors } from "@/constants/Colors";
 import IMAGES from "@/assets/images";
 
-const TicketCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
+const TicketCard: React.FC<CardTicketProps> = (ticket: CardTicketProps) => {
   let { width } = Dimensions.get("window");
   width = Math.floor((width - 20) / 2);
   return (
     <View style={[styles.container, { width }]}>
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: hotel.image }}
+          source={{ uri: ticket.image }}
           style={{
             width,
             height: 140,
@@ -33,7 +33,7 @@ const TicketCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
             name="heart-alt"
             size={20}
             color={
-              hotel.isWhislist ? Colors.light.primary_01 : Colors.light.red
+              ticket.isWhislist ? Colors.light.primary_01 : Colors.light.red
             }
           />
         </TouchableOpacity>
@@ -55,12 +55,12 @@ const TicketCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
               padding: 2,
             }}
           >
-            {hotel.provine}
+            {ticket.provine}
           </Text>
         </View>
-        {hotel.sale && (
+        {ticket.sale && (
           <View style={[styles.sale]}>
-            <Text style={styles.textSale}>Tiết kiệm {hotel.sale}%</Text>
+            <Text style={styles.textSale}>Tiết kiệm {ticket.sale}%</Text>
           </View>
         )}
       </View>
@@ -76,7 +76,7 @@ const TicketCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
           numberOfLines={1}
           ellipsizeMode="tail"
         >
-          {hotel.name}
+          {ticket.name}
         </Text>
 
         <View
@@ -102,7 +102,7 @@ const TicketCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
               fontFamily: "Poppins-Regular",
             }}
           >
-            {hotel.evaluation}
+            {ticket.evaluation}
           </Text>
           <Text
             style={{
@@ -111,7 +111,7 @@ const TicketCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
               fontFamily: "Poppins-Regular",
             }}
           >
-            ({hotel.evaluationCount})
+            ({ticket.evaluationCount})
           </Text>
           <AntDesign
             name="caretright"
@@ -124,8 +124,10 @@ const TicketCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
               fontSize: 10,
               fontFamily: "Poppins-Regular",
             }}
+            numberOfLines={1}
+            ellipsizeMode="tail"
           >
-            {hotel.booking} Đã được đặt
+            {ticket.booking} Đã được đặt
           </Text>
         </View>
 
@@ -137,9 +139,9 @@ const TicketCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
               fontFamily: "Poppins-Medium",
             }}
           >
-            Từ đ {hotel.price}
+            Từ đ {ticket.price}
           </Text>
-          {hotel.sale && (
+          {ticket.sale && (
             <Text
               style={{
                 color: Colors.light.text_secondary,
@@ -148,7 +150,7 @@ const TicketCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
                 textDecorationLine: "line-through",
               }}
             >
-              đ{(hotel.price * hotel.sale) / 100}
+              đ{(ticket.price * ticket.sale) / 100}
             </Text>
           )}
         </View>

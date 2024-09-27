@@ -10,7 +10,6 @@ export interface AddressProps {
   isActived: boolean;
 }
 
-
 export const AddressListData: AddressProps[] = [
     {
         name: "Phong Nha",
@@ -70,6 +69,7 @@ export const AddressListData: AddressProps[] = [
     },
 
 ];
+
 export const AddressListDataTicket: AddressProps[] = [
     {
         name: "Phong Nha",
