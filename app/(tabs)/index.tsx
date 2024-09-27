@@ -17,8 +17,12 @@ import { AddressListData, AddressListDataTicket } from "@/constants/Address";
 import AddressList from "@/components/address/AddressList";
 import { CardTourPropsListData } from "@/constants/Tour";
 import { CardHotelPropsListData } from "@/constants/Hotel";
+import { CardTicketPropsListData } from "@/constants/Ticket";
+import { CardVr360PropsListData } from "@/constants/Vr360";
 import TourListHorization from "@/components/tour/TourListHorization";
 import HotelListHorization from "@/components/hotel/HotelListHorization";
+import TicketListHorization from "@/components/ticket/TicketListHorization";
+import VrCardListVertical from "@/components/vr360/VrCardVerticalList";
 
 const Home = () => {
   return (
@@ -56,13 +60,23 @@ const Home = () => {
 
             <View style={styles.ticketContainer}>
               <Label
-                title="Top Khách sạn được yêu thích"
+                title="Top Vé tham quan được yêu thích"
                 icon="ticket-alt"
                 iconColor={Colors.light.red}
                 textColor={Colors.light.red}
               />
               <AddressList addresList={AddressListDataTicket} />
-              <HotelListHorization hotelList={CardHotelPropsListData} />
+              <TicketListHorization ticketList={CardTicketPropsListData} />
+            </View>
+
+            <View style={styles.vrContainer}>
+              <Label
+                title="Ảnh địa điểm nối bật VR 360"
+                icon="vr-cardboard"
+                iconColor={Colors.light.primary_01}
+                textColor={Colors.light.text}
+              />
+              <VrCardListVertical vrList={CardVr360PropsListData} />
             </View>
           </View>
         </ScrollView>
@@ -97,5 +111,10 @@ const styles = StyleSheet.create({
   hotelContainer: {
     marginBottom: 20,
   },
-  ticketContainer: {},
+  ticketContainer: {
+    marginBottom: 20,
+  },
+  vrContainer: {
+    marginLeft: 12,
+  },
 });

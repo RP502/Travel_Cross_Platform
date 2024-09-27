@@ -1,14 +1,14 @@
 import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 
-import HotelCard from './TicketCard'
-import { CardHotelProps } from '@/constants/Hotel'
+import TicketCard from './TicketCard'
+import { CardTicketProps } from '@/constants/Ticket'
 
-interface HotelListProps {
-    hotelList: CardHotelProps[]
+interface TicketListProps {
+    ticketList: CardTicketProps[]
 }
 
-const TicketListHorization: React.FC<HotelListProps> = ({hotelList}) => {
+const TicketListHorization: React.FC<TicketListProps> = ({ticketList}) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   let { width } = Dimensions.get("window");
   width = Math.floor((width - 45) / 2);
@@ -19,8 +19,8 @@ const TicketListHorization: React.FC<HotelListProps> = ({hotelList}) => {
   return (
     <View style={{}}>
       <FlatList 
-        data={hotelList}
-        renderItem={({item}) => <HotelCard {...item} />}
+        data={ticketList}
+        renderItem={({item}) => <TicketCard {...item} />}
         keyExtractor={(item) => item.id}
         horizontal
         pagingEnabled
