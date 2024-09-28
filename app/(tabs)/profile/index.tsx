@@ -24,84 +24,84 @@ const Profile: React.FC = () => {
             justifyContent: "flex-start",
             alignItems: "center",
             gap: 10,
-
           }}
         >
           <Image
             source={require("@/assets/images/profile.jpg")}
             style={{ width: 50, height: 50, borderRadius: 999 }}
           />
-          <Text style={{ fontSize: 16, fontFamily: "Poppins-Bold" }}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: "Poppins-Bold",
+              color: Colors.light.white,
+            }}
+          >
             John Doe
           </Text>
         </View>
         <TouchableOpacity>
-          <AntDesign name="message1" size={24} color="black" />
+          <AntDesign name="message1" size={24} color={Colors.light.white} />
         </TouchableOpacity>
       </View>
-      
-      <View style={{flex: 1, backgroundColor: Colors.light.background}}>
 
-      <View style={styles.contentContainer}>
-        <ProfileOption
-          icon="receipt"
-          title="Đơn hàng"
-          description="Xem lịch sử đơn hàng"
-          onPress={() => {}}
-        />
-        <Sperater />
+      <View style={{ flex: 1, backgroundColor: Colors.light.background }}>
+        <View style={styles.contentContainer}>
+          <ProfileOption
+            icon="receipt"
+            title="Đơn hàng"
+            description="Xem lịch sử đơn hàng"
+            onPress={() => {}}
+          />
+          <Sperater />
 
-        <ProfileOption
-          icon="person"
-          title="Thông tin cá nhân"
-          description="Cập nhật thông tin cá nhân"
-          onPress={() => {
-        router.push({
-          pathname: "/(tabs)/profile/user_information",
-          params: { hideTabBar: "true" },
-        });
-          }}
-        />
-      </View>
+          <ProfileOption
+            icon="person"
+            title="Thông tin cá nhân"
+            description="Cập nhật thông tin cá nhân"
+            onPress={() => {
+              router.navigate("/profile/user_information");
+            }}
+          />
+        </View>
 
-      <View style={styles.contentContainer}>
-        <ProfileOption
-          icon="phone-portrait-outline"
-          title="Đánh giá"
-          description="Liên hệ với chúng tôi"
-          onPress={() => {}}
-        />
-        <Sperater />
-        <ProfileOption
-          icon="help"
-          title="Trợ giúp"
-          description="Câu hỏi thường gặp"
-          onPress={() => {}}
-        />
-        <Sperater />
-        <ProfileOption
-          icon="settings"
-          title="Cài đặt"
-          description="Cài đặt ứng dụng"
-          onPress={() => {}}
-        />
-        <Sperater />
-        <ProfileOption
-          icon="information-circle"
-          title="Giới thiệu"
-          description="Về chúng tôi"
-          onPress={() => {}}
-        />
-      </View>
-      <View style={styles.contentContainer}>
-      <ProfileOption
-          icon="log-out"
-          title="Đăng xuất"
-          description="Thoát tài khoản"
-        
-          onPress={() => {}}
-        />
-      </View>
+        <View style={styles.contentContainer}>
+          <ProfileOption
+            icon="phone-portrait-outline"
+            title="Đánh giá"
+            description="Liên hệ với chúng tôi"
+            onPress={() => {}}
+          />
+          <Sperater />
+          <ProfileOption
+            icon="help"
+            title="Trợ giúp"
+            description="Câu hỏi thường gặp"
+            onPress={() => {}}
+          />
+          <Sperater />
+          <ProfileOption
+            icon="settings"
+            title="Cài đặt"
+            description="Cài đặt ứng dụng"
+            onPress={() => {}}
+          />
+          <Sperater />
+          <ProfileOption
+            icon="information-circle"
+            title="Giới thiệu"
+            description="Về chúng tôi"
+            onPress={() => {}}
+          />
+        </View>
+        <View style={styles.contentContainer}>
+          <ProfileOption
+            icon="log-out"
+            title="Đăng xuất"
+            description="Thoát tài khoản"
+            onPress={() => {}}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -112,13 +112,12 @@ export default Profile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#B3EDF1",
+    backgroundColor: Colors.light.primary_01,
   },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#B3EDF1",
     paddingHorizontal: 16,
     paddingVertical: 10,
   },
@@ -130,6 +129,5 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     borderRadius: 10,
-    
   },
 });

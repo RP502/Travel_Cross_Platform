@@ -25,7 +25,7 @@ const Login: React.FC = (props: any) => {
     // Add your authentication logic here (e.g. API call)
     // If successful, navigate to HomeScreen
     // const navigation = useNavigation();
-    router.push("/(tabs)")
+    router.navigate("/(tabs)");
   };
   return (
     <View style={styles.container}>
