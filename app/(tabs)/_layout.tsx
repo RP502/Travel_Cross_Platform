@@ -15,7 +15,7 @@ import IMAGES from "../../assets/images"; // Ensure this is the correct path
 const TabLayout = () => {
   return (
     <Tabs
-      screenOptions={{
+      screenOptions={({route}) => ({
         tabBarActiveTintColor: Colors.light.primary_01,
         tabBarLabelStyle: {
           fontSize: 12,
@@ -25,13 +25,14 @@ const TabLayout = () => {
           height: 85,
           backgroundColor: Colors.light.white,
         }
-      }}
+      })}
     >
       <Tabs.Screen
         name="index"
         options={{
           headerShown: false,
           title: "Trang chủ",
+          
           tabBarIcon: ({ color, focused }) => (
             <Image
             source={focused ? IMAGES.HOME_ACTIVE :IMAGES.HOME} // Ensure this points to the correct image
@@ -95,7 +96,7 @@ const TabLayout = () => {
       />
 
       <Tabs.Screen
-        name="profile/index"
+        name="profile"
        
         options={{
           headerShown: false,

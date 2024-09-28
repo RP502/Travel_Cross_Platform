@@ -12,6 +12,7 @@ import ProfileOption from "@/components/profile/ProfileOption";
 import { AntDesign } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 import Sperater from "@/components/profile/Sperater";
+import { router } from "expo-router";
 
 const Profile: React.FC = () => {
   return (
@@ -45,7 +46,7 @@ const Profile: React.FC = () => {
         <ProfileOption
           icon="receipt"
           title="Đơn hàng"
-          description="Cập nhật thông tin cá nhân"
+          description="Xem lịch sử đơn hàng"
           onPress={() => {}}
         />
         <Sperater />
@@ -54,7 +55,12 @@ const Profile: React.FC = () => {
           icon="person"
           title="Thông tin cá nhân"
           description="Cập nhật thông tin cá nhân"
-          onPress={() => {}}
+          onPress={() => {
+        router.push({
+          pathname: "/(tabs)/profile/user_information",
+          params: { hideTabBar: "true" },
+        });
+          }}
         />
       </View>
 

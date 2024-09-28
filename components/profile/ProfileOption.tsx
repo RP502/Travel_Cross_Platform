@@ -21,11 +21,11 @@ const ProfileOption: React.FC<ProfileOptionProps> = ({
   return (
     <TouchableOpacity style={[styles.optionContainer]} onPress={onPress}>
       {title === "Đánh giá" ? (
-        <AntDesign name="like1" size={24} color="black" />
+        <AntDesign name="like1" size={24} color={Colors.light.text_secondary} />
       ) : title === "Trợ giúp" ? (
-        <Entypo name="help-with-circle" size={24} color="black" />
+        <Entypo name="help-with-circle" size={24} color={Colors.light.text_secondary} />
       ) : (
-        <Ionicons name={icon as any} size={24} color={title === "Đăng xuất"? Colors.light.red : "Black"} />
+        <Ionicons name={icon as any} size={24} color={title === "Đăng xuất"? Colors.light.red : Colors.light.text_secondary} />
       )}
 
       <Text style={[styles.optionText, {color: title === "Đăng xuất"? Colors.light.red : "Black" }]}>{title}</Text>
