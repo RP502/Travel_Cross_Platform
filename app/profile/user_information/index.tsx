@@ -6,26 +6,26 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
-
-import { useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { Colors } from "@/constants/Colors";
-import {  useNavigation } from "@react-navigation/native";
-import { useFocusEffect } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 
 const UserInformation = () => {
-
-  const navigation = useNavigation();
-
-  // Ẩn TabBar khi vào màn hình chi tiết
-  useFocusEffect(() => {
-    navigation.setOptions({ tabBarStyle: { display: 'none' } });
+    const navigation = useNavigation();
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: "Thông tin người dùng",
+            headerStyle: {
+            backgroundColor: Colors.light.primary_01,
+            },
+            headerTintColor: Colors.light.white,
+            headerTitleStyle: {
+            fontFamily: "Poppins-Bold",
+            },
+            headerBackTitleVisible: false,
+        });
+    }, []);
     
-    // Hiện lại TabBar khi thoát khỏi màn hình
-    return () => navigation.setOptions({ tabBarStyle: undefined });
-  });
-
-
   const user = {
     name: "John Doe",
     avatar:

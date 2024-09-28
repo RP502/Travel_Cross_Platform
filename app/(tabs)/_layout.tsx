@@ -57,12 +57,14 @@ const TabLayout = () => {
               height: 24,
               // Apply the color to the image
             }} />
-          )
+          ),
+          headerStyle: { backgroundColor: Colors.light.primary_01},
+          headerTintColor: Colors.light.white,
         }}
       />
 
       <Tabs.Screen
-        name="wishlist/WishlistScreen"
+        name="wishlist/index"
         options={{
           title: "Yêu thích",
           tabBarIcon: ({ color, focused }) => (
@@ -75,11 +77,13 @@ const TabLayout = () => {
             }}
           />
           ),
+          headerStyle: { backgroundColor: Colors.light.primary_01},
+          headerTintColor: Colors.light.white,
         }}
       />
 
       <Tabs.Screen
-        name="notification/NotificationScreen"
+        name="notification/index"
         options={{
           title: "Thông báo",
           tabBarIcon: ({ color, focused  }) => (
@@ -92,12 +96,13 @@ const TabLayout = () => {
               }}
             />
           ),
+          headerStyle: { backgroundColor: Colors.light.primary_01},
+          headerTintColor: Colors.light.white,
         }}
       />
 
       <Tabs.Screen
-        name="profile"
-       
+        name="profile/index"
         options={{
           headerShown: false,
           title: "Tài khoản",
