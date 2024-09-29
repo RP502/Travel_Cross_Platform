@@ -25,7 +25,7 @@ const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
           <Fontisto
             name="heart-alt"
             size={20}
-            color={tour.isWhislist ? Colors.light.red : Colors.light.primary_01}
+            color={tour.isWhislist ? Colors.light.text_secondary: Colors.light.primary_01}
           />
         </TouchableOpacity>
         {tour.sale && (

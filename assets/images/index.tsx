@@ -19,6 +19,7 @@ const IMAGES = {
   CART: require("./cart.jpg"),
   CHAT_AI: require("./chat-ai.jpg"),
   EVALUATION: require("./evaluation.jpg"),
+  EMPTY_WISHLIST: require("./empty-wishlist-icon.png"),
 };
 
 export default IMAGES;
