@@ -21,7 +21,7 @@ const VrCardListVertical: React.FC<VrListProps> = ({ vrList }) => {
         renderItem={({ item, index }) => <VrCard {...item} index={index} />}
         keyExtractor={(item, index) => index.toString()}
         estimatedItemSize={100}
-        
+        ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
       />
     </View>
   );

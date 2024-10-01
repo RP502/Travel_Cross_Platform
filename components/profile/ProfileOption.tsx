@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import Entypo from '@expo/vector-icons/Entypo';
+import Entypo from "@expo/vector-icons/Entypo";
 import { Ionicons } from "@expo/vector-icons"; // or any icon library
 import { Colors } from "@/constants/Colors";
 
@@ -23,16 +23,43 @@ const ProfileOption: React.FC<ProfileOptionProps> = ({
       {title === "Đánh giá" ? (
         <AntDesign name="like1" size={24} color={Colors.light.text_secondary} />
       ) : title === "Trợ giúp" ? (
-        <Entypo name="help-with-circle" size={24} color={Colors.light.text_secondary} />
+        <Entypo
+          name="help-with-circle"
+          size={24}
+          color={Colors.light.text_secondary}
+        />
       ) : (
-        <Ionicons name={icon as any} size={24} color={title === "Đăng xuất"? Colors.light.red : Colors.light.text_secondary} />
+        <Ionicons
+          name={icon as any}
+          size={24}
+          color={
+            title === "Đăng xuất"
+              ? Colors.light.red
+              : Colors.light.text_secondary
+          }
+        />
       )}
-
-      <Text style={[styles.optionText, {color: title === "Đăng xuất"? Colors.light.red : "Black" }]}>{title}</Text>
+      <Text
+        style={[
+          styles.optionText,
+          {
+            color:
+              title === "Đăng xuất"
+                ? Colors.light.red
+                : Colors.light.text_secondary,
+                textAlign: "left",
+                textAlignVertical: "center",
+          },
+        ]}
+      >
+        {title}
+      </Text>
       <Ionicons
         name="chevron-forward-outline"
         size={24}
-        color={title === "Đăng xuất"? Colors.light.red : Colors.light.text_secondary}
+        color={
+          title === "Đăng xuất" ? Colors.light.red : Colors.light.text_secondary
+        }
       />
     </TouchableOpacity>
   );
@@ -40,8 +67,9 @@ const ProfileOption: React.FC<ProfileOptionProps> = ({
 
 const styles = StyleSheet.create({
   optionContainer: {
+    width: "100%",
     flexDirection: "row",
-    // alignItems: 'cener',
+    justifyContent: "space-between",
     paddingVertical: 16,
     backgroundColor: Colors.light.white,
   },

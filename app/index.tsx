@@ -14,6 +14,7 @@ const Index: React.FC = () => {
   // const [loading, setLoading] = useState<boolean>(true);
 
   const [fontsLoaded] = useFonts({
+    "Poppins": require("@/assets/fonts/Poppins-Regular.ttf"),
     "Poppins-Regular": require("@/assets/fonts/Poppins-Regular.ttf"),
     "Poppins-Bold": require("@/assets/fonts/Poppins-Bold.ttf"),
     "Poppins-ExtraBold": require("@/assets/fonts/Poppins-ExtraBold.ttf"),
