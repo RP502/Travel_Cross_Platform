@@ -1,6 +1,7 @@
 import {
   Dimensions,
   Image,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.light.primary_01,
+    paddingTop: Platform.OS === "android" ? 15: 0,
   },
   headerContainer: {
     flexDirection: "row",

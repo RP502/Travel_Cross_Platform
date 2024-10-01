@@ -1,4 +1,5 @@
 import {
+  Platform,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -26,9 +27,8 @@ import VrCardListVertical from "@/components/vr360/VrCardVerticalList";
 
 const Home = () => {
   return (
-    <>
-      <StatusBar backgroundColor={Colors.light.white} barStyle="dark-content" />
-      <SafeAreaView style={styles.container}>
+    
+      <SafeAreaView style={[styles.container]}>
         <ScrollView style={styles.container}>
           <View style={styles.topContainer}>
             <Search />
@@ -81,7 +81,6 @@ const Home = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </>
   );
 };
 
@@ -91,6 +90,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.light.white,
+    paddingTop: Platform.OS === "android" ? 10: 0,
   },
   topContainer: {
     backgroundColor: Colors.light.white,

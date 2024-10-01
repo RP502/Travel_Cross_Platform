@@ -2,6 +2,7 @@ import {
   Dimensions,
   Image,
   Modal,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -142,6 +143,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    paddingBottom: Platform.OS === "android" ? 40 : 10,
   },
   modalTitle: {
     fontSize: 18,
