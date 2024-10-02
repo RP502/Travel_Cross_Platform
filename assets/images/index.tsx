@@ -20,6 +20,7 @@ const IMAGES = {
   CHAT_AI: require("./chat-ai.jpg"),
   EVALUATION: require("./evaluation.jpg"),
   EMPTY_WISHLIST: require("./empty-wishlist-icon.png"),
+  MAP: require("./map.jpg"),
 };
 
 export default IMAGES;

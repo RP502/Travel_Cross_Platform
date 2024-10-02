@@ -4,6 +4,7 @@ export interface SliderPorps {
     title: string;
     description: string;
     router: string;
+    isFullScreen?: boolean;
 }
 
 export const SliderList: SliderPorps[] = [

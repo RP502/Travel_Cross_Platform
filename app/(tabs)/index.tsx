@@ -24,6 +24,7 @@ import TourListHorization from "@/components/tour/TourListHorization";
 import HotelListHorization from "@/components/hotel/HotelListHorization";
 import TicketListHorization from "@/components/ticket/TicketListHorization";
 import VrCardListVertical from "@/components/vr360/VrCardVerticalList";
+import { SliderList } from "@/constants/Sider";
 
 const Home = () => {
   return (
@@ -33,7 +34,7 @@ const Home = () => {
           <View style={styles.topContainer}>
             <Search />
             <Categories />
-            <SlideList />
+            <SlideList dataList={SliderList} />
           </View>
           <View style={styles.contenContainer}>
             <View style={styles.tourContainer}>
