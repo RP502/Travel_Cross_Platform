@@ -10,6 +10,7 @@ import {
 import React from "react";
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 import { Colors } from "@/constants/Colors";
 import IMAGES from "@/assets/images";
@@ -30,42 +31,53 @@ const ServicePackage: React.FC<ServicePackageProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.flexStyle}>
-        <Text>Phương tiện: </Text>
-        <Text>{delevery}</Text>
+        <Text style={{ fontSize: 16, fontFamily: "Poppins-Bold" }}>
+          Phương tiện:
+        </Text>
+        <Text style={{ fontSize: 14, fontFamily: "Poppins-Regular" }}>
+          {delevery}
+        </Text>
       </View>
 
       <View style={styles.flexStyle}>
-        <Entypo name="time-slot" size={24} color={Colors.light.primary_01} />
-        <Text>
+        <Entypo name="time-slot" size={20} color={Colors.light.primary_01} />
+        <Text style={{ fontFamily: "Poppins-Regular", fontSize: 14 }}>
           {timeStart} - {timeEnd}
         </Text>
       </View>
 
       <TouchableOpacity style={styles.detailBtn}>
-        <Image source={IMAGES.MAP} />
+        <FontAwesome5 name="map-marked-alt" size={20} color="white" />
         <Text style={styles.btnText}>Xem lịch trình chi tiết</Text>
       </TouchableOpacity>
 
-      <Text>Bao gồm</Text>
+      <Text
+        style={{ fontSize: 16, fontFamily: "Poppins-Bold", marginBottom: 3 }}
+      >
+        Bao gồm:
+      </Text>
 
-      <View>
-        <FlatList
-          data={servicePackage}
-          renderItem={({ item }) => (
-            <View style={styles.flexStyle}>
-              <AntDesign
-                name="checkcircle"
-                size={24}
-                color={Colors.light.primary_01}
-              />
-              <Text numberOfLines={1} ellipsizeMode="tail">
-                {item}
-              </Text>
-            </View>
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
+      <FlatList
+        data={servicePackage}
+        renderItem={({ item }) => (
+          <View style={[styles.flexStyle]}>
+            <AntDesign
+              name="checkcircle"
+              size={20}
+              color={Colors.light.primary_01}
+            />
+            <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              style={{ fontSize: 14, fontFamily: "Poppins-Regular" }}
+            >
+              {item}
+            </Text>
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        horizontal={false}
+      />
     </View>
   );
 };
@@ -77,22 +89,25 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
+    gap: 8,
+    marginBottom: 5,
   },
   container: {
     backgroundColor: Colors.light.background,
-    padding: 16,
+    paddingHorizontal: 26,
   },
   detailBtn: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    gap: 10,
     backgroundColor: Colors.light.primary_01,
-    padding: 8,
+    padding: 5,
     borderRadius: 5,
-    marginTop: 10,
+    marginVertical: 20,
   },
   btnText: {
-    color: Colors.light.text,
+    color: Colors.light.white,
     fontSize: 14,
     fontFamily: "Poppins-Medium",
   },
