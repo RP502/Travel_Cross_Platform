@@ -1,20 +1,23 @@
 import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import Entypo from "@expo/vector-icons/Entypo";
-import { SliderList } from "@/constants/Sider";
+import { SliderPorps } from "@/constants/Sider";
 import SliderItem from "./SliderItem";
 import { Colors } from "@/constants/Colors";
 
-const SlideList: React.FC = () => {
+interface SlideListPorps {
+  isFullScreen?: boolean;
+  dataList: SliderPorps[];
+}
+
+const SlideList: React.FC<SlideListPorps> = ({ isFullScreen, dataList }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   let { width } = Dimensions.get("window");
-  width = width - 32;
+  width = isFullScreen ? width : width - 32;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) =>
-        prev === SliderList.length - 1 ? 0 : prev + 1
-      );
+      setCurrentIndex((prev) => (prev === dataList.length - 1 ? 0 : prev + 1));
     }, 3000);
     return () => clearInterval(interval);
   }, [currentIndex]);
@@ -23,20 +26,32 @@ const SlideList: React.FC = () => {
     const index = Math.floor(event.nativeEvent.contentOffset.x / width);
     setCurrentIndex(index);
   };
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { marginVertical: isFullScreen ? 0 : 10 }]}>
       <FlatList
-        data={SliderList}
-        renderItem={({ item }) => <SliderItem {...item} />}
+        data={dataList}
+        renderItem={({ item }) => (
+          <SliderItem {...item} isFullScreen={isFullScreen ? true : false} />
+        )}
         keyExtractor={(item, index) => index.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
         pagingEnabled
         onMomentumScrollEnd={handleScroll}
       />
-      <View style={styles.indexContainer}>
+      <View
+        style={[
+          styles.indexContainer,
+          {
+            bottom: isFullScreen === true ? 35 : 10,
+            left: 10,
+          },
+
+        ]}
+      >
         <FlatList
-          data={SliderList}
+          data={dataList}
           renderItem={({ item, index }) => (
             <Entypo
               name="dot-single"
@@ -67,12 +82,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.light.white,
     borderRadius: 15,
-    marginVertical: 10,
   },
   indexContainer: {
     position: "absolute",
-    bottom: 10,
-    left: 10,
     color: Colors.light.white,
   },
 });

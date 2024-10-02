@@ -3,29 +3,30 @@ import React from "react";
 import { SliderPorps } from "@/constants/Sider";
 
 const SliderItem: React.FC<SliderPorps> = (slider: SliderPorps) => {
-    let { width } = Dimensions.get("window");
-    width = width - 32;
+  let { width, height } = Dimensions.get("window");
+  width = slider.isFullScreen == true ? width : width - 32;
+
   return (
     <View style={styles.container}>
       <Image
         source={{
           uri: slider.image,
         }}
-        style={[styles.image, { width }]}
+        style={[
+          {
+            width,
+            height:
+              slider.isFullScreen === true ? Math.floor(height / 2.5) : 160,
+            borderRadius: slider.isFullScreen === true ? 0 : 15,
+          },
+        ]}
       />
-      
     </View>
   );
 };
 
 export default SliderItem;
 
-const styles = StyleSheet.create({ 
-    container: {
-    },
-    image: { 
-        width: 350, 
-        height: 160, 
-        borderRadius: 15
-    } 
+const styles = StyleSheet.create({
+  container: {},
 });

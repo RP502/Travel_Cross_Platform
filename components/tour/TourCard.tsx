@@ -12,20 +12,36 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { CardTourProps } from "@/constants/Tour";
 import { Colors } from "@/constants/Colors";
 import IMAGES from "@/assets/images";
+import { router } from "expo-router";
 
 const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
   let { width } = Dimensions.get("window");
   width = Math.floor((width - 45) / 2);
+
   return (
-    <View style={[styles.container, { width }]}>
+    <TouchableOpacity
+      style={[styles.container, { width }]}
+      onPress={() => router.push("/tour/1")}
+    >
       <View style={styles.imageContainer}>
-        <Image source={{ uri: tour.image }} style={{ width, height: 140,   borderTopLeftRadius: 10,
-    borderTopRightRadius: 10, }}  />
+        <Image
+          source={{ uri: tour.image }}
+          style={{
+            width,
+            height: 140,
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+          }}
+        />
         <TouchableOpacity style={styles.whislist}>
           <Fontisto
             name="heart-alt"
             size={20}
-            color={tour.isWhislist ? Colors.light.text_secondary: Colors.light.primary_01}
+            color={
+              tour.isWhislist
+                ? Colors.light.text_secondary
+                : Colors.light.primary_01
+            }
           />
         </TouchableOpacity>
         {tour.sale && (
@@ -154,7 +170,7 @@ const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -11,7 +11,6 @@ export const incrementAsync = createAsyncThunk(
   }
 );
 
-
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -35,7 +34,5 @@ export const userSlice = createSlice({
 });
 
 export const { increment, decrement } = userSlice.actions;
-
-
 
 export default userSlice.reducer;
