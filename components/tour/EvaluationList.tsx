@@ -16,7 +16,7 @@ const EvaluationListData = [
     date: "12/12/2021",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc.",
-    evaluate: 5,
+    evaluate: 3,
     image: "https://phongnhacavestour.com/wp-content/uploads/2016/10/3.jpg",
   },
   {
@@ -25,7 +25,7 @@ const EvaluationListData = [
     date: "12/12/2021",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc.",
-    evaluate: 5,
+    evaluate: 4,
     image: "https://phongnhacavestour.com/wp-content/uploads/2016/10/3.jpg",
   },
   {

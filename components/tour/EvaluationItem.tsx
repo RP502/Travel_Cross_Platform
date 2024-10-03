@@ -18,17 +18,19 @@ const EvaluationItem: React.FC<EvaluationItemProps> = ({
   date,
   content,
   image,
+  evaluate
+  
 }) => {
   return (
     <View style={styles.container}>
       <View style={[styles.topContaier, styles.flexStyle]}>
         <View style={styles.flexStyle}>
           <View style={[styles.flexStyle, {marginRight: 5,}]}>
-            <AntDesign name="star" size={18} color="black" />
-            <AntDesign name="star" size={18} color="black" />
-            <AntDesign name="star" size={18} color="black" />
-            <AntDesign name="star" size={18} color="black" />
-            <AntDesign name="star" size={18} color="black" />
+            <AntDesign name="star" size={18} color={evaluate >= 1 ? Colors.light.primary_01 : "black"} />
+            <AntDesign name="star" size={18} color={evaluate >= 2 ? Colors.light.primary_01 : "black"} />
+            <AntDesign name="star" size={18} color={evaluate >= 3 ? Colors.light.primary_01 : "black"} />
+            <AntDesign name="star" size={18} color={evaluate >= 4 ? Colors.light.primary_01 : "black"} />
+            <AntDesign name="star" size={18} color={evaluate >= 5 ? Colors.light.primary_01 : "black"} />
           </View>
           <Text
             style={{
