@@ -12,6 +12,7 @@ import Feather from "@expo/vector-icons/Feather";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "@/constants/Colors";
+import { router } from "expo-router";
 
 const Search = () => {
   return (
@@ -29,7 +30,7 @@ const Search = () => {
         />
       </View>
       <View style={styles.rightContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.navigate('/cart')}>
           <Feather name="shopping-cart" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity>
