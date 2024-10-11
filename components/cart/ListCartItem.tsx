@@ -1,4 +1,10 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { FlashList } from "@shopify/flash-list";
 import CartItem, { CartItemProps } from "./CartItem";
@@ -39,16 +45,82 @@ const loremData: CartItemProps[] = [
 
 const ListCartItem = () => {
   return (
-    <ScrollView style={{ paddingHorizontal: 16 }}>
-      <FlashList
-        data={loremData}
-        renderItem={({ item }) => <CartItem {...item} />}
-        keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={() => <View style={{ height: 1, backgroundColor: Colors.light.neutral_04 }} />}
-        showsVerticalScrollIndicator={false}
-        estimatedItemSize={157}
-      />
-    </ScrollView>
+    <View style={{ flex: 1 }}>
+      <ScrollView style={{ paddingHorizontal: 16 }}>
+        <FlashList
+          data={loremData}
+          renderItem={({ item }) => <CartItem {...item} />}
+          keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => (
+            <View
+              style={{ height: 1, backgroundColor: Colors.light.neutral_04 }}
+            />
+          )}
+          showsVerticalScrollIndicator={false}
+          estimatedItemSize={157}
+        />
+      </ScrollView>
+
+      <View
+        style={{
+          marginVertical: 10,
+          paddingHorizontal: 16,
+          paddingBottom: 16,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          borderTopWidth: 1,
+          borderTopColor: Colors.light.neutral_04,
+          paddingTop: 10,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 5,
+        }}
+      >
+        <View>
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: "Poppins-Regular",
+              color: Colors.light.text_secondary,
+            }}
+          >
+            Tổng cộng: 3 sản phẩm
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: "Poppins-Bold",
+              color: Colors.light.red,
+            }}
+          >
+            Tổng tiền: 4500$
+          </Text>
+        </View>
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: Colors.light.primary_01,
+            borderRadius: 10,
+            padding: 10,
+            width: 120,
+          }}
+        >
+          <Text
+            style={{
+              color: Colors.light.white,
+              fontSize: 16,
+              fontFamily: "Poppins-Medium",
+              textAlign: "center",
+            }}
+          >
+            Thanh toán
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 

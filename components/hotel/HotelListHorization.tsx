@@ -17,7 +17,7 @@ const HotelListHorization: React.FC<HotelListProps> = ({hotelList}) => {
     setCurrentIndex(index);
   };
   return (
-    <View style={{}}>
+    <View style={{  paddingLeft: 11,}}>
       <FlatList 
         data={hotelList}
         renderItem={({item}) => <HotelCard {...item} />}

@@ -21,6 +21,7 @@ const IMAGES = {
   EVALUATION: require("./evaluation.jpg"),
   EMPTY_WISHLIST: require("./empty-wishlist-icon.png"),
   MAP: require("./map.jpg"),
+  EMPTY_CART: require("./empty_cart.png"),
 };
 
 export default IMAGES;
