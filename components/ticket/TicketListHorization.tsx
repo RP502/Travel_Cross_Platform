@@ -17,7 +17,7 @@ const TicketListHorization: React.FC<TicketListProps> = ({ticketList}) => {
     setCurrentIndex(index);
   };
   return (
-    <View style={{}}>
+    <View style={{paddingLeft: 11}}>
       <FlatList 
         data={ticketList}
         renderItem={({item}) => <TicketCard {...item} />}

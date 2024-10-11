@@ -16,7 +16,7 @@ const TourListHorization: React.FC<TourListProps> = ({tourList}) => {
     setCurrentIndex(index);
   };
   return (
-    <View style={{}}>
+    <View style={{ paddingLeft: 11,}}>
       <FlatList 
         data={tourList}
         renderItem={({item}) => <TourCard {...item} />}

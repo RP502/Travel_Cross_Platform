@@ -26,5 +26,7 @@ const AddressList: React.FC<AddressListProps> = ({ addresList }) => {
 export default AddressList;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingLeft: 16,
+  },
 });
