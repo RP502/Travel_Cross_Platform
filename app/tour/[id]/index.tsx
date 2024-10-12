@@ -52,13 +52,6 @@ const tour = {
 };
 
 const DetailTour: React.FC = () => {
-  // const navigation = useNavigation();
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerShown: false,
-  //   });
-  // }, []);
-
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
