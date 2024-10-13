@@ -8,10 +8,13 @@ const TourLayout = () => {
   return (
     <Stack initialRouteName="index">
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="book_tour/index" />
       <Stack.Screen
         name="tour_schedule/index"
         options={backNavigationOption("Lịch trình tour")}
+      />
+      <Stack.Screen
+        name="info_booking/index"
+        options={backNavigationOption("Hoàn tất đơn hàng")}
       />
     </Stack>
   );

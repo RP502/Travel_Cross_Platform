@@ -156,7 +156,7 @@ const DetailTour: React.FC = () => {
             timeEnd={tour.timeEnd}
           />
 
-          {/* evaluatio */}
+          {/* evaluation */}
 
           <View style={styles.labelContainer}>
             <MaterialIcons
