@@ -165,7 +165,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                   numberOfLines={2}
                   ellipsizeMode="tail"
                 >
-                  Tour name
+                  Tour nameF
                 </Text>
 
                 <View
@@ -269,7 +269,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                       <Text
                         style={{
                           fontSize: 20,
-                          fontFamily: "Poppins-Reguler",
+                          fontFamily: "Poppins-Regular",
                           color: Colors.light.text_secondary,
                         }}
                       >
@@ -341,7 +341,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                       <Text
                         style={{
                           fontSize: 20,
-                          fontFamily: "Poppins-Reguler",
+                          fontFamily: "Poppins-Regular",
                           color: Colors.light.text_secondary,
                         }}
                       >

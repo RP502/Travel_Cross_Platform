@@ -97,7 +97,7 @@ const InfoBooking = () => {
           borderTopColor: Colors.light.neutral_04,
           paddingHorizontal: 16,
           paddingTop: 10,
-          paddingBottom: Platform.OS === "android" ? 40 : 20,
+          paddingBottom: Platform.OS === "ios" ? 40 : 20,
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
@@ -120,7 +120,7 @@ const InfoBooking = () => {
             1000 vnđ
           </Text>
         </View>
-        <TouchableOpacity style={[styles.btn, { marginVertical: 10 }]}>
+        <TouchableOpacity style={[styles.btn]}>
           <Text style={styles.btnText}>Thanh toán</Text>
         </TouchableOpacity>
       </View>

@@ -72,7 +72,7 @@ const TourSchedule = () => {
                   size={20}
                   color={Colors.light.text_secondary}
                 />
-                <Text style={{ fontSize: 14, fontFamily: "Poppins-Meidum" }}>
+                <Text style={{ fontSize: 14, fontFamily: "Poppins-Medium" }}>
                   Tour có hướng dẫn viên
                 </Text>
               </View>

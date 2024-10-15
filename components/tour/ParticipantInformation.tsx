@@ -5,6 +5,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -14,8 +15,47 @@ import { AntDesign } from "@expo/vector-icons";
 
 let { width, height } = Dimensions.get("window");
 
+interface Participant {
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  dateOfBirth: string;
+  phoneNumber: string;
+}
+
 const ParticipantInformation = () => {
   const [isDisplay, setIsDisplay] = useState<boolean>(false);
+  const [isEmpty, setIsEmpty] = useState<boolean>(false);
+  const [isDatePickerVisible, setDatePickerVisibility] =
+    useState<boolean>(false);
+
+  const [participant, setParticipant] = useState<Participant>({
+    firstName: "",
+    lastName: "",
+    fullName: "",
+    dateOfBirth: "",
+    phoneNumber: "",
+  });
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date: string) => {
+    setParticipant({ ...participant, dateOfBirth: date.toString() });
+    setDatePickerVisibility(false);
+  };
+
+  const getDate = () => {
+    let tempDate = participant.dateOfBirth.toString().split(" ");
+    return participant.dateOfBirth !== ""
+      ? `${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
+      : "";
+  };
 
   return (
     <>
@@ -178,8 +218,6 @@ const ParticipantInformation = () => {
             </Text>
           </TouchableOpacity>
         </View>
-
-        
       </View>
 
       <Modal
@@ -197,13 +235,121 @@ const ParticipantInformation = () => {
                 <AntDesign name="close" size={24} color="black" />
               </TouchableOpacity>
               <View style={{ flex: 1 }}>
-                <Text style={styles.modalTitle}>Tùy chọn đơn hàng</Text>
+                <Text style={styles.modalTitle}>Thông tin người tham gia</Text>
               </View>
             </View>
 
-            <View
-              style={{ flex: 1, paddingHorizontal: 16, marginTop: 10 }}
-            ></View>
+            {/* information filed */}
+            <View style={{ flex: 1, paddingHorizontal: 16, marginTop: 10 }}>
+              <View style={styles.inputContainer}>
+                <View style={{ flexDirection: "row", gap: 3 }}>
+                  <Text style={styles.labelText}>Họ</Text>
+                  {participant.lastName === "" && (
+                    <Text
+                      style={[styles.labelText, { color: Colors.light.red }]}
+                    >
+                      *
+                    </Text>
+                  )}
+                </View>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="Xin vui lòng nhập Họ"
+                  value={participant.lastName}
+                  onChangeText={(text) =>
+                    setParticipant({ ...participant, lastName: text })
+                  }
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <View style={{ flexDirection: "row", gap: 3 }}>
+                  <Text style={styles.labelText}>Tên</Text>
+                  {participant.firstName === "" && (
+                    <Text
+                      style={[styles.labelText, { color: Colors.light.red }]}
+                    >
+                      *
+                    </Text>
+                  )}
+                </View>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="Xin vui lòng nhập Tên"
+                  value={participant.firstName}
+                  onChangeText={(text) =>
+                    setParticipant({ ...participant, firstName: text })
+                  }
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <View style={{ flexDirection: "row", gap: 3 }}>
+                  <Text style={styles.labelText}>Tên đầy đủ</Text>
+                  {participant.fullName === "" && (
+                    <Text
+                      style={[styles.labelText, { color: Colors.light.red }]}
+                    >
+                      *
+                    </Text>
+                  )}
+                </View>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="Xin vui lòng nhập tên đầy đủ"
+                  value={participant.fullName}
+                  onChangeText={(text) =>
+                    setParticipant({ ...participant, fullName: text })
+                  }
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  onConfirm={handleConfirm}
+                  onCancel={hideDatePicker}
+                />
+                <View style={{ flexDirection: "row", gap: 3 }}>
+                  <Text style={styles.labelText}>Ngày sinh</Text>
+                  {participant.dateOfBirth === "" && (
+                    <Text
+                      style={[styles.labelText, { color: Colors.light.red }]}
+                    >
+                      *
+                    </Text>
+                  )}
+                </View>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="Xin vui lòng chọn ngày sinh"
+                  value={participant.dateOfBirth}
+                  onFocus={showDatePicker}
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <View style={{ flexDirection: "row", gap: 3 }}>
+                  <Text style={styles.labelText}>Số điện thoại</Text>
+                  {participant.phoneNumber === "" && (
+                    <Text
+                      style={[styles.labelText, { color: Colors.light.red }]}
+                    >
+                      *
+                    </Text>
+                  )}
+                </View>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="Xin vui lòng nhập số điện thoại"
+                  value={participant.phoneNumber}
+                  onChangeText={(text) =>
+                    setParticipant({ ...participant, phoneNumber: text })
+                  }
+                />
+              </View>
+            </View>
 
             <View
               style={{
@@ -213,28 +359,6 @@ const ParticipantInformation = () => {
                 borderTopColor: Colors.light.neutral_04,
               }}
             >
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-              >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontFamily: "Poppins-Medium",
-                    color: Colors.light.text_secondary,
-                  }}
-                >
-                  Tổng tiền:
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontFamily: "Poppins-Bold",
-                    color: Colors.light.red,
-                  }}
-                >
-                  1000 vnđ
-                </Text>
-              </View>
               <TouchableOpacity style={[styles.btn, { marginVertical: 10 }]}>
                 <Text style={styles.btnText}>Lưu</Text>
               </TouchableOpacity>
@@ -292,5 +416,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Poppins-Bold",
     textAlign: "center",
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  labelText: {
+    fontSize: 14,
+    fontFamily: "Poppins-Regular",
+    color: Colors.light.text_secondary,
+  },
+  textInput: {
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.light.neutral_04,
+    borderRadius: 10,
+    paddingHorizontal: 5,
+    marginTop: 5,
+    color: Colors.light.text,
+    fontFamily: "Poppins-Regular",
+    fontSize: 16,
   },
 });
