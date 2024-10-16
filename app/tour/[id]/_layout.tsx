@@ -16,6 +16,10 @@ const TourLayout = () => {
         name="info_booking/index"
         options={backNavigationOption("Hoàn tất đơn hàng")}
       />
+      <Stack.Screen
+        name="payment/index"
+        options={backNavigationOption("Chọn phương thức thanh toán")}
+      />
     </Stack>
   );
 };

@@ -7,20 +7,22 @@ import {
   View,
 } from "react-native";
 import React from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Colors } from "@/constants/Colors";
 import ParticipantInformation from "@/components/tour/ParticipantInformation";
+import TourBooker from "@/components/tour/TourBooker";
+import ApplyDiscount from "@/components/tour/ApplyDiscount";
+import { router } from "expo-router";
 
 const InfoBooking = () => {
   return (
     <View
       style={{
         flex: 1,
-        borderTopWidth: 1,
-        borderTopColor: Colors.light.neutral_04,
       }}
     >
       <View style={{ flex: 1 }}>
-        <ScrollView>
+        <KeyboardAwareScrollView>
           <View style={{ flexDirection: "column", gap: 10 }}>
             <View
               style={{
@@ -85,11 +87,44 @@ const InfoBooking = () => {
                 Hoàn hủy miễn phí trong 24h
               </Text>
             </View>
+            {/* TourBooker */}
+            <TourBooker />
 
             {/* ParticipantInformation */}
             <ParticipantInformation />
+
+            {/* coupon */}
+
+            <ApplyDiscount />
+
+            <View
+              style={{
+                paddingHorizontal: 16,
+                paddingVertical: 5,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: Colors.light.green,
+                  width: "100%",
+                  borderRadius: 10,
+                  opacity: 0.8,
+                  padding: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Medium",
+                    color: Colors.light.white,
+                  }}
+                >
+                  Hoàn hủy miễn phí trong 24h
+                </Text>
+              </View>
+            </View>
           </View>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
       <View
         style={{
@@ -120,7 +155,7 @@ const InfoBooking = () => {
             1000 vnđ
           </Text>
         </View>
-        <TouchableOpacity style={[styles.btn]}>
+        <TouchableOpacity style={[styles.btn]} onPress={() => router.push('/tour/[id]/payment')}>
           <Text style={styles.btnText}>Thanh toán</Text>
         </TouchableOpacity>
       </View>

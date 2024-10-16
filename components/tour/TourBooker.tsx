@@ -16,28 +16,28 @@ import { AntDesign } from "@expo/vector-icons";
 
 let { width, height } = Dimensions.get("window");
 
-interface Participant {
+interface TourBookerr {
   firstName: string;
   lastName: string;
   fullName: string;
   dateOfBirth: string;
   phoneNumber: string;
+  email: string;
 }
 
-const ParticipantInformation = () => {
+const TourBooker = () => {
   const [isDisplay, setIsDisplay] = useState<boolean>(false);
-  
+
   const [isDatePickerVisible, setDatePickerVisibility] =
     useState<boolean>(false);
 
-  const inputDateRef = React.useRef<TextInput | null>(null);
-
-  const [participant, setParticipant] = useState<Participant>({
+  const [tourBookerr, setTourBookerr] = useState<TourBookerr>({
     firstName: "",
     lastName: "",
     fullName: "",
     dateOfBirth: "",
     phoneNumber: "",
+    email: "",
   });
 
   const showDatePicker = () => {
@@ -54,10 +54,16 @@ const ParticipantInformation = () => {
       month: "2-digit",
       year: "numeric",
     });
-    setParticipant({ ...participant, dateOfBirth: formattedDate });
+    setTourBookerr({ ...tourBookerr, dateOfBirth: formattedDate });
     setDatePickerVisibility(false);
   };
 
+  const getDate = () => {
+    let tempDate = tourBookerr.dateOfBirth.toString().split(" ");
+    return tourBookerr.dateOfBirth !== ""
+      ? `${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
+      : "";
+  };
 
   return (
     <>
@@ -66,9 +72,16 @@ const ParticipantInformation = () => {
           paddingHorizontal: 16,
           paddingVertical: 10,
           backgroundColor: Colors.light.white,
+          marginVertical: 10,
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 10,
+          }}
+        >
           <View
             style={{
               width: 3,
@@ -85,47 +98,11 @@ const ParticipantInformation = () => {
               color: Colors.light.text,
             }}
           >
-            Thônng tin người tham gia
+            Thônng tin người đặt Tour
           </Text>
         </View>
 
-        <TouchableOpacity
-          style={{
-            width: 100,
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 5,
-            paddingVertical: 6,
-            paddingHorizontal: 6,
-            marginVertical: 15,
-            borderRadius: 10,
-            borderColor: Colors.light.primary_01,
-            borderWidth: 1,
-            backgroundColor: Colors.light.white,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              fontFamily: "Poppins-Bold",
-              color: Colors.light.primary_01,
-            }}
-          >
-            +
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: "Poppins-Bold",
-              color: Colors.light.primary_01,
-            }}
-          >
-            Thêm
-          </Text>
-        </TouchableOpacity>
-
-        {/* Thông tin người tham gia */}
+        {/* Thông tin người đặt tour */}
         <View
           style={{
             padding: 10,
@@ -208,6 +185,30 @@ const ParticipantInformation = () => {
             </TouchableOpacity>
           </View>
 
+          <View style={{ flexDirection: "row", gap: 20 }}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontFamily: "Poppins-Regular",
+                color: Colors.light.text_secondary,
+                width: 100,
+              }}
+            >
+              Email
+            </Text>
+            <TouchableOpacity onPress={() => setIsDisplay(true)}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: "Poppins-Regular",
+                  color: Colors.light.red,
+                }}
+              >
+                Vui lòng nhập
+              </Text>
+            </TouchableOpacity>
+          </View>
+
           <TouchableOpacity onPress={() => setIsDisplay(true)}>
             <Text
               style={{
@@ -246,7 +247,7 @@ const ParticipantInformation = () => {
               <View style={styles.inputContainer}>
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Họ</Text>
-                  {participant.lastName === "" && (
+                  {tourBookerr.lastName === "" && (
                     <Text
                       style={[styles.labelText, { color: Colors.light.red }]}
                     >
@@ -256,11 +257,11 @@ const ParticipantInformation = () => {
                 </View>
                 <TextInput
                   style={styles.textInput}
+                  placeholderTextColor={Colors.light.neutral_04}
                   placeholder="Xin vui lòng nhập Họ"
-                     placeholderTextColor={Colors.light.neutral_04}
-                  value={participant.lastName}
+                  value={tourBookerr.lastName}
                   onChangeText={(text) =>
-                    setParticipant({ ...participant, lastName: text })
+                    setTourBookerr({ ...tourBookerr, lastName: text })
                   }
                 />
               </View>
@@ -268,7 +269,7 @@ const ParticipantInformation = () => {
               <View style={styles.inputContainer}>
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Tên</Text>
-                  {participant.firstName === "" && (
+                  {tourBookerr.firstName === "" && (
                     <Text
                       style={[styles.labelText, { color: Colors.light.red }]}
                     >
@@ -278,11 +279,11 @@ const ParticipantInformation = () => {
                 </View>
                 <TextInput
                   style={styles.textInput}
+                  placeholderTextColor={Colors.light.neutral_04}
                   placeholder="Xin vui lòng nhập Tên"
-                     placeholderTextColor={Colors.light.neutral_04}
-                  value={participant.firstName}
+                  value={tourBookerr.firstName}
                   onChangeText={(text) =>
-                    setParticipant({ ...participant, firstName: text })
+                    setTourBookerr({ ...tourBookerr, firstName: text })
                   }
                 />
               </View>
@@ -290,7 +291,7 @@ const ParticipantInformation = () => {
               <View style={styles.inputContainer}>
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Tên đầy đủ</Text>
-                  {participant.fullName === "" && (
+                  {tourBookerr.fullName === "" && (
                     <Text
                       style={[styles.labelText, { color: Colors.light.red }]}
                     >
@@ -300,17 +301,17 @@ const ParticipantInformation = () => {
                 </View>
                 <TextInput
                   style={styles.textInput}
+                  placeholderTextColor={Colors.light.neutral_04}
                   placeholder="Xin vui lòng nhập tên đầy đủ"
-                     placeholderTextColor={Colors.light.neutral_04}
-                  value={participant.fullName}
+                  value={tourBookerr.fullName}
                   onChangeText={(text) =>
-                    setParticipant({ ...participant, fullName: text })
+                    setTourBookerr({ ...tourBookerr, fullName: text })
                   }
                 />
               </View>
 
               <View style={styles.inputContainer}>
-              <DateTimePickerModal
+                <DateTimePickerModal
                   isVisible={isDatePickerVisible}
                   mode="date"
                   onConfirm={handleConfirm}
@@ -320,7 +321,7 @@ const ParticipantInformation = () => {
                 />
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Ngày sinh</Text>
-                  {participant.dateOfBirth === "" && (
+                  {tourBookerr.dateOfBirth === "" && (
                     <Text
                       style={[styles.labelText, { color: Colors.light.red }]}
                     >
@@ -330,18 +331,17 @@ const ParticipantInformation = () => {
                 </View>
                 <TextInput
                   style={styles.textInput}
+                  placeholderTextColor={Colors.light.neutral_04}
                   placeholder="Xin vui lòng chọn ngày sinh"
-                     placeholderTextColor={Colors.light.neutral_04}
-                  value={participant.dateOfBirth}
+                  value={tourBookerr.dateOfBirth}
                   onFocus={showDatePicker}
-                  ref={inputDateRef}
                 />
               </View>
 
               <View style={styles.inputContainer}>
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Số điện thoại</Text>
-                  {participant.phoneNumber === "" && (
+                  {tourBookerr.phoneNumber === "" && (
                     <Text
                       style={[styles.labelText, { color: Colors.light.red }]}
                     >
@@ -351,11 +351,33 @@ const ParticipantInformation = () => {
                 </View>
                 <TextInput
                   style={styles.textInput}
+                  placeholderTextColor={Colors.light.neutral_04}
                   placeholder="Xin vui lòng nhập số điện thoại"
-                     placeholderTextColor={Colors.light.neutral_04}
-                  value={participant.phoneNumber}
+                  value={tourBookerr.phoneNumber}
                   onChangeText={(text) =>
-                    setParticipant({ ...participant, phoneNumber: text })
+                    setTourBookerr({ ...tourBookerr, phoneNumber: text })
+                  }
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <View style={{ flexDirection: "row", gap: 3 }}>
+                  <Text style={styles.labelText}>Email</Text>
+                  {tourBookerr.phoneNumber === "" && (
+                    <Text
+                      style={[styles.labelText, { color: Colors.light.red }]}
+                    >
+                      *
+                    </Text>
+                  )}
+                </View>
+                <TextInput
+                  style={styles.textInput}
+                  placeholderTextColor={Colors.light.neutral_04}
+                  placeholder="Xin vui lòng nhập email"
+                  value={tourBookerr.email}
+                  onChangeText={(text) =>
+                    setTourBookerr({ ...tourBookerr, email: text })
                   }
                 />
               </View>
@@ -380,7 +402,7 @@ const ParticipantInformation = () => {
   );
 };
 
-export default ParticipantInformation;
+export default TourBooker;
 
 const styles = StyleSheet.create({
   flexStyle: {
