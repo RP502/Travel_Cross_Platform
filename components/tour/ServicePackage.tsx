@@ -14,6 +14,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 import { Colors } from "@/constants/Colors";
 import IMAGES from "@/assets/images";
+import { router } from "expo-router";
 
 interface ServicePackageProps {
   delevery: string;
@@ -46,7 +47,10 @@ const ServicePackage: React.FC<ServicePackageProps> = ({
         </Text>
       </View>
 
-      <TouchableOpacity style={styles.detailBtn}>
+      <TouchableOpacity
+        style={styles.detailBtn}
+        onPress={() => router.push("/tour/[id]/tour_schedule")}
+      >
         <FontAwesome5 name="map-marked-alt" size={20} color="white" />
         <Text style={styles.btnText}>Xem lịch trình chi tiết</Text>
       </TouchableOpacity>

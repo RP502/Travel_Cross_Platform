@@ -52,13 +52,6 @@ const tour = {
 };
 
 const DetailTour: React.FC = () => {
-  // const navigation = useNavigation();
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerShown: false,
-  //   });
-  // }, []);
-
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
@@ -163,7 +156,7 @@ const DetailTour: React.FC = () => {
             timeEnd={tour.timeEnd}
           />
 
-          {/* evaluatio */}
+          {/* evaluation */}
 
           <View style={styles.labelContainer}>
             <MaterialIcons

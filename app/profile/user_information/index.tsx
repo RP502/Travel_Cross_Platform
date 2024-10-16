@@ -9,23 +9,14 @@ import {
 import React, { useLayoutEffect } from "react";
 import { Colors } from "@/constants/Colors";
 import { useNavigation } from "@react-navigation/native";
+import { backNavigationOption } from "@/utils/BackNavigation";
 
 const UserInformation = () => {
-    const navigation = useNavigation();
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerTitle: "Thông tin người dùng",
-            headerStyle: {
-            backgroundColor: Colors.light.primary_01,
-            },
-            headerTintColor: Colors.light.white,
-            headerTitleStyle: {
-            fontFamily: "Poppins-Bold",
-            },
-            headerBackTitleVisible: false,
-        });
-    }, []);
-    
+  const navigation = useNavigation();
+  useLayoutEffect(() => {
+    navigation.setOptions(backNavigationOption("Thông tin tài khoản"));
+  }, []);
+
   const user = {
     name: "John Doe",
     avatar:

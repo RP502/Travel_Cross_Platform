@@ -16,7 +16,9 @@ import { router } from "expo-router";
 
 const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
   let { width } = Dimensions.get("window");
-  width = Math.floor((width - 45) / 2);
+  width = tour.isMinWidth
+    ? Math.floor((width - 72) / 2)
+    : Math.floor((width - 45) / 2);
 
   return (
     <TouchableOpacity

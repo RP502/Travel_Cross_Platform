@@ -9,6 +9,7 @@ export interface CardTourProps {
   price: number;
   sale?: number;
   isWhislist?: boolean;
+  isMinWidth?: boolean;
 }
 export const CardTourPropsListData: CardTourProps[] = [
   {
