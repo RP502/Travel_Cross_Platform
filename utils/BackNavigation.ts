@@ -4,9 +4,10 @@ export const backNavigationOption = (title: string) => {
   return {
     headerTitle: title,
     headerStyle: {
-      backgroundColor: Colors.light.primary_01,
+      backgroundColor:
+        title === "Danh sách tour" ? "white" : Colors.light.primary_01,
     },
-    headerTintColor: Colors.light.white,
+    headerTintColor: title === "Danh sách tour" ? "black" : Colors.light.white,
     headerTitleStyle: {
       fontFamily: "Poppins-Bold",
     },

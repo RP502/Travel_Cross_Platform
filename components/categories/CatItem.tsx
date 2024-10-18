@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'rea
 import React from 'react'
 import {CategoryProps }  from '@/constants/Category'
 import { Colors } from '@/constants/Colors'
+import { router, Href } from 'expo-router'
 
 const CatItem: React.FC<CategoryProps> = (cat: CategoryProps) => {
 
@@ -9,7 +10,7 @@ const CatItem: React.FC<CategoryProps> = (cat: CategoryProps) => {
   width = Math.floor((width - 62)/4)
 
   return (
-    <TouchableOpacity style={[styles.container, { width }]}>
+    <TouchableOpacity style={[styles.container, { width }]} onPress={() => router.navigate(cat.router as Href<string>)}>
         <Image 
              source={{
                 uri: cat.image,
