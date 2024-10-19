@@ -9,7 +9,7 @@ export const CategoryList: CategoryProps[] = [
     image:
       "https://www.sicilyrentcar.it/wp-content/uploads/2023/12/SRC-Rent-Car-prenotazione-noleggio-auto-01-ricerca.png",
     name: "Thuê xe",
-    router: "helo",
+    router: "/tour",
   },
   {
     image:
