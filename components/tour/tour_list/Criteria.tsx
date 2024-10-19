@@ -12,7 +12,14 @@ import React from "react";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
-import Stares from "./criteria/Stares";
+import Stares, { StarItemProps } from "./criteria/Stares";
+import { loremList, starList } from "@/constants/Criteria";
+import Destiantions from "./criteria/Destination";
+import TourTypes from "./criteria/TourType";
+import NumberOfParticipant from "./criteria/NumberOfParticipants";
+import Promotions from "./criteria/Promotions";
+import AccompanyingServices from "./criteria/AccompanyingServices";
+import Transportation from "./criteria/Transportation";
 
 let { width, height } = Dimensions.get("window");
 
@@ -55,7 +62,13 @@ const Criteria: React.FC<CriteriaProps> = ({
 
           <View style={{ flex: 1, marginTop: 10 }}>
             <ScrollView style={styles.scrollView}>
-              <Stares />
+              <Stares listStart={starList} />
+              <Destiantions destinationesList={loremList} />
+              <TourTypes tourTypeList={loremList} />
+              <NumberOfParticipant numberOfParticipantsList={loremList} />
+              <Promotions promotionsList={loremList} />
+              <AccompanyingServices accompanyingServicesList={loremList} />
+              <Transportation transportationList={loremList} />
             </ScrollView>
           </View>
 

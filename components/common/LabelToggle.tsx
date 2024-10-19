@@ -14,15 +14,16 @@ const LabelToggle: React.FC<LabelToggleProps> = ({
   handleToggle,
 }) => {
   return (
-    <TouchableOpacity onPress={handleToggle}
+    <TouchableOpacity
+      onPress={handleToggle}
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
-      <Text style={{ fontSize: 16, fontFamily: "Poppins-Medium" }}>
-        LabelToggle
+      <Text style={{ fontSize: 18, fontFamily: "Poppins-Medium" }}>
+        {title}
       </Text>
       {isShow ? (
         <Entypo name="chevron-thin-down" size={18} color="black" />
