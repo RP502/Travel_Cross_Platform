@@ -12,15 +12,19 @@ import React from "react";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
+import Stares from "./criteria/Stares";
 
 let { width, height } = Dimensions.get("window");
 
 interface CriteriaProps {
-    isShowCriteria: boolean;
-    setIsShowCriteria: (value: boolean) => void;
+  isShowCriteria: boolean;
+  setIsShowCriteria: (value: boolean) => void;
 }
 
-const Criteria: React.FC<CriteriaProps> = ({ isShowCriteria, setIsShowCriteria }) => {
+const Criteria: React.FC<CriteriaProps> = ({
+  isShowCriteria,
+  setIsShowCriteria,
+}) => {
   return (
     <Modal
       animationType="slide"
@@ -33,16 +37,26 @@ const Criteria: React.FC<CriteriaProps> = ({ isShowCriteria, setIsShowCriteria }
       <View style={styles.modalOverlay}>
         <View style={styles.modalView}>
           <View style={styles.flexStyle}>
-            <TouchableOpacity onPress={() => setIsShowCriteria(!isShowCriteria)}>
+            <TouchableOpacity
+              onPress={() => setIsShowCriteria(!isShowCriteria)}
+            >
               <AntDesign name="close" size={24} color="black" />
             </TouchableOpacity>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Text style={styles.modalTitle}>Chọn lọc</Text>
             </View>
           </View>
 
-          <View style={{ flex: 1, paddingHorizontal: 16, marginTop: 10 }}>
-            <ScrollView style={styles.scrollView}></ScrollView>
+          <View style={{ flex: 1, marginTop: 10 }}>
+            <ScrollView style={styles.scrollView}>
+              <Stares />
+            </ScrollView>
           </View>
 
           <View
@@ -51,30 +65,33 @@ const Criteria: React.FC<CriteriaProps> = ({ isShowCriteria, setIsShowCriteria }
               paddingTop: 10,
               borderTopWidth: 1,
               borderTopColor: Colors.light.neutral_04,
+              flexDirection: "row",
+              gap: 20,
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            <TouchableOpacity
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                backgroundColor: Colors.light.white,
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: Colors.light.neutral_04,
+              }}
             >
               <Text
                 style={{
                   fontSize: 16,
-                  fontFamily: "Poppins-Medium",
-                  color: Colors.light.text_secondary,
-                }}
-              >
-                Tổng tiền:
-              </Text>
-              <Text
-                style={{
-                  fontSize: 20,
                   fontFamily: "Poppins-Bold",
-                  color: Colors.light.red,
+                  textAlign: "center",
                 }}
               >
-                1000 vnđ
+                Xóa
               </Text>
-            </View>
+            </TouchableOpacity>
+
             <TouchableOpacity
               style={[styles.btn, { marginVertical: 10 }]}
               onPress={() => {
@@ -82,7 +99,7 @@ const Criteria: React.FC<CriteriaProps> = ({ isShowCriteria, setIsShowCriteria }
                 router.push("/tour/[id]/info_booking");
               }}
             >
-              <Text style={styles.btnText}>Đặt ngay</Text>
+              <Text style={styles.btnText}>Chọn lọc</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -104,6 +121,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   btn: {
+    flex: 1,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,

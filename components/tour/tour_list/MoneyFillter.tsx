@@ -8,10 +8,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Slider from "react-native-a11y-slider";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
+import InputRange from "@/components/common/InputRange";
 
 let { width, height } = Dimensions.get("window");
 
@@ -24,7 +26,27 @@ const MoneyFillter: React.FC<MoneyFillterProps> = ({
   isShowMoneyFillter,
   setIsShowMoneyFillter,
 }) => {
-  const [values, setValues] = React.useState([50]);
+  const [min, setMin] = useState<number>(0);
+  const [max, setMax] = useState<number>(100000);
+  const [numberOfTour, setNumberOfTour] = useState<number>(0);
+
+  // get value from api
+  useEffect(() => {
+    // fetch data
+    const fetchData = async () => {
+      setMin(0);
+      setMax(100000);
+      setNumberOfTour(10);
+    };
+    fetchData();
+  }, []);
+
+  const handelWhenChangeValue = async (values: any) => {
+    //  handel when change value
+    const numericValues = values.map((value: any) => Number(value));
+    console.log(numericValues[0]);
+  };
+
   return (
     <Modal
       animationType="fade"
@@ -47,20 +69,57 @@ const MoneyFillter: React.FC<MoneyFillterProps> = ({
             </View>
           </View>
 
-          <View style={{ flex: 1, paddingHorizontal: 16, marginTop: 10 }}>
-            
+          <View style={{ flex: 1, paddingHorizontal: 30, marginTop: 10 }}>
+            <Slider
+              min={min}
+              max={max}
+              values={[min, max]}
+              increment={1}
+              markerColor={Colors.light.green}
+              style={{
+                backgroundColor: Colors.light.white,
+              }}
+              labelStyle={{
+                backgroundColor: "#1d5bbf",
+                borderRadius: 10,
+              }}
+              labelTextStyle={{
+                color: Colors.light.white,
+                fontFamily: "Poppins-Bold",
+              }}
+              onChange={handelWhenChangeValue}
+            />
           </View>
 
           <View
             style={{
               paddingHorizontal: 16,
-              paddingTop: 10,
-              borderTopWidth: 1,
-              borderTopColor: Colors.light.neutral_04,
+              paddingVertical: 10,
+              flexDirection: "row",
+              gap: 20,
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            <TouchableOpacity>
-              <Text>Xóa</Text>
+            <TouchableOpacity
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                backgroundColor: Colors.light.white,
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: Colors.light.neutral_04,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontFamily: "Poppins-Bold",
+                  textAlign: "center",
+                }}
+              >
+                Xóa
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.btn, { marginVertical: 10 }]}
@@ -69,7 +128,13 @@ const MoneyFillter: React.FC<MoneyFillterProps> = ({
                 router.push("/tour/[id]/info_booking");
               }}
             >
-              <Text style={styles.btnText}>Đặt ngay</Text>
+              <Text
+                style={styles.btnText}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                Xem {numberOfTour} kết quả
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -91,6 +156,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   btn: {
+    flex: 1,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
