@@ -164,11 +164,11 @@ export default TicketCard;
 const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
-    shadowColor: "#000", // Shadow color for iOS
-    shadowOffset: { width: 1, height: 2 }, // Shadow offset for iOS
-    shadowOpacity: 0.8, // Shadow opacity for iOS
-    shadowRadius: 3, // Shadow radius for iOS
-    elevation: 5, // Elevation for Android
+    // shadowColor: "#000", // Shadow color for iOS
+    // shadowOffset: { width: 1, height: 2 }, // Shadow offset for iOS
+    // shadowOpacity: 0.8, // Shadow opacity for iOS
+    // shadowRadius: 3, // Shadow radius for iOS
+    // elevation: 5, // Elevation for Android
     marginBottom: 10,
   },
   imageContainer: {},

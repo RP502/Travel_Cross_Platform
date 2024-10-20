@@ -4,6 +4,9 @@ import { useNavigation } from "expo-router";
 import { backNavigationOption } from "@/utils/BackNavigation";
 import { Colors } from "@/constants/Colors";
 import Fillter from "@/components/tour/tour_list/Fillter";
+import { MasonryFlashList } from "@shopify/flash-list";
+import TourCard from "@/components/tour/TourCard";
+import { CardTourPropsListData } from "@/constants/Tour";
 
 const TourList = () => {
   const navigation = useNavigation();
@@ -15,8 +18,18 @@ const TourList = () => {
     <View style={{ flex: 1 }}>
       <Fillter />
 
-      <View>
-        <ScrollView></ScrollView>
+      {/* // list tour */}
+      <View style={{ paddingHorizontal: 16, paddingTop: 10 }}>
+        <ScrollView>
+          <MasonryFlashList
+            data={CardTourPropsListData}
+            numColumns={2}
+            renderItem={({ item, index }) => <TourCard {...item} />}
+            keyExtractor={(item, index) => index.toString()}
+            estimatedItemSize={100}
+            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+          />
+        </ScrollView>
       </View>
     </View>
   );

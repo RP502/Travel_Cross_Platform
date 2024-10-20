@@ -95,7 +95,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
               paddingVertical: 5,
               borderRadius: 10,
               backgroundColor: Colors.light.white,
-              borderColor: "black",
+              borderColor: Colors.light.neutral_04,
               borderWidth: 1,
               flex: 1,
             }}
