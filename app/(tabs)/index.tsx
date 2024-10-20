@@ -28,60 +28,59 @@ import { SliderList } from "@/constants/Sider";
 
 const Home = () => {
   return (
-    
-      <SafeAreaView style={[styles.container]}>
-        <ScrollView style={styles.container}>
-          <View style={styles.topContainer}>
-            <Search />
-            <Categories />
-            <SlideList dataList={SliderList} />
+    <SafeAreaView style={[styles.container]}>
+      <Search />
+      <ScrollView style={styles.container}>
+        <View style={styles.topContainer}>
+          <Categories />
+          <SlideList dataList={SliderList} />
+        </View>
+        <View style={styles.contenContainer}>
+          <View style={styles.tourContainer}>
+            <Label
+              title="Tour trải nghiệm"
+              icon="flag"
+              iconColor={Colors.light.primary_01}
+              textColor={Colors.light.text}
+            />
+            <AddressList addresList={AddressListData} />
+            <TourListHorization tourList={CardTourPropsListData} />
           </View>
-          <View style={styles.contenContainer}>
-            <View style={styles.tourContainer}>
-              <Label
-                title="Tour trải nghiệm"
-                icon="flag"
-                iconColor={Colors.light.primary_01}
-                textColor={Colors.light.text}
-              />
-              <AddressList addresList={AddressListData} />
-              <TourListHorization tourList={CardTourPropsListData} />
-            </View>
 
-            <View style={styles.hotelContainer}>
-              <Label
-                title="Top Khách sạn được yêu thích"
-                icon="hotel"
-                iconColor={Colors.light.primary_01}
-                textColor={Colors.light.text}
-              />
-              <AddressList addresList={AddressListData} />
-              <HotelListHorization hotelList={CardHotelPropsListData} />
-            </View>
-
-            <View style={styles.ticketContainer}>
-              <Label
-                title="Top Vé tham quan được yêu thích"
-                icon="ticket-alt"
-                iconColor={Colors.light.red}
-                textColor={Colors.light.red}
-              />
-              <AddressList addresList={AddressListDataTicket} />
-              <TicketListHorization ticketList={CardTicketPropsListData} />
-            </View>
-
-            <View style={styles.vrContainer}>
-              <Label
-                title="Ảnh địa điểm nối bật VR 360"
-                icon="vr-cardboard"
-                iconColor={Colors.light.primary_01}
-                textColor={Colors.light.text}
-              />
-              <VrCardListVertical vrList={CardVr360PropsListData} />
-            </View>
+          <View style={styles.hotelContainer}>
+            <Label
+              title="Top Khách sạn được yêu thích"
+              icon="hotel"
+              iconColor={Colors.light.primary_01}
+              textColor={Colors.light.text}
+            />
+            <AddressList addresList={AddressListData} />
+            <HotelListHorization hotelList={CardHotelPropsListData} />
           </View>
-        </ScrollView>
-      </SafeAreaView>
+
+          <View style={styles.ticketContainer}>
+            <Label
+              title="Top Vé tham quan được yêu thích"
+              icon="ticket-alt"
+              iconColor={Colors.light.red}
+              textColor={Colors.light.red}
+            />
+            <AddressList addresList={AddressListDataTicket} />
+            <TicketListHorization ticketList={CardTicketPropsListData} />
+          </View>
+
+          <View style={styles.vrContainer}>
+            <Label
+              title="Ảnh địa điểm nối bật VR 360"
+              icon="vr-cardboard"
+              iconColor={Colors.light.primary_01}
+              textColor={Colors.light.text}
+            />
+            <VrCardListVertical vrList={CardVr360PropsListData} />
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.light.white,
-    paddingTop: Platform.OS === "android" ? 10: 0,
+    paddingTop: Platform.OS === "android" ? 10 : 0,
   },
   topContainer: {
     backgroundColor: Colors.light.white,
