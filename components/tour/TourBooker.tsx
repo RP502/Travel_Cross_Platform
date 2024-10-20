@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Colors } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 let { width, height } = Dimensions.get("window");
 
@@ -243,7 +244,7 @@ const TourBooker = () => {
             </View>
 
             {/* information filed */}
-            <View style={{ flex: 1, paddingHorizontal: 16, marginTop: 10 }}>
+            <KeyboardAwareScrollView style={{ flex: 1, paddingHorizontal: 16, marginTop: 10 }}>
               <View style={styles.inputContainer}>
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Họ</Text>
@@ -381,7 +382,7 @@ const TourBooker = () => {
                   }
                 />
               </View>
-            </View>
+            </KeyboardAwareScrollView>
 
             <View
               style={{
