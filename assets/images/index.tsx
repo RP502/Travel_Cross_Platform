@@ -22,6 +22,7 @@ const IMAGES = {
   EMPTY_WISHLIST: require("./empty-wishlist-icon.png"),
   MAP: require("./map.jpg"),
   EMPTY_CART: require("./empty_cart.png"),
+  FORGET_PASSWORD: require("./forget_password.jpg"),
 };
 
 export default IMAGES;

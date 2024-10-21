@@ -10,16 +10,14 @@ import {
   Button,
 } from "react-native";
 import { Link } from "@react-navigation/native";
-import { router } from 'expo-router';
+import { router } from "expo-router";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Colors } from "@/constants/Colors";
-
 
 const Login: React.FC = (props: any) => {
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
 
   const handleLogin = () => {
     // Add your authentication logic here (e.g. API call)
@@ -71,7 +69,10 @@ const Login: React.FC = (props: any) => {
             </View>
           </View>
           {/* Forgot Password */}
-          <TouchableOpacity style={styles.forgotPassword}>
+          <TouchableOpacity
+            style={styles.forgotPassword}
+            onPress={() => router.navigate("/forget_password")}
+          >
             <Text style={styles.textForgotPassword}>Quên mật khẩu?</Text>
           </TouchableOpacity>
         </View>
