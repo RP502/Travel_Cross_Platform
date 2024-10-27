@@ -25,8 +25,17 @@ import HotelListHorization from "@/components/hotel/HotelListHorization";
 import TicketListHorization from "@/components/ticket/TicketListHorization";
 import VrCardListVertical from "@/components/vr360/VrCardVerticalList";
 import { SliderList } from "@/constants/Sider";
+import { auth } from "@/firebaseConfig";
+import { useSelector, useDispatch } from "react-redux";
+
 
 const Home = () => {
+
+  const dispatch = useDispatch();
+  
+
+  const count = useSelector((state: any) => state.sliders.sliders);
+  console.log(count)
   return (
     <SafeAreaView style={[styles.container]}>
       <Search />

@@ -14,8 +14,19 @@ import { AntDesign } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 import Sperater from "@/components/profile/Sperater";
 import { router } from "expo-router";
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebaseConfig";
 
 const Profile: React.FC = () => {
+  const logoutUser = async () => {  
+    try {
+      await signOut(auth);
+      router.navigate("/(auth)/login");
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -100,7 +111,7 @@ const Profile: React.FC = () => {
             icon="log-out"
             title="Đăng xuất"
             description="Thoát tài khoản"
-            onPress={() => {}}
+            onPress={logoutUser}
           />
         </View>
       </View>
@@ -114,7 +125,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.light.primary_01,
-    paddingTop: Platform.OS === "android" ? 15: 0,
+    paddingTop: Platform.OS === "android" ? 15 : 0,
   },
   headerContainer: {
     flexDirection: "row",

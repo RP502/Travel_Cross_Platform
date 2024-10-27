@@ -13,19 +13,36 @@ import { Link } from "@react-navigation/native";
 import { router } from "expo-router";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Colors } from "@/constants/Colors";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebaseConfig";
+import { current } from "@reduxjs/toolkit";
+import {
+  ALERT_TYPE,
+  Dialog,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
 
 const Login: React.FC = (props: any) => {
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // Add your authentication logic here (e.g. API call)
     // If successful, navigate to HomeScreen
     // const navigation = useNavigation();
-    router.navigate("/(tabs)");
+    try {
+   
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      router.navigate("/(tabs)");
+    } catch (error) {
+      console.log(error);
+    }
+    
   };
   return (
+    <AlertNotificationRoot theme="light">
     <View style={styles.container}>
       <Image
         source={require("@/assets/images/login.jpg")}
@@ -106,6 +123,7 @@ const Login: React.FC = (props: any) => {
         </View>
       </View>
     </View>
+    </AlertNotificationRoot>
   );
 };
 
