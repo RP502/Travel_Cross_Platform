@@ -8,9 +8,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import { router } from "expo-router";
+import { addLocations, addTours } from "@/utils/addData";
 
 const Index: React.FC = () => {
   const [isLogined, setIsLogined] = useState<boolean>(false);
+
 
   const [fontsLoaded] = useFonts({
     Poppins: require("@/assets/fonts/Poppins-Regular.ttf"),
@@ -33,7 +35,7 @@ const Index: React.FC = () => {
 
   // isFirstTime
   AsyncStorage.getItem("isFirstTime").then((value) => {
-    console.log(value);
+
     if (value === null) {
       AsyncStorage.setItem("isFirstTime", "false");
       router.navigate("/onboarding");

@@ -3,16 +3,15 @@ import { app } from '@/firebaseConfig'; // Adjust path to your Firebase config f
 
 const db = getFirestore(app);
 
-export const fetchSliders = async () => {
+export const fetchLocations = async () => {
   try {
-    const slidersCollection = collection(db, 'sliders');
-    const slidersSnapshot = await getDocs(slidersCollection);
-    const slidersList = slidersSnapshot.docs.map(doc => ({
+    const locationsCollection = collection(db, 'locations');
+    const locationsSnapshot = await getDocs(locationsCollection);
+    const locationsList = locationsSnapshot.docs.map(doc => ({
       id: doc.id, 
       ...doc.data()
     }));
-    
-    return slidersList;
+    return locationsList;
   } catch (error: any) {
     console.error('Error fetching sliders:', error.message);
   }

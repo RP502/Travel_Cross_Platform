@@ -4,16 +4,17 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { SliderPorps } from "@/constants/Sider";
 import SliderItem from "./SliderItem";
 import { Colors } from "@/constants/Colors";
+import { Slider } from "@/redux/sliders/sliderType";
 
 interface SlideListPorps {
   isFullScreen?: boolean;
-  dataList: SliderPorps[];
+  dataList: Slider[];
 }
 
-const SlideList: React.FC<SlideListPorps> = ({ isFullScreen, dataList }) => {
+const SlideList: React.FC<SlideListPorps> = ({ dataList }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   let { width } = Dimensions.get("window");
-  width = isFullScreen ? width : width - 32;
+  width = width - 32;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,11 +29,11 @@ const SlideList: React.FC<SlideListPorps> = ({ isFullScreen, dataList }) => {
   };
 
   return (
-    <View style={[styles.container, { marginVertical: isFullScreen ? 0 : 10 }]}>
+    <View style={[styles.container, { marginVertical:  10 }]}>
       <FlatList
         data={dataList}
         renderItem={({ item }) => (
-          <SliderItem {...item} isFullScreen={isFullScreen ? true : false} />
+          <SliderItem {...item} />
         )}
         keyExtractor={(item, index) => index.toString()}
         horizontal
@@ -44,7 +45,6 @@ const SlideList: React.FC<SlideListPorps> = ({ isFullScreen, dataList }) => {
         style={[
           styles.indexContainer,
           {
-            bottom: isFullScreen === true ? 35 : 10,
             left: 10,
           },
 

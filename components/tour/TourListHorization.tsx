@@ -1,13 +1,14 @@
-import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import { CardTourProps } from '@/constants/Tour'
-import TourCard from './TourCard'
+import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+
+import TourCard from "./TourCard";
+import { Tour } from "@/redux/tours/tourType";
 
 interface TourListProps {
-    tourList: CardTourProps[]
+  tourList: Tour[];
 }
 
-const TourListHorization: React.FC<TourListProps> = ({tourList}) => {
+const TourListHorization: React.FC<TourListProps> = ({ tourList }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   let { width } = Dimensions.get("window");
   width = Math.floor((width - 45) / 2);
@@ -16,21 +17,21 @@ const TourListHorization: React.FC<TourListProps> = ({tourList}) => {
     setCurrentIndex(index);
   };
   return (
-    <View style={{ paddingLeft: 11,}}>
-      <FlatList 
+    <View style={{ paddingLeft: 11 }}>
+      <FlatList
         data={tourList}
-        renderItem={({item}) => <TourCard {...item} />}
-        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <TourCard tour={item} />}
+        keyExtractor={(item) => item.tourId}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
-        ItemSeparatorComponent={() => <View style={{width: 10}} />}
+        ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
       />
     </View>
-  )
-}
+  );
+};
 
-export default TourListHorization
+export default TourListHorization;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

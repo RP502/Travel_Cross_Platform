@@ -13,10 +13,16 @@ import { CardTourProps } from "@/constants/Tour";
 import { Colors } from "@/constants/Colors";
 import IMAGES from "@/assets/images";
 import { router } from "expo-router";
+import { Tour } from "@/redux/tours/tourType";
 
-const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
+interface TourCardProps {
+  tour: Tour;
+  isMinWidth?: boolean;
+}
+
+const TourCard: React.FC<TourCardProps> = ({ tour, isMinWidth }) => {
   let { width } = Dimensions.get("window");
-  width = tour.isMinWidth
+  width = isMinWidth
     ? Math.floor((width - 72) / 2)
     : Math.floor((width - 45) / 2);
 
@@ -27,7 +33,7 @@ const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
     >
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: tour.image }}
+          source={{ uri: tour.image[0] }}
           style={{
             width,
             height: 140,
@@ -36,15 +42,7 @@ const TourCard: React.FC<CardTourProps> = (tour: CardTourProps) => {
           }}
         />
         <TouchableOpacity style={styles.whislist}>
-          <Fontisto
-            name="heart-alt"
-            size={20}
-            color={
-              tour.isWhislist
-                ? Colors.light.text_secondary
-                : Colors.light.primary_01
-            }
-          />
+          <Fontisto name="heart-alt" size={20} color={Colors.light.text} />
         </TouchableOpacity>
         {tour.sale && (
           <View style={[styles.sale]}>

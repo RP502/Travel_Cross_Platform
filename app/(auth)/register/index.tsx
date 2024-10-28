@@ -159,7 +159,6 @@ const Register: React.FC = () => {
         button: "Xác nhận",
         autoClose: 300,
       });
-      console.log(error);
     }
   };
 
@@ -167,7 +166,6 @@ const Register: React.FC = () => {
     try {
       const userRef = doc(db, "userInfo", uid);
       await setDoc(userRef, userInfo);
-      console.log("User information saved in Firestore");
     } catch (error) {
       console.error("Error saving user information:", error);
     }

@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import Search from "@/components/Search";
 import Categories from "@/components/categories";
 import { Colors } from "@/constants/Colors";
@@ -27,22 +27,46 @@ import VrCardListVertical from "@/components/vr360/VrCardVerticalList";
 import { SliderList } from "@/constants/Sider";
 import { auth } from "@/firebaseConfig";
 import { useSelector, useDispatch } from "react-redux";
-
+// Import the AppDispatch type
+import { fetchSlidersAsync } from "@/redux/sliders/slidersSlice";
+import { AppDispatch, RootState } from "@/redux/store";
+import { fetchToursAsync } from "@/redux/tours/toursSlice";
+import { fetchLocationsAsync } from "@/redux/locations/locationsSlice";
 
 const Home = () => {
+  // Use the AppDispatch type
+  const { sliders, status, error } = useSelector((state: any) => state.sliders);
+  const tours = useSelector((state: any) => state.tours.tours);
+  const locations = useSelector((state: any) => state.locations.locations);
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchSlidersAsync());
+      dispatch(fetchToursAsync());
+      dispatch(fetchLocationsAsync());
+    }
+  }, [status, dispatch]);
 
-  const dispatch = useDispatch();
-  
+  if (status === "loading")
+    return (
+      <View>
+        <Text>Loadding</Text>
+      </View>
+    );
+  if (status === "failed")
+    return (
+      <View>
+        <Text>Errror</Text>
+      </View>
+    );
 
-  const count = useSelector((state: any) => state.sliders.sliders);
-  console.log(count)
   return (
     <SafeAreaView style={[styles.container]}>
       <Search />
       <ScrollView style={styles.container}>
         <View style={styles.topContainer}>
           <Categories />
-          <SlideList dataList={SliderList} />
+          <SlideList dataList={sliders} />
         </View>
         <View style={styles.contenContainer}>
           <View style={styles.tourContainer}>
@@ -52,8 +76,8 @@ const Home = () => {
               iconColor={Colors.light.primary_01}
               textColor={Colors.light.text}
             />
-            <AddressList addresList={AddressListData} />
-            <TourListHorization tourList={CardTourPropsListData} />
+            <AddressList addresList={locations} />
+            <TourListHorization tourList={tours} />
           </View>
 
           <View style={styles.hotelContainer}>
@@ -63,7 +87,7 @@ const Home = () => {
               iconColor={Colors.light.primary_01}
               textColor={Colors.light.text}
             />
-            <AddressList addresList={AddressListData} />
+            <AddressList addresList={locations} />
             <HotelListHorization hotelList={CardHotelPropsListData} />
           </View>
 
@@ -74,7 +98,7 @@ const Home = () => {
               iconColor={Colors.light.red}
               textColor={Colors.light.red}
             />
-            <AddressList addresList={AddressListDataTicket} />
+            <AddressList addresList={locations} />
             <TicketListHorization ticketList={CardTicketPropsListData} />
           </View>
 

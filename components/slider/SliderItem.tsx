@@ -1,23 +1,23 @@
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { SliderPorps } from "@/constants/Sider";
+import { Slider } from "@/redux/sliders/sliderType";
 
-const SliderItem: React.FC<SliderPorps> = (slider: SliderPorps) => {
+const SliderItem: React.FC<Slider> = (slider: Slider) => {
   let { width, height } = Dimensions.get("window");
-  width = slider.isFullScreen == true ? width : width - 32;
+  width = width - 32;
 
   return (
     <View style={styles.container}>
       <Image
         source={{
-          uri: slider.image,
+          uri: slider.url_image,
         }}
         style={[
           {
             width,
-            height:
-              slider.isFullScreen === true ? Math.floor(height / 2.5) : 160,
-            borderRadius: slider.isFullScreen === true ? 0 : 15,
+            height: 160,
+            borderRadius: 15,
           },
         ]}
       />
