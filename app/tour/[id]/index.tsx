@@ -9,7 +9,7 @@ import {
   LogBox,
 } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { useNavigation } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import BackNavigation from "@/components/navigation/BackNavigation";
 import SlideList from "@/components/slider";
 import { SliderList } from "@/constants/Sider";
@@ -25,6 +25,8 @@ import DescriptionTour from "@/components/tour/DescriptionTour";
 import TourNote from "@/components/tour/TourNote";
 import TourListHorization from "@/components/tour/TourListHorization";
 import { CardTourPropsListData } from "@/constants/Tour";
+import { useSelector } from "react-redux";
+import SlideImage from "@/components/tour/tour_detail/image_list";
 
 let { width, height } = Dimensions.get("window");
 
@@ -51,17 +53,20 @@ const tour = {
   ],
 };
 
-const DetailTour: React.FC = () => {
+const DetailTour: React.FC = (a) => {
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
+  const { id } = useLocalSearchParams();
+  const tours = useSelector((state: any) => state.tours.tours);
+  const tour = tours.find((tour: any) => tour.id === id);
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.imageContainer}>
           <BackNavigation />
-          <SlideList isFullScreen={true} dataList={SliderList} />
+          <SlideImage isFullScreen={true} dataList={tour.image} />
         </View>
 
         <View style={styles.contentContaier}>
@@ -199,8 +204,7 @@ const DetailTour: React.FC = () => {
             />
             <Text style={styles.labelText}>Bạn có thẻ thích</Text>
           </View>
-          <TourListHorization tourList={CardTourPropsListData} />
-
+          <TourListHorization tourList={tours} />
         </View>
       </ScrollView>
 
@@ -212,9 +216,10 @@ const DetailTour: React.FC = () => {
 export default DetailTour;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
   imageContainer: {
-    width: width,
     height: Math.floor(height / 2.5),
   },
   contentContaier: {

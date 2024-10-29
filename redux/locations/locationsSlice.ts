@@ -1,15 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchLocations } from "@/api/locations";
-import { Location } from "./locationType";
+import { Address, Location } from "./locationType";
+import { Colors } from "@/constants/Colors";
 
 interface LocationsState {
-  locations: Location[];
+  addressList: Address[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
 const initialState: LocationsState = {
-  locations: [],
+  addressList: [],
   status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
   error: null,
 };
@@ -27,7 +28,7 @@ export const fetchLocationsAsync = createAsyncThunk(
   }
 );
 
-export const locationsSlice = createSlice({   
+export const locationsSlice = createSlice({
   name: "locations",
   initialState,
   reducers: {
@@ -40,7 +41,16 @@ export const locationsSlice = createSlice({
       })
       .addCase(fetchLocationsAsync.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.locations = action.payload as Location[];
+        state.addressList = action.payload
+          ? action.payload.map((item) => {
+              return {
+                name: item.name,
+                isActived: false,
+              };
+            })
+          : [];
+
+      
       })
       .addCase(fetchLocationsAsync.rejected, (state, action) => {
         state.status = "failed";

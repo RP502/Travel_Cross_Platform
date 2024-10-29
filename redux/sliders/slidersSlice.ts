@@ -32,6 +32,7 @@ export const slidersSlice = createSlice({
   initialState,
   reducers: {
     // Other synchronous reducers if needed
+    
   },
   extraReducers: (builder) => {
     builder

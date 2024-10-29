@@ -9,18 +9,25 @@ import {
 import React from "react";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { CardTicketProps } from "@/constants/Ticket";
+
 import { Colors } from "@/constants/Colors";
 import IMAGES from "@/assets/images";
+import { Ticket } from "@/redux/tickets/ticketType";
 
-const TicketCard: React.FC<CardTicketProps> = (ticket: CardTicketProps) => {
+interface CardTicketProps {
+  ticket: Ticket;
+}
+
+const TicketCard: React.FC<CardTicketProps> = ({ ticket }) => {
   let { width } = Dimensions.get("window");
   width = Math.floor((width - 20) / 2);
+  console.log(ticket)
   return (
+  
     <View style={[styles.container, { width }]}>
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: ticket.image }}
+          source={{ uri: ticket.image[0] }}
           style={{
             width,
             height: 140,
@@ -29,13 +36,7 @@ const TicketCard: React.FC<CardTicketProps> = (ticket: CardTicketProps) => {
           }}
         />
         <TouchableOpacity style={styles.whislist}>
-          <Fontisto
-            name="heart-alt"
-            size={20}
-            color={
-              ticket.isWhislist ? Colors.light.primary_01 : Colors.light.red
-            }
-          />
+          <Fontisto name="heart-alt" size={20} color={Colors.light.text} />
         </TouchableOpacity>
         <View
           style={{
@@ -58,7 +59,7 @@ const TicketCard: React.FC<CardTicketProps> = (ticket: CardTicketProps) => {
             {ticket.provine}
           </Text>
         </View>
-        {ticket.sale && (
+        {ticket.sale !== 0  && (
           <View style={[styles.sale]}>
             <Text style={styles.textSale}>Tiết kiệm {ticket.sale}%</Text>
           </View>
@@ -111,7 +112,7 @@ const TicketCard: React.FC<CardTicketProps> = (ticket: CardTicketProps) => {
               fontFamily: "Poppins-Regular",
             }}
           >
-            ({ticket.evaluationCount})
+            {ticket.evaluationCount}
           </Text>
           <AntDesign
             name="caretright"
@@ -141,7 +142,7 @@ const TicketCard: React.FC<CardTicketProps> = (ticket: CardTicketProps) => {
           >
             Từ đ {ticket.price}
           </Text>
-          {ticket.sale && (
+          {ticket.sale !== 0 && (
             <Text
               style={{
                 color: Colors.light.text_secondary,

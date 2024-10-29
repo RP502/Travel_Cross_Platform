@@ -14,10 +14,8 @@ import { Colors } from "@/constants/Colors";
 import Slider from "@/components/slider";
 import SlideList from "@/components/slider";
 import Label from "@/components/Label";
-import { AddressListData, AddressListDataTicket } from "@/constants/Address";
 import AddressList from "@/components/address/AddressList";
 import { CardTourPropsListData } from "@/constants/Tour";
-import { CardHotelPropsListData } from "@/constants/Hotel";
 import { CardTicketPropsListData } from "@/constants/Ticket";
 import { CardVr360PropsListData } from "@/constants/Vr360";
 import TourListHorization from "@/components/tour/TourListHorization";
@@ -32,18 +30,26 @@ import { fetchSlidersAsync } from "@/redux/sliders/slidersSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import { fetchToursAsync } from "@/redux/tours/toursSlice";
 import { fetchLocationsAsync } from "@/redux/locations/locationsSlice";
+import { fetchHotelsAsync } from "@/redux/hotels/hotelsSlice";
+import { fetchTicketsAsync } from "@/redux/tickets/ticketsSlice";
+
 
 const Home = () => {
   // Use the AppDispatch type
+  const dispatch = useDispatch<AppDispatch>();
   const { sliders, status, error } = useSelector((state: any) => state.sliders);
   const tours = useSelector((state: any) => state.tours.tours);
-  const locations = useSelector((state: any) => state.locations.locations);
-  const dispatch = useDispatch<AppDispatch>();
+  const { addressList } = useSelector((state: any) => state.locations);
+  const hotels = useSelector((state: any) => state.hotels.hotels);
+  const tickets = useSelector((state: any) => state.tickets.tickets);
+ 
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchSlidersAsync());
       dispatch(fetchToursAsync());
       dispatch(fetchLocationsAsync());
+      dispatch(fetchHotelsAsync());
+      dispatch(fetchTicketsAsync());
     }
   }, [status, dispatch]);
 
@@ -76,7 +82,7 @@ const Home = () => {
               iconColor={Colors.light.primary_01}
               textColor={Colors.light.text}
             />
-            <AddressList addresList={locations} />
+            <AddressList addresList={addressList} />
             <TourListHorization tourList={tours} />
           </View>
 
@@ -87,8 +93,8 @@ const Home = () => {
               iconColor={Colors.light.primary_01}
               textColor={Colors.light.text}
             />
-            <AddressList addresList={locations} />
-            <HotelListHorization hotelList={CardHotelPropsListData} />
+            <AddressList addresList={addressList} />
+            <HotelListHorization hotelList={hotels} />
           </View>
 
           <View style={styles.ticketContainer}>
@@ -98,8 +104,8 @@ const Home = () => {
               iconColor={Colors.light.red}
               textColor={Colors.light.red}
             />
-            <AddressList addresList={locations} />
-            <TicketListHorization ticketList={CardTicketPropsListData} />
+            <AddressList addresList={addressList} />
+            <TicketListHorization ticketList={tickets} />
           </View>
 
           <View style={styles.vrContainer}>

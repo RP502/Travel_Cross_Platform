@@ -12,7 +12,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { CardTourProps } from "@/constants/Tour";
 import { Colors } from "@/constants/Colors";
 import IMAGES from "@/assets/images";
-import { router } from "expo-router";
+import { Href, router } from "expo-router";
 import { Tour } from "@/redux/tours/tourType";
 
 interface TourCardProps {
@@ -29,7 +29,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour, isMinWidth }) => {
   return (
     <TouchableOpacity
       style={[styles.container, { width }]}
-      onPress={() => router.push("/tour/1")}
+      onPress={() => router.push(`/tour/${tour.tourId}/` as Href)}
     >
       <View style={styles.imageContainer}>
         <Image
@@ -44,7 +44,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour, isMinWidth }) => {
         <TouchableOpacity style={styles.whislist}>
           <Fontisto name="heart-alt" size={20} color={Colors.light.text} />
         </TouchableOpacity>
-        {tour.sale && (
+        {tour.sale !== 0 && (
           <View style={[styles.sale]}>
             <Text style={styles.textSale}>Tiết kiệm {tour.sale}%</Text>
           </View>
@@ -134,7 +134,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour, isMinWidth }) => {
           >
             Từ đ {tour.price}
           </Text>
-          {tour.sale && (
+          {tour.sale !==0 && (
             <Text
               style={{
                 color: Colors.light.text_secondary,

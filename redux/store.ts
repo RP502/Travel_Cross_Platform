@@ -3,6 +3,8 @@ import counterReducer from "./counter/counterSlice";
 import slidersREducer from "./sliders/slidersSlice";
 import toursReducer from "./tours/toursSlice";
 import locationsReducer from "./locations/locationsSlice";
+import hotelsReducer from "./hotels/hotelsSlice";
+import ticketsReducer from "./tickets/ticketsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ export const store = configureStore({
     sliders: slidersREducer,
     tours: toursReducer,
     locations: locationsReducer,
+    hotels: hotelsReducer,
+    tickets: ticketsReducer,
   },
 });
 

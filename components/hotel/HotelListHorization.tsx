@@ -1,14 +1,13 @@
-import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-
-import HotelCard from './HotelCard'
-import { CardHotelProps } from '@/constants/Hotel'
+import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import HotelCard from "./HotelCard";
+import { Hotel } from "@/redux/hotels/hotelType";
 
 interface HotelListProps {
-    hotelList: CardHotelProps[]
+  hotelList: Hotel[];
 }
 
-const HotelListHorization: React.FC<HotelListProps> = ({hotelList}) => {
+const HotelListHorization: React.FC<HotelListProps> = ({ hotelList }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   let { width } = Dimensions.get("window");
   width = Math.floor((width - 45) / 2);
@@ -17,21 +16,21 @@ const HotelListHorization: React.FC<HotelListProps> = ({hotelList}) => {
     setCurrentIndex(index);
   };
   return (
-    <View style={{  paddingLeft: 11,}}>
-      <FlatList 
+    <View style={{ paddingLeft: 11 }}>
+      <FlatList
         data={hotelList}
-        renderItem={({item}) => <HotelCard {...item} />}
-        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <HotelCard hotel={item} />}
+        keyExtractor={(item) => item.hotelId}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
-        ItemSeparatorComponent={() => <View style={{width: 10}} />}
+        ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
       />
     </View>
-  )
-}
+  );
+};
 
-export default HotelListHorization
+export default HotelListHorization;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

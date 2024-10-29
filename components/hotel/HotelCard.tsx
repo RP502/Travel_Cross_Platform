@@ -9,18 +9,22 @@ import {
 import React from "react";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { CardHotelProps } from "@/constants/Hotel";
 import { Colors } from "@/constants/Colors";
 import IMAGES from "@/assets/images";
+import { Hotel } from "@/redux/hotels/hotelType";
 
-const HotelCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
+interface CardHotelProps {
+  hotel: Hotel;
+}
+
+const HotelCard: React.FC<CardHotelProps> = ({ hotel }) => {
   let { width } = Dimensions.get("window");
   width = Math.floor((width - 20) / 2);
   return (
     <View style={[styles.container, { width }]}>
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: hotel.image }}
+          source={{ uri: hotel.image[0] }}
           style={{
             width,
             height: 140,
@@ -33,7 +37,7 @@ const HotelCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
             name="heart-alt"
             size={20}
             color={
-              hotel.isWhislist ? Colors.light.primary_01 : Colors.light.red
+               Colors.light.text
             }
           />
         </TouchableOpacity>
@@ -58,7 +62,7 @@ const HotelCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
             {hotel.provine}
           </Text>
         </View>
-        {hotel.sale && (
+        {hotel.sale !== 0 && (
           <View style={[styles.sale]}>
             <Text style={styles.textSale}>Tiết kiệm {hotel.sale}%</Text>
           </View>
@@ -139,7 +143,7 @@ const HotelCard: React.FC<CardHotelProps> = (hotel: CardHotelProps) => {
           >
             Từ đ {hotel.price}
           </Text>
-          {hotel.sale && (
+          {hotel.sale !== 0 && (
             <Text
               style={{
                 color: Colors.light.text_secondary,

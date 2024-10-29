@@ -1,13 +1,11 @@
-export type Tour = {
-  id: any;
-  tourId: string;
+export type Hotel = {
+  hotelId: string;
   name: string;
   image: string[];
-  type: string[];
   evaluation: number;
   evaluationCount: number;
   booking: number;
   price: number;
   sale: number;
-  location: string[];
-};
+  provine: string;
+}
