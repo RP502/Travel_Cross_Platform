@@ -9,38 +9,40 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Colors } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
+import { Participant } from "@/model/participant";
 
 let { width, height } = Dimensions.get("window");
 
-interface Participant {
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  dateOfBirth: string;
-  phoneNumber: string;
+interface ParticipantInformationProps {
+  participantList: Participant[];
+  setParticipantList: React.Dispatch<React.SetStateAction<Participant[]>>;
 }
 
-const ParticipantInformation = () => {
+const ParticipantInformation: React.FC<ParticipantInformationProps> = ({
+  participantList,
+  setParticipantList,
+}) => {
   const [isDisplay, setIsDisplay] = useState<boolean>(false);
-  
+
   const [isDatePickerVisible, setDatePickerVisibility] =
     useState<boolean>(false);
 
   const inputDateRef = React.useRef<TextInput | null>(null);
 
-  const [participant, setParticipant] = useState<Participant>({
-    firstName: "",
-    lastName: "",
+  const participantInit = participantList.find((p) => p.isSelecting) || {
+    id: "",
     fullName: "",
     dateOfBirth: "",
     phoneNumber: "",
-  });
+  };
 
+  const [participant, setParticipant] = useState<Participant>(participantInit);
+  const [selectedId, setSelectedId] = useState<string>("");
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -59,6 +61,63 @@ const ParticipantInformation = () => {
     setDatePickerVisibility(false);
   };
 
+  const handleAddParticipant = () => {
+    setParticipant({ id: "", fullName: "", dateOfBirth: "", phoneNumber: "" });
+    setIsDisplay(true);
+  };
+
+  const handleSaveParticipant = () => {
+    if (
+      participant.fullName === "" ||
+      participant.dateOfBirth === "" ||
+      participant.phoneNumber === ""
+    ) {
+      alert("Vui lòng nhập đầy đủ thông tin");
+      return;
+    }
+
+    if (participant.id !== "") {
+      const newParticipantList: Participant[] = participantList.map((p) =>
+        p.id === participant.id ? participant : p
+      );
+      setParticipantList(newParticipantList);
+      setSelectedId(participant.id);
+      setIsDisplay(false);
+      return;
+    }
+
+    const newParticipant: Participant = {
+      ...participant,
+      isSelecting: true,
+      id: (participantList.length + 1).toString(),
+    };
+    const newParticipantList: Participant[] = participantList.map((p) => ({
+      ...p,
+      isSelecting: false,
+    }));
+    newParticipantList.push(newParticipant);
+    setParticipantList(newParticipantList);
+    setSelectedId(newParticipant.id);
+    setIsDisplay(false);
+  };
+
+  const handleSelectParticipant = (id: string) => {
+    const newParticipantList: Participant[] = participantList.map((p) => ({
+      ...p,
+      isSelecting: p.id === id,
+    }));
+    setParticipantList(newParticipantList);
+  };
+
+  useEffect(() => {
+    const participant = participantList.find((p) => p.isSelecting) || {
+      id: "",
+      fullName: "",
+      dateOfBirth: "",
+      phoneNumber: "",
+    };
+    setParticipant(participant);
+  }, [participantList]);
 
   return (
     <>
@@ -89,6 +148,43 @@ const ParticipantInformation = () => {
             Thônng tin người tham gia
           </Text>
         </View>
+        {/* list participant */}
+        {participantList.length > 0 && (
+          <View style={{ marginTop: 10 }}>
+            <FlatList
+              data={participantList}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={{
+                    width: 50,
+                    padding: 10,
+                    borderRadius: 10,
+                    borderWidth: 1,
+                    borderColor: item.isSelecting
+                      ? Colors.light.primary_01
+                      : Colors.light.text,
+                  }}
+                  onPress={() => handleSelectParticipant(item.id)}
+                >
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontFamily: "Poppins-Regular",
+                      color: Colors.light.text,
+                    }}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {item.fullName}
+                  </Text>
+                </TouchableOpacity>
+              )}
+              horizontal
+              keyExtractor={(item) => item.id}
+              ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+            />
+          </View>
+        )}
 
         <TouchableOpacity
           style={{
@@ -105,6 +201,7 @@ const ParticipantInformation = () => {
             borderWidth: 1,
             backgroundColor: Colors.light.white,
           }}
+          onPress={handleAddParticipant}
         >
           <Text
             style={{
@@ -149,15 +246,27 @@ const ParticipantInformation = () => {
               Tên đầy đủ
             </Text>
             <TouchableOpacity onPress={() => setIsDisplay(true)}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontFamily: "Poppins-Regular",
-                  color: Colors.light.red,
-                }}
-              >
-                Vui lòng nhập
-              </Text>
+              {participant.fullName === "" ? (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.red,
+                  }}
+                >
+                  Vui lòng nhập
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.text,
+                  }}
+                >
+                  {participant.fullName}
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
 
@@ -173,15 +282,27 @@ const ParticipantInformation = () => {
               Ngày sinh
             </Text>
             <TouchableOpacity onPress={() => setIsDisplay(true)}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontFamily: "Poppins-Regular",
-                  color: Colors.light.red,
-                }}
-              >
-                Vui lòng chọn
-              </Text>
+              {participant.dateOfBirth === "" ? (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.red,
+                  }}
+                >
+                  Vui lòng chọn
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.text,
+                  }}
+                >
+                  {participant.dateOfBirth}
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
 
@@ -197,15 +318,27 @@ const ParticipantInformation = () => {
               Số điện thoại
             </Text>
             <TouchableOpacity onPress={() => setIsDisplay(true)}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontFamily: "Poppins-Regular",
-                  color: Colors.light.red,
-                }}
-              >
-                Vui lòng nhập
-              </Text>
+              {participant.phoneNumber === "" ? (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.red,
+                  }}
+                >
+                  Vui lòng nhập
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.text,
+                  }}
+                >
+                  {participant.phoneNumber}
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
 
@@ -243,51 +376,9 @@ const ParticipantInformation = () => {
             </View>
 
             {/* information filed */}
-            <KeyboardAwareScrollView style={{ flex: 1, paddingHorizontal: 16, marginTop: 10 }}>
-              <View style={styles.inputContainer}>
-                <View style={{ flexDirection: "row", gap: 3 }}>
-                  <Text style={styles.labelText}>Họ</Text>
-                  {participant.lastName === "" && (
-                    <Text
-                      style={[styles.labelText, { color: Colors.light.red }]}
-                    >
-                      *
-                    </Text>
-                  )}
-                </View>
-                <TextInput
-                  style={styles.textInput}
-                  placeholder="Xin vui lòng nhập Họ"
-                     placeholderTextColor={Colors.light.neutral_04}
-                  value={participant.lastName}
-                  onChangeText={(text) =>
-                    setParticipant({ ...participant, lastName: text })
-                  }
-                />
-              </View>
-
-              <View style={styles.inputContainer}>
-                <View style={{ flexDirection: "row", gap: 3 }}>
-                  <Text style={styles.labelText}>Tên</Text>
-                  {participant.firstName === "" && (
-                    <Text
-                      style={[styles.labelText, { color: Colors.light.red }]}
-                    >
-                      *
-                    </Text>
-                  )}
-                </View>
-                <TextInput
-                  style={styles.textInput}
-                  placeholder="Xin vui lòng nhập Tên"
-                     placeholderTextColor={Colors.light.neutral_04}
-                  value={participant.firstName}
-                  onChangeText={(text) =>
-                    setParticipant({ ...participant, firstName: text })
-                  }
-                />
-              </View>
-
+            <KeyboardAwareScrollView
+              style={{ flex: 1, paddingHorizontal: 16, marginTop: 10 }}
+            >
               <View style={styles.inputContainer}>
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Tên đầy đủ</Text>
@@ -302,7 +393,7 @@ const ParticipantInformation = () => {
                 <TextInput
                   style={styles.textInput}
                   placeholder="Xin vui lòng nhập tên đầy đủ"
-                     placeholderTextColor={Colors.light.neutral_04}
+                  placeholderTextColor={Colors.light.neutral_04}
                   value={participant.fullName}
                   onChangeText={(text) =>
                     setParticipant({ ...participant, fullName: text })
@@ -311,7 +402,7 @@ const ParticipantInformation = () => {
               </View>
 
               <View style={styles.inputContainer}>
-              <DateTimePickerModal
+                <DateTimePickerModal
                   isVisible={isDatePickerVisible}
                   mode="date"
                   onConfirm={handleConfirm}
@@ -332,7 +423,7 @@ const ParticipantInformation = () => {
                 <TextInput
                   style={styles.textInput}
                   placeholder="Xin vui lòng chọn ngày sinh"
-                     placeholderTextColor={Colors.light.neutral_04}
+                  placeholderTextColor={Colors.light.neutral_04}
                   value={participant.dateOfBirth}
                   onFocus={showDatePicker}
                   ref={inputDateRef}
@@ -353,7 +444,7 @@ const ParticipantInformation = () => {
                 <TextInput
                   style={styles.textInput}
                   placeholder="Xin vui lòng nhập số điện thoại"
-                     placeholderTextColor={Colors.light.neutral_04}
+                  placeholderTextColor={Colors.light.neutral_04}
                   value={participant.phoneNumber}
                   onChangeText={(text) =>
                     setParticipant({ ...participant, phoneNumber: text })
@@ -370,7 +461,10 @@ const ParticipantInformation = () => {
                 borderTopColor: Colors.light.neutral_04,
               }}
             >
-              <TouchableOpacity style={[styles.btn, { marginVertical: 10 }]}>
+              <TouchableOpacity
+                style={[styles.btn, { marginVertical: 10 }]}
+                onPress={handleSaveParticipant}
+              >
                 <Text style={styles.btnText}>Lưu</Text>
               </TouchableOpacity>
             </View>

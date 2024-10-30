@@ -1,7 +1,10 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import { FlatList, LogBox, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect } from "react";
 import { Colors } from "@/constants/Colors";
 import PaymentMethodItem, { PaymentMethodItemProps } from "@/components/tour/PaymentMethodItem";
+import { useLocalSearchParams } from "expo-router";
+import { TourBooker } from "@/model/tourBooker";
+import { Participant } from "@/model/participant";
 
 const loremData: PaymentMethodItemProps[] = [
     {
@@ -21,7 +24,24 @@ const loremData: PaymentMethodItemProps[] = [
     },
 ];
 
+LogBox.ignoreAllLogs();
+
 const Payment = () => {
+
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+}, [])
+  const { id, totalPrice, participantList, tourBooker } = useLocalSearchParams();
+
+  // Parse JSON strings to retrieve objects
+
+  const participants: Participant[] = JSON.parse(Array.isArray(participantList) ? participantList[0] : participantList || '[]');
+  const booker: TourBooker = JSON.parse(Array.isArray(tourBooker) ? tourBooker[0] : tourBooker || '{}');
+
+  console.log(typeof participants);
+  participants.forEach(person => {
+    console.log(person.fullName); // "Fhhj"
+  });
   return (
     <View style={{ flex: 1, flexDirection: "column" }}>
       <View style={{ flex: 1, marginTop: 20, paddingHorizontal: 16 }}>

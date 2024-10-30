@@ -14,32 +14,23 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Colors } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { TourBooker } from "@/model/tourBooker";
 
 let { width, height } = Dimensions.get("window");
 
-interface TourBookerr {
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  dateOfBirth: string;
-  phoneNumber: string;
-  email: string;
+interface TourBookerInfoProps {
+  tourBooker: TourBooker;
+  setTourBooker: React.Dispatch<React.SetStateAction<TourBooker>>;
 }
 
-const TourBooker = () => {
+const TourBookerInfo: React.FC<TourBookerInfoProps> = ({
+  tourBooker,
+  setTourBooker,
+}) => {
   const [isDisplay, setIsDisplay] = useState<boolean>(false);
 
   const [isDatePickerVisible, setDatePickerVisibility] =
     useState<boolean>(false);
-
-  const [tourBookerr, setTourBookerr] = useState<TourBookerr>({
-    firstName: "",
-    lastName: "",
-    fullName: "",
-    dateOfBirth: "",
-    phoneNumber: "",
-    email: "",
-  });
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -55,15 +46,35 @@ const TourBooker = () => {
       month: "2-digit",
       year: "numeric",
     });
-    setTourBookerr({ ...tourBookerr, dateOfBirth: formattedDate });
+    setTourBooker({ ...tourBooker, dateOfBirth: formattedDate });
     setDatePickerVisibility(false);
   };
 
   const getDate = () => {
-    let tempDate = tourBookerr.dateOfBirth.toString().split(" ");
-    return tourBookerr.dateOfBirth !== ""
+    let tempDate = tourBooker.dateOfBirth.toString().split(" ");
+    return tourBooker.dateOfBirth !== ""
       ? `${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
       : "";
+  };
+
+  const handleSave = () => {
+    if (tourBooker.fullName === "") {
+      alert("Vui lòng nhập tên đầy đủ");
+      return;
+    }
+    if (tourBooker.dateOfBirth === "") {
+      alert("Vui lòng chọn ngày sinh");
+      return;
+    }
+    if (tourBooker.phoneNumber === "") {
+      alert("Vui lòng nhập số điện thoại");
+      return;
+    }
+    if (tourBooker.email === "") {
+      alert("Vui lòng nhập email");
+      return;
+    }
+    setIsDisplay(false);
   };
 
   return (
@@ -126,15 +137,27 @@ const TourBooker = () => {
               Tên đầy đủ
             </Text>
             <TouchableOpacity onPress={() => setIsDisplay(true)}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontFamily: "Poppins-Regular",
-                  color: Colors.light.red,
-                }}
-              >
-                Vui lòng nhập
-              </Text>
+              {tourBooker.fullName !== "" ? (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.text_secondary,
+                  }}
+                >
+                  {tourBooker.fullName}
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.red,
+                  }}
+                >
+                  Vui lòng nhập
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
 
@@ -150,15 +173,27 @@ const TourBooker = () => {
               Ngày sinh
             </Text>
             <TouchableOpacity onPress={() => setIsDisplay(true)}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontFamily: "Poppins-Regular",
-                  color: Colors.light.red,
-                }}
-              >
-                Vui lòng chọn
-              </Text>
+              {tourBooker.dateOfBirth !== "" ? (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.text_secondary,
+                  }}
+                >
+                  {tourBooker.dateOfBirth}
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.red,
+                  }}
+                >
+                  Vui lòng nhập
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
 
@@ -174,15 +209,27 @@ const TourBooker = () => {
               Số điện thoại
             </Text>
             <TouchableOpacity onPress={() => setIsDisplay(true)}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontFamily: "Poppins-Regular",
-                  color: Colors.light.red,
-                }}
-              >
-                Vui lòng nhập
-              </Text>
+              {tourBooker.phoneNumber !== "" ? (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.text_secondary,
+                  }}
+                >
+                  {tourBooker.phoneNumber}
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.red,
+                  }}
+                >
+                  Vui lòng nhập
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
 
@@ -198,15 +245,27 @@ const TourBooker = () => {
               Email
             </Text>
             <TouchableOpacity onPress={() => setIsDisplay(true)}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontFamily: "Poppins-Regular",
-                  color: Colors.light.red,
-                }}
-              >
-                Vui lòng nhập
-              </Text>
+              {tourBooker.email !== "" ? (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.text_secondary,
+                  }}
+                >
+                  {tourBooker.email}
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins-Regular",
+                    color: Colors.light.red,
+                  }}
+                >
+                  Vui lòng nhập
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
 
@@ -244,8 +303,10 @@ const TourBooker = () => {
             </View>
 
             {/* information filed */}
-            <KeyboardAwareScrollView style={{ flex: 1, paddingHorizontal: 16, marginTop: 10 }}>
-              <View style={styles.inputContainer}>
+            <KeyboardAwareScrollView
+              style={{ flex: 1, paddingHorizontal: 16, marginTop: 10 }}
+            >
+              {/* <View style={styles.inputContainer}>
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Họ</Text>
                   {tourBookerr.lastName === "" && (
@@ -265,9 +326,9 @@ const TourBooker = () => {
                     setTourBookerr({ ...tourBookerr, lastName: text })
                   }
                 />
-              </View>
+              </View> */}
 
-              <View style={styles.inputContainer}>
+              {/* <View style={styles.inputContainer}>
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Tên</Text>
                   {tourBookerr.firstName === "" && (
@@ -287,12 +348,12 @@ const TourBooker = () => {
                     setTourBookerr({ ...tourBookerr, firstName: text })
                   }
                 />
-              </View>
+              </View> */}
 
               <View style={styles.inputContainer}>
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Tên đầy đủ</Text>
-                  {tourBookerr.fullName === "" && (
+                  {tourBooker.fullName === "" && (
                     <Text
                       style={[styles.labelText, { color: Colors.light.red }]}
                     >
@@ -304,9 +365,9 @@ const TourBooker = () => {
                   style={styles.textInput}
                   placeholderTextColor={Colors.light.neutral_04}
                   placeholder="Xin vui lòng nhập tên đầy đủ"
-                  value={tourBookerr.fullName}
+                  value={tourBooker.fullName}
                   onChangeText={(text) =>
-                    setTourBookerr({ ...tourBookerr, fullName: text })
+                    setTourBooker({ ...tourBooker, fullName: text })
                   }
                 />
               </View>
@@ -322,7 +383,7 @@ const TourBooker = () => {
                 />
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Ngày sinh</Text>
-                  {tourBookerr.dateOfBirth === "" && (
+                  {tourBooker.dateOfBirth === "" && (
                     <Text
                       style={[styles.labelText, { color: Colors.light.red }]}
                     >
@@ -334,7 +395,7 @@ const TourBooker = () => {
                   style={styles.textInput}
                   placeholderTextColor={Colors.light.neutral_04}
                   placeholder="Xin vui lòng chọn ngày sinh"
-                  value={tourBookerr.dateOfBirth}
+                  value={tourBooker.dateOfBirth}
                   onFocus={showDatePicker}
                 />
               </View>
@@ -342,7 +403,7 @@ const TourBooker = () => {
               <View style={styles.inputContainer}>
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Số điện thoại</Text>
-                  {tourBookerr.phoneNumber === "" && (
+                  {tourBooker.phoneNumber === "" && (
                     <Text
                       style={[styles.labelText, { color: Colors.light.red }]}
                     >
@@ -354,9 +415,9 @@ const TourBooker = () => {
                   style={styles.textInput}
                   placeholderTextColor={Colors.light.neutral_04}
                   placeholder="Xin vui lòng nhập số điện thoại"
-                  value={tourBookerr.phoneNumber}
+                  value={tourBooker.phoneNumber}
                   onChangeText={(text) =>
-                    setTourBookerr({ ...tourBookerr, phoneNumber: text })
+                    setTourBooker({ ...tourBooker, phoneNumber: text })
                   }
                 />
               </View>
@@ -364,7 +425,7 @@ const TourBooker = () => {
               <View style={styles.inputContainer}>
                 <View style={{ flexDirection: "row", gap: 3 }}>
                   <Text style={styles.labelText}>Email</Text>
-                  {tourBookerr.phoneNumber === "" && (
+                  {tourBooker.phoneNumber === "" && (
                     <Text
                       style={[styles.labelText, { color: Colors.light.red }]}
                     >
@@ -376,9 +437,9 @@ const TourBooker = () => {
                   style={styles.textInput}
                   placeholderTextColor={Colors.light.neutral_04}
                   placeholder="Xin vui lòng nhập email"
-                  value={tourBookerr.email}
+                  value={tourBooker.email}
                   onChangeText={(text) =>
-                    setTourBookerr({ ...tourBookerr, email: text })
+                    setTourBooker({ ...tourBooker, email: text })
                   }
                 />
               </View>
@@ -392,7 +453,10 @@ const TourBooker = () => {
                 borderTopColor: Colors.light.neutral_04,
               }}
             >
-              <TouchableOpacity style={[styles.btn, { marginVertical: 10 }]}>
+              <TouchableOpacity
+                style={[styles.btn, { marginVertical: 10 }]}
+                onPress={handleSave}
+              >
                 <Text style={styles.btnText}>Lưu</Text>
               </TouchableOpacity>
             </View>
@@ -403,7 +467,7 @@ const TourBooker = () => {
   );
 };
 
-export default TourBooker;
+export default TourBookerInfo;
 
 const styles = StyleSheet.create({
   flexStyle: {

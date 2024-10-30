@@ -1,4 +1,5 @@
 import {
+  Alert,
   Dimensions,
   FlatList,
   Modal,
@@ -15,6 +16,12 @@ import { AntDesign } from "@expo/vector-icons";
 import { Color } from "react-native-alert-notification/lib/typescript/service";
 import { Href, router } from "expo-router";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import {
+  ALERT_TYPE,
+  Dialog,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
 import { Tour } from "@/redux/tours/tourType";
 import { DateOfBooking, getNextSevenDays } from "@/utils/getDate";
 
@@ -93,6 +100,43 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
     if (numberChild > 0) {
       setNumberChild(numberChild - 1);
     }
+  };
+
+  const handleBooking = () => {
+    if (dateSelected === null) {
+      Alert.alert('Cảnh báo', 'Vui lòng chọn ngày', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
+      return;
+    }
+
+    if (priceSum === 0) {
+      Alert.alert('Cảnh báo ', 'Vui lòng chọn số lượng người tham gia', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
+      return 
+    }
+
+    setIsDisPlayBooking(false);
+    router.push({
+      pathname: `/tour/${tour.tourId}/info_booking`,
+      params: {
+        totalPrice: priceSum.toString(),
+        date: dateSelected.date,
+        adult: numberAdult.toString(),
+        child: numberChild.toString(),
+      }, // Convert to string if totalPrice is a number
+    } as Href);
   };
 
   return (
@@ -192,7 +236,6 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
       </View>
 
       {/* booking */}
-
       <Modal
         animationType="slide"
         transparent={true}
@@ -537,10 +580,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
               </View>
               <TouchableOpacity
                 style={[styles.btn, { marginVertical: 10 }]}
-                onPress={() => {
-                  setIsDisPlayBooking(false);
-                  router.push(`/tour/${tour.tourId}/info_booking` as Href);
-                }}
+                onPress={handleBooking}
               >
                 <Text style={styles.btnText}>Đặt ngay</Text>
               </TouchableOpacity>
