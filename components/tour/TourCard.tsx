@@ -128,22 +128,25 @@ const TourCard: React.FC<TourCardProps> = ({ tour, isMinWidth }) => {
           <Text
             style={{
               color: Colors.light.primary_01,
-              fontSize: 10,
+              fontSize: 12,
               fontFamily: "Poppins-Medium",
             }}
           >
-            Từ đ {tour.price}
+            đ{" "}
+            {(tour.price - (tour.price * tour.sale) / 100).toLocaleString(
+              "vi-VN"
+            )}
           </Text>
-          {tour.sale !==0 && (
+          {tour.sale !== 0 && (
             <Text
               style={{
                 color: Colors.light.text_secondary,
-                fontSize: 10,
+                fontSize: 12,
                 fontFamily: "Poppins-Medium",
                 textDecorationLine: "line-through",
               }}
             >
-              đ{(tour.price * tour.sale) / 100}
+              đ {tour.price.toLocaleString("vi-VN")}
             </Text>
           )}
         </View>

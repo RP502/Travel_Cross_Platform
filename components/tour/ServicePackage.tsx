@@ -29,6 +29,10 @@ const ServicePackage: React.FC<ServicePackageProps> = ({
   timeEnd,
   servicePackage,
 }) => {
+
+
+  console.log('service ',servicePackage)
+
   return (
     <View style={styles.container}>
       <View style={styles.flexStyle}>

@@ -5,10 +5,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import { router } from "expo-router";
+import { addTours } from "@/utils/addData";
 
 const Index: React.FC = () => {
   const [isLogined, setIsLogined] = useState<boolean>(false);
-
   const [fontsLoaded] = useFonts({
     Poppins: require("@/assets/fonts/Poppins-Regular.ttf"),
     "Poppins-Regular": require("@/assets/fonts/Poppins-Regular.ttf"),

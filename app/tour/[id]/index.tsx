@@ -30,26 +30,16 @@ import SlideImage from "@/components/tour/tour_detail/image_list";
 
 let { width, height } = Dimensions.get("window");
 
-const tour = {
-  id: "1",
-  name: "Tour Động Phong Nha",
-  image: "https://phongnhacavestour.com/wp-content/uploads/2016/10/3.jpg",
-  type: "Beach",
-  evaluation: 4.5,
-  evaluationCount: 120,
-  booking: 80,
-  price: 200,
-  sale: 150,
-  isWhislist: true,
-  delevery: "Xe đạp",
-  timeStart: "7:00",
+const tourService = {
+  delevery: "Ô tô",
+  timeStart: "8:00",
   timeEnd: "17:00",
   servicePackage: [
     "Vé tham quan",
     "Hướng dẫn viên",
     "Bữa trưa",
-    "Bảo hiểm",
-    "Xe đạp",
+    "Bảo hiểm an toàn khi tham gia tour",
+    "Di chuyển bằng thuyền",
   ],
 };
 
@@ -155,10 +145,10 @@ const DetailTour: React.FC = (a) => {
             <Text style={styles.labelText}>Các gói dịch vụ</Text>
           </View>
           <ServicePackage
-            servicePackage={tour.servicePackage}
-            delevery={tour.delevery}
-            timeStart={tour.timeStart}
-            timeEnd={tour.timeEnd}
+            servicePackage={tourService.servicePackage}
+            delevery={tourService.delevery}
+            timeStart={tourService.timeStart}
+            timeEnd={tourService.timeEnd}
           />
 
           {/* evaluation */}
@@ -173,16 +163,6 @@ const DetailTour: React.FC = (a) => {
           </View>
           <EvaluationList />
 
-          {/* description */}
-          <View style={styles.labelContainer}>
-            <MaterialIcons
-              name="brightness-7"
-              size={24}
-              color={Colors.light.primary_01}
-            />
-            <Text style={styles.labelText}>Về dịch vụ này</Text>
-          </View>
-          <DescriptionTour />
 
           {/* note */}
           <View style={styles.labelContainer}>
@@ -191,7 +171,7 @@ const DetailTour: React.FC = (a) => {
               size={24}
               color={Colors.light.primary_01}
             />
-            <Text style={styles.labelText}>Về dịch vụ này</Text>
+            <Text style={styles.labelText}>Những điều cần lưu ý</Text>
           </View>
           <TourNote />
 
@@ -208,7 +188,7 @@ const DetailTour: React.FC = (a) => {
         </View>
       </ScrollView>
 
-      <BottomBooking price={tour.price} sale={tour.sale} />
+      <BottomBooking  tour={tour}/>
     </View>
   );
 };

@@ -9,35 +9,91 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
 import { Color } from "react-native-alert-notification/lib/typescript/service";
-import { router } from "expo-router";
+import { Href, router } from "expo-router";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { Tour } from "@/redux/tours/tourType";
+import { DateOfBooking, getNextSevenDays } from "@/utils/getDate";
 
 interface BottomBookingProps {
-  price: number;
-  sale?: number;
+  tour: Tour;
 }
-
-interface dateOfTour {
-  date: string;
-  price: number;
-  sale: number;
-}
-const tourDates: dateOfTour[] = [
-  { date: "10/01", price: 1000, sale: 10 },
-  { date: "10/02", price: 1100, sale: 15 },
-  { date: "10/03", price: 1200, sale: 20 },
-  { date: "10/04", price: 1300, sale: 25 },
-  { date: "10/05", price: 1400, sale: 30 },
-];
 
 let { width, height } = Dimensions.get("window");
 
-const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
+const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
+  const realPrice =
+    tour.sale !== 0 ? tour.price - (tour.price * tour.sale) / 100 : tour.price;
+
+  const tourDatesInit: DateOfBooking[] = getNextSevenDays();
+
+  const [tourDates, setTourDates] = useState<DateOfBooking[]>(tourDatesInit);
+  const [dateSelected, setDateSelected] = useState<DateOfBooking | null>(null);
+
   const [isDisPlayBooking, setIsDisPlayBooking] =
     React.useState<boolean>(false);
+
+  const [numberAdult, setNumberAdult] = useState<number>(0);
+  const [numberChild, setNumberChild] = useState<number>(0);
+
+  const [priceSum, setPriceSum] = useState<number>(0);
+  const [isDatePickerVisible, setDatePickerVisibility] =
+    useState<boolean>(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date: Date) => {
+    const formattedDate = date.toLocaleDateString("vi-VN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+    setDatePickerVisibility(false);
+  };
+
+  const selectDate = (item: DateOfBooking) => {
+    console.log("item", item);
+    setDateSelected(item);
+    setTourDates(
+      tourDates.map((date) => {
+        if (date.date === item.date) {
+          return { ...date, isSelected: true };
+        }
+        return { ...date, isSelected: false };
+      })
+    );
+  };
+
+  useEffect(() => {
+    setPriceSum(numberAdult * realPrice + numberChild * tour.childrenPrice);
+  }, [numberAdult, numberChild]);
+
+  const handleAddAdult = async () => {
+    setNumberAdult((pre) => pre + 1);
+  };
+  const handleSubAdult = () => {
+    if (numberAdult > 0) {
+      setNumberAdult(numberAdult - 1);
+    }
+  };
+  const handleAddChild = () => {
+    setNumberChild(numberChild + 1);
+  };
+  const handleSubChild = () => {
+    if (numberChild > 0) {
+      setNumberChild(numberChild - 1);
+    }
+  };
 
   return (
     <>
@@ -73,9 +129,9 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
               fontFamily: "Poppins-Medium",
             }}
           >
-            {price} vnđ
+            đ {realPrice.toLocaleString("vi-VN")}
           </Text>
-          {sale && (
+          {tour.sale !== 0 && (
             <Text
               style={{
                 color: Colors.light.text_secondary,
@@ -84,7 +140,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                 textDecorationLine: "line-through",
               }}
             >
-              {(price * sale) / 100}vnđ
+              đ {tour.price.toLocaleString("vi-VN")}
             </Text>
           )}
         </View>
@@ -165,7 +221,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                   numberOfLines={2}
                   ellipsizeMode="tail"
                 >
-                  Tour nameF
+                  {tour.name}
                 </Text>
 
                 <View
@@ -179,15 +235,44 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                     gap: 10,
                   }}
                 >
-                  <Text
+                  <View
                     style={{
-                      fontSize: 14,
-                      fontFamily: "Poppins-Medium",
-                      color: Colors.light.text_secondary,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
                     }}
                   >
-                    Xin chọn ngày đi tour
-                  </Text>
+                    <DateTimePickerModal
+                      isVisible={isDatePickerVisible}
+                      mode="date"
+                      onConfirm={handleConfirm}
+                      onCancel={hideDatePicker}
+                      isDarkModeEnabled={false}
+                      textColor={Colors.light.text}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        fontFamily: "Poppins-Medium",
+                        color: Colors.light.text_secondary,
+                      }}
+                    >
+                      Xin chọn ngày đi tour
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => setDatePickerVisibility(true)}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          fontFamily: "Poppins-Medium",
+                          color: Colors.light.text_secondary,
+                          textDecorationLine: "underline",
+                        }}
+                      >
+                        Chọn ngày
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                   {/* <View style={{width: '100%', height: 1, backgroundColor: Colors.light.neutral_04}}  /> */}
                   <FlatList
                     data={tourDates}
@@ -198,10 +283,27 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                           paddingHorizontal: 16,
                           paddingVertical: 8,
                           borderRadius: 10,
-                          backgroundColor: Colors.light.background,
+                          backgroundColor: item.isSelected
+                            ? "#db7e48"
+                            : Colors.light.background,
+                          borderWidth: 1,
+                          borderColor: item.isSelected
+                            ? Colors.light.primary_01
+                            : Colors.light.neutral_04,
                         }}
+                        onPress={() => selectDate(item)}
                       >
-                        <Text>{item.date}</Text>
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            fontFamily: "Poppins-Regular",
+                            color: item.isSelected
+                              ? Colors.light.white
+                              : Colors.light.text,
+                          }}
+                        >
+                          {item.date}
+                        </Text>
                       </TouchableOpacity>
                     )}
                     horizontal
@@ -230,15 +332,27 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                       alignItems: "center",
                     }}
                   >
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontFamily: "Poppins-Bold",
-                        color: Colors.light.text_secondary,
-                      }}
-                    >
-                      Người lớn
-                    </Text>
+                    <View>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: "Poppins-Bold",
+                          color: Colors.light.text_secondary,
+                        }}
+                      >
+                        Người lớn
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          fontFamily: "Poppins-Regular",
+                          color: Colors.light.primary_01,
+                        }}
+                      >
+                        {numberAdult} x {realPrice.toLocaleString("vi-VN")} đ =
+                        {(numberAdult * realPrice).toLocaleString("vi-VN")} đ
+                      </Text>
+                    </View>
                     <View
                       style={{
                         flexDirection: "row",
@@ -254,6 +368,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                           backgroundColor: Colors.light.background,
                           borderRadius: 10,
                         }}
+                        onPress={handleSubAdult}
                       >
                         <Text
                           style={{
@@ -263,7 +378,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                             textAlign: "center",
                           }}
                         >
-                          +
+                          -
                         </Text>
                       </TouchableOpacity>
                       <Text
@@ -273,7 +388,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                           color: Colors.light.text_secondary,
                         }}
                       >
-                        0
+                        {numberAdult}
                       </Text>
                       <TouchableOpacity
                         style={{
@@ -282,6 +397,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                           backgroundColor: Colors.light.background,
                           borderRadius: 10,
                         }}
+                        onPress={handleAddAdult}
                       >
                         <Text
                           style={{
@@ -290,7 +406,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                             color: Colors.light.text_secondary,
                           }}
                         >
-                          -
+                          +
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -302,15 +418,31 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                       alignItems: "center",
                     }}
                   >
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontFamily: "Poppins-Bold",
-                        color: Colors.light.text_secondary,
-                      }}
-                    >
-                      Trẻ em (5-10)
-                    </Text>
+                    <View>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: "Poppins-Bold",
+                          color: Colors.light.text_secondary,
+                        }}
+                      >
+                        Trẻ em (5-10)
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          fontFamily: "Poppins-Regular",
+                          color: Colors.light.primary_01,
+                        }}
+                      >
+                        {numberChild} x{" "}
+                        {tour.childrenPrice.toLocaleString("vi-VN")} đ =
+                        {(numberChild * tour.childrenPrice).toLocaleString(
+                          "vi-VN"
+                        )}{" "}
+                        đ
+                      </Text>
+                    </View>
                     <View
                       style={{
                         flexDirection: "row",
@@ -326,6 +458,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                           backgroundColor: Colors.light.background,
                           borderRadius: 10,
                         }}
+                        onPress={handleSubChild}
                       >
                         <Text
                           style={{
@@ -335,7 +468,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                             textAlign: "center",
                           }}
                         >
-                          +
+                          -
                         </Text>
                       </TouchableOpacity>
                       <Text
@@ -345,7 +478,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                           color: Colors.light.text_secondary,
                         }}
                       >
-                        0
+                        {numberChild}
                       </Text>
                       <TouchableOpacity
                         style={{
@@ -354,6 +487,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                           backgroundColor: Colors.light.background,
                           borderRadius: 10,
                         }}
+                        onPress={handleAddChild}
                       >
                         <Text
                           style={{
@@ -362,7 +496,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                             color: Colors.light.text_secondary,
                           }}
                         >
-                          -
+                          +
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -398,14 +532,14 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ price, sale }) => {
                     color: Colors.light.red,
                   }}
                 >
-                  1000 vnđ
+                  đ {priceSum.toLocaleString("vi-VN")}
                 </Text>
               </View>
               <TouchableOpacity
                 style={[styles.btn, { marginVertical: 10 }]}
                 onPress={() => {
                   setIsDisPlayBooking(false);
-                  router.push("/tour/[id]/info_booking");
+                  router.push(`/tour/${tour.tourId}/info_booking` as Href);
                 }}
               >
                 <Text style={styles.btnText}>Đặt ngay</Text>

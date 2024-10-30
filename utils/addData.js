@@ -153,7 +153,7 @@ const tours = [
 
 export const addTours = async () => {
     
-const tours = [
+  const tours = [
     {
       tourId: "tour_1",
       name: "Vũng Chùa Đảo Yến",
@@ -164,11 +164,12 @@ const tours = [
         "https://res.cloudinary.com/dcp33adrf/image/upload/v1730103305/travel-app/tours/V%C5%A9ng%20Ch%C3%B9a%20%C4%90%E1%BA%A3o%20Y%E1%BA%BFn/download_ogfrrg.jpg",
       ],
       type: "Tham quan",
-      evaluation: 4.5,
-      evaluationCount: 120,
-      booking: 100,
-      price: 1000000,
-      sale: 20,
+      evaluation: 4.6,
+      evaluationCount: 210,
+      booking: 250,
+      price: 1200000,
+      childrenPrice: 800000,
+      sale: 15,
       location: ["Quảng Ninh"],
     },
     {
@@ -181,11 +182,12 @@ const tours = [
         "https://res.cloudinary.com/dcp33adrf/image/upload/v1730102979/travel-app/tours/phong%20nha/pn3_ttwkdu.jpg",
       ],
       type: "Khám phá",
-      evaluation: 4.5,
-      evaluationCount: 120,
-      booking: 100,
-      price: 1000000,
-      sale: 20,
+      evaluation: 4.8,
+      evaluationCount: 350,
+      booking: 400,
+      price: 1500000,
+      childrenPrice: 1000000,
+      sale: 10,
       location: ["Bố Trạch"],
     },
     {
@@ -198,10 +200,11 @@ const tours = [
         "https://res.cloudinary.com/dcp33adrf/image/upload/v1730102951/travel-app/tours/thanh%20co%20quang%20tr%E1%BB%8B/tc2_u8980c.jpg",
       ],
       type: "Di tích lịch sử",
-      evaluation: 4.5,
-      evaluationCount: 120,
-      booking: 100,
-      price: 1000000,
+      evaluation: 4.7,
+      evaluationCount: 190,
+      booking: 200,
+      price: 900000,
+      childrenPrice: 600000,
       sale: 20,
       location: ["Đông Hà"],
     },
@@ -215,11 +218,12 @@ const tours = [
         "https://res.cloudinary.com/dcp33adrf/image/upload/v1730103259/travel-app/tours/%C4%90%E1%BA%A3o%20c%E1%BB%93n%20c%E1%BB%8F/download_wdrxco.jpg",
       ],
       type: "Đảo",
-      evaluation: 4.5,
-      evaluationCount: 120,
-      booking: 100,
-      price: 1000000,
-      sale: 20,
+      evaluation: 4.6,
+      evaluationCount: 220,
+      booking: 150,
+      price: 1400000,
+      childrenPrice: 980000,
+      sale: 12,
       location: ["Cồn Cỏ"],
     },
     {
@@ -232,11 +236,12 @@ const tours = [
         "https://res.cloudinary.com/dcp33adrf/image/upload/v1730103058/travel-app/tours/nh%E1%BA%ADt%20l%E1%BB%87/nl2_hnm4oi.jpg",
       ],
       type: "Bãi Biển",
-      evaluation: 4.5,
-      evaluationCount: 120,
-      booking: 100,
-      price: 1000000,
-      sale: 20,
+      evaluation: 4.4,
+      evaluationCount: 180,
+      booking: 300,
+      price: 800000,
+      childrenPrice: 600000,
+      sale: 25,
       location: ["Đồng Hới"],
     },
     {
@@ -249,32 +254,17 @@ const tours = [
         "https://res.cloudinary.com/dcp33adrf/image/upload/v1730103169/travel-app/tours/L%C3%A0ng%20c%E1%BB%95%20b%C3%ADch%20la/download_qfotmb.jpg",
       ],
       type: "Di tích lịch sử",
-      evaluation: 4.5,
-      evaluationCount: 120,
-      booking: 100,
-      price: 1000000,
-      sale: 20,
+      evaluation: 4.3,
+      evaluationCount: 150,
+      booking: 170,
+      price: 850000,
+      childrenPrice: 600000,
+      sale: 18,
       location: ["Phong Điền"],
-    },
-    {
-      tourId: "tour_7",
-      name: "Làng Cổ Bích La",
-      image: [
-        "https://res.cloudinary.com/dcp33adrf/image/upload/v1730103113/travel-app/tours/Hang%20T%C3%A1m%20C%C3%B4/images_tfzvbp.jpg",
-        "https://res.cloudinary.com/dcp33adrf/image/upload/v1730103113/travel-app/tours/Hang%20T%C3%A1m%20C%C3%B4/images_tfzvbp.jpg",
-        "https://res.cloudinary.com/dcp33adrf/image/upload/v1730103113/travel-app/tours/Hang%20T%C3%A1m%20C%C3%B4/images_tfzvbp.jpg",
-        "https://res.cloudinary.com/dcp33adrf/image/upload/v1730103113/travel-app/tours/Hang%20T%C3%A1m%20C%C3%B4/images_tfzvbp.jpg",
-  
-      ],
-      type: "Di tích lịch sử",
-      evaluation: 4.5,
-      evaluationCount: 120,
-      booking: 100,
-      price: 1000000,
-      sale: 20,
-      location: ["Phong Điền"],
-    },
-  ];
+    }
+];
+
+
 
   for (const tour of tours) {
     try {

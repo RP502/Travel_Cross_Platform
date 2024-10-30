@@ -8,6 +8,7 @@ export type Tour = {
   evaluationCount: number;
   booking: number;
   price: number;
+  childrenPrice: number;
   sale: number;
   location: string[];
 };
