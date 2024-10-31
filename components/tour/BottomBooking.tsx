@@ -24,6 +24,11 @@ import {
 } from "react-native-alert-notification";
 import { Tour } from "@/redux/tours/tourType";
 import { DateOfBooking, getNextSevenDays } from "@/utils/getDate";
+import { auth } from "@/firebaseConfig";
+import { Cart, TourCart } from "@/redux/cart/cartsType";
+import { generateRandomId } from "@/utils/generateRamdomId";
+import Loader from "../common/Loader";
+import { insertCart } from "@/api/cart";
 
 interface BottomBookingProps {
   tour: Tour;
@@ -32,6 +37,10 @@ interface BottomBookingProps {
 let { width, height } = Dimensions.get("window");
 
 const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
+  const userId = auth.currentUser?.uid;
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const realPrice =
     tour.sale !== 0 ? tour.price - (tour.price * tour.sale) / 100 : tour.price;
 
@@ -104,27 +113,27 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
 
   const handleBooking = () => {
     if (dateSelected === null) {
-      Alert.alert('Cảnh báo', 'Vui lòng chọn ngày', [
+      Alert.alert("Cảnh báo", "Vui lòng chọn ngày", [
         {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
         },
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
+        { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
       return;
     }
 
     if (priceSum === 0) {
-      Alert.alert('Cảnh báo ', 'Vui lòng chọn số lượng người tham gia', [
+      Alert.alert("Cảnh báo ", "Vui lòng chọn số lượng người tham gia", [
         {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
         },
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
+        { text: "OK", onPress: () => console.log("OK Pressed") },
       ]);
-      return 
+      return;
     }
 
     setIsDisPlayBooking(false);
@@ -139,8 +148,54 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
     } as Href);
   };
 
+  const handleAddCart = async () => {
+    if (dateSelected === null) {
+      Alert.alert("Cảnh báo", "Vui lòng chọn ngày", [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+      return;
+    }
+
+    if (priceSum === 0) {
+      Alert.alert("Cảnh báo ", "Vui lòng chọn số lượng người tham gia", [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
+      return;
+    }
+    setIsLoading(true);
+    const cart: TourCart = {
+      tourId: tour.tourId,
+      tourImage: tour.image[0],
+      adult: numberAdult,
+      child: numberChild,
+      date: dateSelected.date,
+      totalPrice: priceSum,
+    };
+
+    const cartData: Cart = {
+      cartId: generateRandomId(10).toString(),
+      userId: userId || "",
+      type: "tour",
+      tourId: cart,
+      totalPrice: priceSum,
+    };
+    await insertCart(cartData);
+    setIsLoading(false);
+  };
+
   return (
     <>
+      <Loader isLoading setIsLoading />
       <View
         style={{
           height: 95,
@@ -199,6 +254,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
               borderWidth: 1,
               flex: 1,
             }}
+            onPress={handleAddCart}
           >
             <Text
               style={{

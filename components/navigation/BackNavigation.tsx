@@ -12,7 +12,11 @@ import { Colors } from "@/constants/Colors";
 import IMAGES from "@/assets/images";
 import { router } from "expo-router";
 
-const BackNavigation: React.FC = () => {
+interface BackNavigationProps {
+  tourId: string;
+}
+
+const BackNavigation: React.FC<BackNavigationProps> = ({ tourId }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>

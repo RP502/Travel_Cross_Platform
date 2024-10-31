@@ -43,10 +43,10 @@ const tourService = {
   ],
 };
 
+LogBox.ignoreAllLogs()
+
 const DetailTour: React.FC = (a) => {
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
+
   const { id } = useLocalSearchParams();
   const tours = useSelector((state: any) => state.tours.tours);
   const tour = tours.find((tour: any) => tour.id === id);
@@ -55,7 +55,7 @@ const DetailTour: React.FC = (a) => {
     <View style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.imageContainer}>
-          <BackNavigation />
+          <BackNavigation tourId={id.toString()} />
           <SlideImage isFullScreen={true} dataList={tour.image} />
         </View>
 

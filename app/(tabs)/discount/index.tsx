@@ -13,11 +13,10 @@ import VourcherCard, {
   VourcherCardProps,
 } from "@/components/discount/VourcherCard";
 import SlideList from "@/components/slider";
-import { SliderList } from "@/constants/Sider";
 import { MasonryFlashList } from "@shopify/flash-list";
-
-import { CardTourPropsListData } from "@/constants/Tour";
 import TourCard from "@/components/tour/TourCard";
+import { useSelector } from "react-redux";
+import { Tour } from "@/redux/tours/tourType";
 
 const loremData: VourcherCardProps[] = [
   {
@@ -52,6 +51,9 @@ const Discount = () => {
     });
   }, []);
 
+  const { sliders, status, error } = useSelector((state: any) => state.sliders);
+  const tours: Tour[] = useSelector((state: any) => state.tours.tours);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.labelContainer}>
@@ -69,7 +71,7 @@ const Discount = () => {
       </View>
 
       <View style={styles.bannerContainer}>
-        <SlideList dataList={SliderList} />
+        <SlideList dataList={sliders} />
       </View>
 
       <View style={styles.labelContainer}>
@@ -77,9 +79,9 @@ const Discount = () => {
       </View>
       <View style={styles.vourcherContainer}>
         <MasonryFlashList
-          data={CardTourPropsListData}
+          data={tours}
           numColumns={2}
-          renderItem={({ item, index }) => <TourCard {...item} isMinWidth={true} />}
+          renderItem={({ item, index }) => <TourCard tour={item} isMinWidth={true} />}
           keyExtractor={(item, index) => index.toString()}
           estimatedItemSize={100}
           ItemSeparatorComponent={() => <View style={{ width: 10 }} />}

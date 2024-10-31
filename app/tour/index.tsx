@@ -12,7 +12,7 @@ import { Tour } from "@/redux/tours/tourType";
 
 const TourList = () => {
   const navigation = useNavigation();
-  const tours = useSelector((state: any) => state.tours.tours); 
+  const tours: Tour[] = useSelector((state: any) => state.tours.tours); 
 
   useLayoutEffect(() => {
     navigation.setOptions(backNavigationOption("Danh sách tour"));

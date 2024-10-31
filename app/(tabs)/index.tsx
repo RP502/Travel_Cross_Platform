@@ -32,7 +32,7 @@ import { fetchToursAsync } from "@/redux/tours/toursSlice";
 import { fetchLocationsAsync } from "@/redux/locations/locationsSlice";
 import { fetchHotelsAsync } from "@/redux/hotels/hotelsSlice";
 import { fetchTicketsAsync } from "@/redux/tickets/ticketsSlice";
-
+import Loader from "@/components/common/Loader";
 
 const Home = () => {
   // Use the AppDispatch type
@@ -42,7 +42,7 @@ const Home = () => {
   const { addressList } = useSelector((state: any) => state.locations);
   const hotels = useSelector((state: any) => state.hotels.hotels);
   const tickets = useSelector((state: any) => state.tickets.tickets);
- 
+
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchSlidersAsync());
@@ -53,12 +53,7 @@ const Home = () => {
     }
   }, [status, dispatch]);
 
-  if (status === "loading")
-    return (
-      <View>
-        <Text>Loadding</Text>
-      </View>
-    );
+  if (status === "loading") return <Loader />;
   if (status === "failed")
     return (
       <View>

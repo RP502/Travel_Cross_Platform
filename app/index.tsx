@@ -32,13 +32,13 @@ const Index: React.FC = () => {
   AsyncStorage.getItem("isFirstTime").then((value) => {
     if (value === null) {
       AsyncStorage.setItem("isFirstTime", "false");
-      router.navigate("/onboarding");
+      router.replace("/onboarding");
     } else {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
         if (currentUser) {
-          router.navigate("/(tabs)");
+          router.replace("/(tabs)");
         } else {
-          router.navigate("/(auth)/login");
+          router.replace("/(auth)/login");
         }
       });
     }

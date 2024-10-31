@@ -20,6 +20,10 @@ const TourLayout = () => {
         name="payment/index"
         options={backNavigationOption("Chọn phương thức thanh toán")}
       />
+      <Stack.Screen
+        name="credit_card/index"
+        options={backNavigationOption("Nhập thông tin thẻ")}
+      />
     </Stack>
   );
 };

@@ -18,11 +18,10 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 
 const Profile: React.FC = () => {
-  const logoutUser = async () => {  
+  const logoutUser = async () => {
     try {
       await signOut(auth);
       router.navigate("/(auth)/login");
-      
     } catch (error) {
       console.log(error);
     }
