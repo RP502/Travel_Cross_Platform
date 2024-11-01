@@ -30,10 +30,10 @@ const Search = () => {
         />
       </View>
       <View style={styles.rightContainer}>
-        <TouchableOpacity onPress={() => router.navigate('/cart')}>
+        <TouchableOpacity onPress={() => router.navigate("/cart")}>
           <Feather name="shopping-cart" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.navigate("/chatbot")}>
           <AntDesign name="message1" size={24} color="black" />
         </TouchableOpacity>
       </View>
