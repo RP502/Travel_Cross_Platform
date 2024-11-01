@@ -80,6 +80,15 @@ const Profile: React.FC = () => {
               router.navigate("/profile/user_information");
             }}
           />
+
+          <ProfileOption
+            icon="map"
+            title="Maps"
+            description="Xem vị trí của bạn"
+            onPress={() => {
+              router.navigate("/map");
+            }}
+          />
         </View>
 
         <View style={styles.contentContainer}>
