@@ -5,6 +5,8 @@ import toursReducer from "./tours/toursSlice";
 import locationsReducer from "./locations/locationsSlice";
 import hotelsReducer from "./hotels/hotelsSlice";
 import ticketsReducer from "./tickets/ticketsSlice";
+import cartsReducer from "./cart/cartsSlice";
+import wishlistReducer from "./wishlist/wishilistSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +16,8 @@ export const store = configureStore({
     locations: locationsReducer,
     hotels: hotelsReducer,
     tickets: ticketsReducer,
+    carts: cartsReducer,
+    wishlist: wishlistReducer,
   },
 });
 

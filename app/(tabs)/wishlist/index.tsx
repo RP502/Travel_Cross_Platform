@@ -4,13 +4,15 @@ import { Link } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import NonWhishList from "@/components/wishlist/NonWhishList";
 import WhishList from "@/components/wishlist/WhishList";
+import { useSelector } from "react-redux";
+import { WishItem } from "@/redux/wishlist/wishItemType";
 
 const WishlistScreen = () => {
-  const [wishlists, setWishlists] = useState([]);
+  const wishlist: WishItem[] = useSelector((state: any) => state.wishlist.wishlist);
 
   return (
     <ScrollView style={styles.container}>
-      {wishlists.length === 0 ? <NonWhishList /> : <WhishList />}
+      {wishlist.length === 0 ? <NonWhishList /> : <WhishList wishlist={wishlist} />}
     </ScrollView>
   );
 };

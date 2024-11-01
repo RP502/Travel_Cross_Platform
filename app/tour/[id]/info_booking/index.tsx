@@ -51,8 +51,6 @@ const InfoBooking = () => {
       return;
     }
 
-    console.log(typeof JSON.stringify(participantList));
-
     router.push({
       pathname: `/tour/${id}/payment`,
       params: {

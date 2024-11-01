@@ -15,14 +15,24 @@ import IMAGES from "@/assets/images";
 import { Colors } from "@/constants/Colors";
 import { MasonryFlashList } from "@shopify/flash-list";
 import SuggetWishCard from "./SuggetWishCard";
-import {SuggetWishCardPropsListData} from '@/constants/SuggetWishList'
+import {
+  SuggetWishCardPropsListData,
+  SuggetWishCardProps,
+} from "@/constants/SuggetWishList";
+import { useSelector } from "react-redux";
+import TourCard from "../tour/TourCard";
+import { Tour } from "@/redux/tours/tourType";
 
 let { width, height } = Dimensions.get("window");
 const NonWhishList = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
+  const tours: Tour[] = useSelector(
+    (state: any) => state.tours.tours
+  ) as Tour[];
+
   return (
-    <View style={[styles.container,]}>
+    <View style={[styles.container]}>
       <Image source={IMAGES.EMPTY_WISHLIST} style={styles.image} />
       <Text style={styles.labelText}>
         Chưa có hoạt động nào trong danh sách của bạn
@@ -63,14 +73,12 @@ const NonWhishList = () => {
                 đây.
               </Text>
               <MasonryFlashList
-                data={SuggetWishCardPropsListData}
+                data={tours}
                 numColumns={2}
-                renderItem={({ item, index }) => <SuggetWishCard {...item}  />}
+                renderItem={({ item, index }) => <TourCard tour={item} />}
                 keyExtractor={(item, index) => index.toString()}
                 estimatedItemSize={100}
-        
-                />
-              
+              />
             </ScrollView>
 
             <TouchableOpacity style={[styles.btn, { marginVertical: 10 }]}>
@@ -113,6 +121,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Regular",
     color: Colors.light.text_secondary,
     textAlign: "center",
+    marginBottom: 10,
   },
   btn: {
     paddingVertical: 10,

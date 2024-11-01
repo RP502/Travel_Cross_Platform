@@ -16,12 +16,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Color } from "react-native-alert-notification/lib/typescript/service";
 import { Href, router } from "expo-router";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import {
-  ALERT_TYPE,
-  Dialog,
-  AlertNotificationRoot,
-  Toast,
-} from "react-native-alert-notification";
+import Toast from "react-native-toast-message";
 import { Tour } from "@/redux/tours/tourType";
 import { DateOfBooking, getNextSevenDays } from "@/utils/getDate";
 import { auth } from "@/firebaseConfig";
@@ -29,6 +24,9 @@ import { Cart, TourCart } from "@/redux/cart/cartsType";
 import { generateRandomId } from "@/utils/generateRamdomId";
 import Loader from "../common/Loader";
 import { insertCart } from "@/api/cart";
+import { fetchCartsAsync } from "@/redux/cart/cartsSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
 
 interface BottomBookingProps {
   tour: Tour;
@@ -38,6 +36,7 @@ let { width, height } = Dimensions.get("window");
 
 const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
   const userId = auth.currentUser?.uid;
+  const dispatch = useDispatch<AppDispatch>();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -78,7 +77,6 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
   };
 
   const selectDate = (item: DateOfBooking) => {
-    console.log("item", item);
     setDateSelected(item);
     setTourDates(
       tourDates.map((date) => {
@@ -146,6 +144,10 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
         child: numberChild.toString(),
       }, // Convert to string if totalPrice is a number
     } as Href);
+    setNumberAdult(0);
+    setNumberChild(0);
+    setDateSelected(null);
+    setTourDates(tourDatesInit);
   };
 
   const handleAddCart = async () => {
@@ -173,29 +175,45 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
       return;
     }
     setIsLoading(true);
-    const cart: TourCart = {
+    const tourCart: TourCart = {
       tourId: tour.tourId,
+      tourName: tour.name,
       tourImage: tour.image[0],
+      tourShortDesc: tour.shortDesc,
       adult: numberAdult,
       child: numberChild,
       date: dateSelected.date,
       totalPrice: priceSum,
+      price: tour.price,
+      childrenPrice: tour.childrenPrice,
+      sale: tour.sale,
     };
+
+    console.log('Tỏ', tourCart);
 
     const cartData: Cart = {
       cartId: generateRandomId(10).toString(),
       userId: userId || "",
       type: "tour",
-      tourId: cart,
+      tour: tourCart,
       totalPrice: priceSum,
     };
+    console.log('Cart', cartData);
     await insertCart(cartData);
+
+    Alert.alert("Thành công ", "Đã thêm vào giỏ hàng");
     setIsLoading(false);
+    setNumberAdult(0);
+    setNumberChild(0);
+    setDateSelected(null);
+    setTourDates(tourDatesInit);
+    setIsDisPlayBooking(false);
+    dispatch(fetchCartsAsync(userId as string));
   };
 
   return (
     <>
-      <Loader isLoading setIsLoading />
+      <Loader isLoading={isLoading} setIsLoading={setIsLoading} />
       <View
         style={{
           height: 95,
@@ -254,7 +272,7 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
               borderWidth: 1,
               flex: 1,
             }}
-            onPress={handleAddCart}
+            onPress={() => setIsDisPlayBooking(true)}
           >
             <Text
               style={{
@@ -634,12 +652,43 @@ const BottomBooking: React.FC<BottomBookingProps> = ({ tour }) => {
                   đ {priceSum.toLocaleString("vi-VN")}
                 </Text>
               </View>
-              <TouchableOpacity
-                style={[styles.btn, { marginVertical: 10 }]}
-                onPress={handleBooking}
-              >
-                <Text style={styles.btnText}>Đặt ngay</Text>
-              </TouchableOpacity>
+
+              <View style={{ flexDirection: "row", gap: 10 }}>
+                <TouchableOpacity
+                  style={[
+                    styles.btn,
+                    {
+                      marginVertical: 10,
+                      borderWidth: 1,
+                      borderColor: Colors.light.neutral_04,
+                    },
+                  ]}
+                  onPress={handleAddCart}
+                >
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontFamily: "Poppins-Medium",
+                      textAlign: "center",
+                      color: Colors.light.text,
+                    }}
+                  >
+                    Thêm vào giỏ hàng
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.btn,
+                    {
+                      marginVertical: 10,
+                      backgroundColor: Colors.light.primary_01,
+                    },
+                  ]}
+                  onPress={handleBooking}
+                >
+                  <Text style={styles.btnText}>Đặt ngay</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
@@ -662,9 +711,11 @@ const styles = StyleSheet.create({
   },
   btn: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
     borderRadius: 10,
-    backgroundColor: Colors.light.primary_01,
+    width: "50%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   btnText: {
     color: Colors.light.white,

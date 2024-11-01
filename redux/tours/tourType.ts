@@ -4,6 +4,7 @@ export type Tour = {
   name: string;
   image: string[];
   type: string[];
+  shortDesc: string;
   evaluation: number;
   evaluationCount: number;
   booking: number;

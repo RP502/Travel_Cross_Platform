@@ -30,8 +30,12 @@ interface ArrageItemProps {
 
 const arrageList: ArrageItemProps[] = [
   {
-    title: "Giá thấp đến cao",
+    title: "Mặc định",
     isActive: true,
+  },
+  {
+    title: "Giá thấp đến cao",
+    isActive: false,
   },
   {
     title: "Giá cao đến thấp",

@@ -65,8 +65,6 @@ const CreditCard = () => {
       expiry: formData?.values.expiry || "",
       cvc: formData?.values.cvc || "",
     };
-
-    console.log(creditCard);
     const inforBooking: InforBooking = {
       bookingId: generateRandomId(10).toString(),
       userId: auth.currentUser?.uid || "",

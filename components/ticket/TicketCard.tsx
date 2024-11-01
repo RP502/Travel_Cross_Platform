@@ -21,7 +21,6 @@ interface CardTicketProps {
 const TicketCard: React.FC<CardTicketProps> = ({ ticket }) => {
   let { width } = Dimensions.get("window");
   width = Math.floor((width - 20) / 2);
-  console.log(ticket)
   return (
   
     <View style={[styles.container, { width }]}>

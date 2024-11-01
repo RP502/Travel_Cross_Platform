@@ -38,7 +38,10 @@ const BackNavigation: React.FC<BackNavigationProps> = ({ tourId }) => {
         <TouchableOpacity style={styles.rightBox}>
           <Image style={styles.image} source={IMAGES.WISHLIST} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.rightBox}>
+        <TouchableOpacity
+          style={styles.rightBox}
+          onPress={() => router.navigate("/cart")}
+        >
           <Image style={styles.image} source={IMAGES.CART} />
         </TouchableOpacity>
       </View>

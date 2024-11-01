@@ -31,8 +31,6 @@ const ServicePackage: React.FC<ServicePackageProps> = ({
 }) => {
 
 
-  console.log('service ',servicePackage)
-
   return (
     <View style={styles.container}>
       <View style={styles.flexStyle}>

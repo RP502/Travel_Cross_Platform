@@ -32,9 +32,13 @@ import { fetchToursAsync } from "@/redux/tours/toursSlice";
 import { fetchLocationsAsync } from "@/redux/locations/locationsSlice";
 import { fetchHotelsAsync } from "@/redux/hotels/hotelsSlice";
 import { fetchTicketsAsync } from "@/redux/tickets/ticketsSlice";
+import { fetchCartsAsync } from "@/redux/cart/cartsSlice";
 import Loader from "@/components/common/Loader";
+import { fetchWishListAsync } from "@/redux/wishlist/wishilistSlice";
 
 const Home = () => {
+  const userId = auth.currentUser?.uid;
+
   // Use the AppDispatch type
   const dispatch = useDispatch<AppDispatch>();
   const { sliders, status, error } = useSelector((state: any) => state.sliders);
@@ -50,8 +54,11 @@ const Home = () => {
       dispatch(fetchLocationsAsync());
       dispatch(fetchHotelsAsync());
       dispatch(fetchTicketsAsync());
+      dispatch(fetchCartsAsync(userId as string));
+      dispatch(fetchWishListAsync(userId as string));
     }
   }, [status, dispatch]);
+
 
   if (status === "loading") return <Loader />;
   if (status === "failed")

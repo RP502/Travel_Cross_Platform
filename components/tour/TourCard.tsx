@@ -6,7 +6,7 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { CardTourProps } from "@/constants/Tour";
@@ -14,6 +14,14 @@ import { Colors } from "@/constants/Colors";
 import IMAGES from "@/assets/images";
 import { Href, router } from "expo-router";
 import { Tour } from "@/redux/tours/tourType";
+import { useDispatch, useSelector } from "react-redux";
+import { WishItem } from "@/redux/wishlist/wishItemType";
+import { generateRandomId } from "@/utils/generateRamdomId";
+import { deleteWishListById, insertWishList } from "@/api/wishlist";
+import { AppDispatch } from "@/redux/store";
+import { auth } from "@/firebaseConfig";
+import { fetchWishListAsync } from "@/redux/wishlist/wishilistSlice";
+import { fetchToursAsync } from "@/redux/tours/toursSlice";
 
 interface TourCardProps {
   tour: Tour;
@@ -21,10 +29,50 @@ interface TourCardProps {
 }
 
 const TourCard: React.FC<TourCardProps> = ({ tour, isMinWidth }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const userId = auth.currentUser?.uid;
+
+  const wishList: WishItem[] = useSelector(
+    (state: any) => state.wishlist.wishlist
+  );
+
+  const initWish = wishList.find(
+    (item) => item.tourId === tour.tourId && item.type === "tour"
+  );
+
+  const [isWish, setIsWish] = useState<boolean>(false);
+  const [wishItem, setWishItem] = useState<WishItem | undefined>(undefined);
+
+  useEffect(() => {
+    const checkInWishList = wishList.find(
+      (item) => item.tourId === tour.tourId && item.type === "tour"
+    );
+    setIsWish(checkInWishList !== undefined);
+    setWishItem(checkInWishList);
+  }, [wishList]);
+
   let { width } = Dimensions.get("window");
   width = isMinWidth
     ? Math.floor((width - 72) / 2)
     : Math.floor((width - 45) / 2);
+
+  const toggleWishList = async () => {
+    if (isWish) {
+      // Remove from wishlist
+      await deleteWishListById(wishItem?.wishId as string);
+    } else {
+      // Add to wishlist
+      const wishData: WishItem = {
+        wishId: generateRandomId(10),
+        userId: userId as string,
+        type: "tour",
+        tourId: tour.tourId,
+      };
+      await insertWishList(wishData);
+    }
+    dispatch(fetchWishListAsync(userId as string));
+    dispatch(fetchToursAsync());
+  };
 
   return (
     <TouchableOpacity
@@ -41,8 +89,12 @@ const TourCard: React.FC<TourCardProps> = ({ tour, isMinWidth }) => {
             borderTopRightRadius: 10,
           }}
         />
-        <TouchableOpacity style={styles.whislist}>
-          <Fontisto name="heart-alt" size={20} color={Colors.light.text} />
+        <TouchableOpacity style={styles.whislist} onPress={toggleWishList}>
+          <Fontisto
+            name="heart-alt"
+            size={20}
+            color={isWish ? Colors.light.primary_01 : Colors.light.text}
+          />
         </TouchableOpacity>
         {tour.sale !== 0 && (
           <View style={[styles.sale]}>

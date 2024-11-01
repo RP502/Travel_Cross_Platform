@@ -26,7 +26,6 @@ export const addLocations = async () => {
   }
 };
 
-
 const tours = [
   {
     tourId: "tour_1",
@@ -138,7 +137,6 @@ const tours = [
       "https://res.cloudinary.com/dcp33adrf/image/upload/v1730103113/travel-app/tours/Hang%20T%C3%A1m%20C%C3%B4/images_tfzvbp.jpg",
       "https://res.cloudinary.com/dcp33adrf/image/upload/v1730103113/travel-app/tours/Hang%20T%C3%A1m%20C%C3%B4/images_tfzvbp.jpg",
       "https://res.cloudinary.com/dcp33adrf/image/upload/v1730103113/travel-app/tours/Hang%20T%C3%A1m%20C%C3%B4/images_tfzvbp.jpg",
-
     ],
     type: "Di tích lịch sử",
     evaluation: 4.5,
@@ -150,9 +148,7 @@ const tours = [
   },
 ];
 
-
 export const addTours = async () => {
-    
   const tours = [
     {
       tourId: "tour_1",
@@ -171,6 +167,8 @@ export const addTours = async () => {
       childrenPrice: 800000,
       sale: 15,
       location: ["Quảng Ninh"],
+      shortDesc:
+        "Khám phá vẻ đẹp yên bình của Vũng Chùa Đảo Yến với thiên nhiên hoang sơ và bãi biển thơ mộng.",
     },
     {
       tourId: "tour_2",
@@ -189,6 +187,8 @@ export const addTours = async () => {
       childrenPrice: 1000000,
       sale: 10,
       location: ["Bố Trạch"],
+      shortDesc:
+        "Khám phá hang động kỳ vĩ và cảnh sắc thiên nhiên tuyệt đẹp của vườn quốc gia Phong Nha Kẻ Bàng.",
     },
     {
       tourId: "tour_3",
@@ -207,6 +207,8 @@ export const addTours = async () => {
       childrenPrice: 600000,
       sale: 20,
       location: ["Đông Hà"],
+      shortDesc:
+        "Ghé thăm di tích lịch sử nổi tiếng và cảm nhận tinh thần bất khuất của dân tộc Việt Nam.",
     },
     {
       tourId: "tour_4",
@@ -225,6 +227,8 @@ export const addTours = async () => {
       childrenPrice: 980000,
       sale: 12,
       location: ["Cồn Cỏ"],
+      shortDesc:
+        "Thư giãn trên bãi biển hoang sơ và khám phá hòn đảo xinh đẹp Cồn Cỏ.",
     },
     {
       tourId: "tour_5",
@@ -243,6 +247,8 @@ export const addTours = async () => {
       childrenPrice: 600000,
       sale: 25,
       location: ["Đồng Hới"],
+      shortDesc:
+        "Tận hưởng không khí biển trong lành và thư giãn trên bãi biển Nhật Lệ nổi tiếng.",
     },
     {
       tourId: "tour_6",
@@ -261,18 +267,16 @@ export const addTours = async () => {
       childrenPrice: 600000,
       sale: 18,
       location: ["Phong Điền"],
-    }
-];
-
-
+      shortDesc: "Khám phá những nét văn hóa xưa tại Làng Cổ Bích La.",
+    },
+  ];
 
   for (const tour of tours) {
     try {
       await setDoc(doc(db, "tours", tour.tourId), tour);
-      console.log(`Location ${ tour.tourId} added successfully.`);
+      console.log(`Location ${tour.tourId} added successfully.`);
     } catch (error) {
       console.error("Error adding location: ", error);
     }
   }
-  
-}
+};

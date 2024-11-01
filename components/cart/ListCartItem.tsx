@@ -5,52 +5,64 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlashList } from "@shopify/flash-list";
-import CartItem, { CartItemProps } from "./CartItem";
+import CartItem from "./CartItem";
 import { Colors } from "@/constants/Colors";
+import { Cart } from "@/redux/cart/cartsType";
+import { deleteCartById } from "@/api/cart";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { fetchCartsAsync, selectCartItem } from "@/redux/cart/cartsSlice";
+import { auth } from "@/firebaseConfig";
 
-const loremData: CartItemProps[] = [
-  {
-    id: "1",
-    name: "Trip to Paris",
-    image: "https://phongnhacavestour.com/wp-content/uploads/2016/10/3.jpg",
-    price: 1200,
-    date: "2023-10-01",
-    shortDescription: "A wonderful trip to Paris.",
-    adultQuantity: 2,
-    childQuantity: 1,
-  },
-  {
-    id: "2",
-    name: "Trip to New York",
-    image: "https://phongnhacavestour.com/wp-content/uploads/2016/10/3.jpg",
-    price: 1500,
-    date: "2023-11-15",
-    shortDescription: "Explore the city that never sleeps.",
-    adultQuantity: 1,
-    childQuantity: 0,
-  },
-  {
-    id: "3",
-    name: "Trip to Tokyo",
-    image: "https://phongnhacavestour.com/wp-content/uploads/2016/10/3.jpg",
-    price: 1800,
-    date: "2024-03-20",
-    shortDescription: "Experience the culture of Tokyo.",
-    adultQuantity: 2,
-    childQuantity: 2,
-  },
-];
+interface Props {
+  cartList: Cart[];
+}
 
-const ListCartItem = () => {
+const ListCartItem: React.FC<Props> = ({}) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const userId = auth.currentUser?.uid;
+  const carts: Cart[] = useSelector((state: any) => state.carts.carts);
+
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  useEffect(() => {
+    setTotalPrice(
+      carts.reduce(
+        (total, item) => (item.isSelecting ? total + item.totalPrice : total),
+        0
+      )
+    );
+  }, [carts]);
+
+  const handleSelect = (cartId: string) => {
+    dispatch(selectCartItem({ cartId }));
+  };
+
+  const handleDelete = async (cartId: string) => {
+    await deleteCartById(cartId);
+    dispatch(fetchCartsAsync(userId as string));
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={{ paddingHorizontal: 16 }}>
         <FlashList
-          data={loremData}
-          renderItem={({ item }) => <CartItem {...item} />}
-          keyExtractor={(item) => item.id}
+          data={carts}
+          renderItem={({ item }) => {
+            if (item.type === "tour") {
+              return (
+                <CartItem
+                  cart={item}
+                  handleSelect={handleSelect}
+                  handleDelete={handleDelete}
+                />
+              );
+            }
+            return null;
+          }}
+          keyExtractor={(item) => item.cartId}
           ItemSeparatorComponent={() => (
             <View
               style={{ height: 1, backgroundColor: Colors.light.neutral_04 }}
@@ -73,10 +85,10 @@ const ListCartItem = () => {
           borderTopColor: Colors.light.neutral_04,
           paddingTop: 10,
           shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
+          // shadowOffset: { width: 0, height: 2 },
+          // shadowOpacity: 0.25,
+          // shadowRadius: 3.84,
+          // elevation: 5,
         }}
       >
         <View>
@@ -87,7 +99,7 @@ const ListCartItem = () => {
               color: Colors.light.text_secondary,
             }}
           >
-            Tổng cộng: 3 sản phẩm
+            Tổng cộng: {carts.length} sản phẩm
           </Text>
           <Text
             style={{
@@ -96,7 +108,7 @@ const ListCartItem = () => {
               color: Colors.light.red,
             }}
           >
-            Tổng tiền: 4500$
+            Tổng tiền: {totalPrice.toLocaleString("vi-VN")} vnd
           </Text>
         </View>
 

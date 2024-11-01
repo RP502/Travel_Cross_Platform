@@ -9,15 +9,18 @@ export interface VourcherCardProps {
   discountType: string;
   isSave: boolean;
   condition: string;
+  handleSaveVourcher?: (discoutnCode: string) => void;
 }
 
 let { width } = Dimensions.get("window");
 width = Math.floor((width - 72)/3);
 
 const VourcherCard: React.FC<VourcherCardProps> = ({
+  discoutnCode,
   discountValue,
   condition,
   isSave,
+  handleSaveVourcher,
 }) => {
   return (
     <View style={styles.container}>
@@ -75,6 +78,7 @@ const VourcherCard: React.FC<VourcherCardProps> = ({
             paddingVertical: 3,
             paddingHorizontal: 8,
           }}
+          onPress={() => handleSaveVourcher && handleSaveVourcher(discoutnCode)}
         >
           <Text
             style={{

@@ -4,34 +4,29 @@ import { useNavigation } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import EmptyCart from "@/components/cart/EmptyCart";
 import ListCartItem from "@/components/cart/ListCartItem";
+import { backNavigationOption } from "@/utils/BackNavigation";
+import { useSelector } from "react-redux";
+import { Cart } from "@/redux/cart/cartsType";
 
-const Cart = () => {
+const CartScreen = () => {
   const navigation = useNavigation();
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: "Giỏ hàng",
-      headerStyle: {
-        backgroundColor: Colors.light.primary_01,
-      },
-      headerTintColor: Colors.light.white,
-      headerTitleStyle: {
-        fontFamily: "Poppins-Bold",
-      },
-      headerBackTitleVisible: false,
-    });
+    navigation.setOptions(backNavigationOption("Giỏ hàng"));
   }, [navigation]);
 
   const [cartProductList, setCartProductList] = useState([1, 2]);
 
-  return cartProductList.length > 0 ? (
+  const cartList: Cart[] = useSelector((state: any) => state.carts.carts);
+
+  return cartList.length > 0 ? (
     // is not empty
-    <ListCartItem />
+    <ListCartItem cartList={cartList} />
   ) : (
     // is empty
     <EmptyCart />
   );
 };
 
-export default Cart;
+export default CartScreen;
 
 const styles = StyleSheet.create({});

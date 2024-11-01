@@ -26,6 +26,10 @@ const Profile: React.FC = () => {
       console.log(error);
     }
   };
+
+  const user = auth.currentUser;
+  console.log(user?.photoURL);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
@@ -38,7 +42,9 @@ const Profile: React.FC = () => {
           }}
         >
           <Image
-            source={require("@/assets/images/profile.jpg")}
+            source={{
+              uri: user?.photoURL || "",
+            }}
             style={{ width: 50, height: 50, borderRadius: 999 }}
           />
           <Text
@@ -48,7 +54,7 @@ const Profile: React.FC = () => {
               color: Colors.light.white,
             }}
           >
-            John Doe
+            {user?.displayName}
           </Text>
         </View>
         <TouchableOpacity>
