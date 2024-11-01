@@ -1,7 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import { useNavigation } from "expo-router";
 import { router } from "expo-router";
-import React, { useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,13 @@ import {
 import { OnboardingItem, onboardingData } from "@/constants/Onboarding";
 
 const Onboarding: React.FC = () => {
+
+  const navigation = useNavigation();
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  }, [])
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const flatListRef = useRef<FlatList>(null);
   let { width } = Dimensions.get("window");

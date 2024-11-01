@@ -1,14 +1,15 @@
-import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
 
-import TicketCard from './TicketCard'
-import { CardTicketProps } from '@/constants/Ticket'
+import TicketCard from "./TicketCard";
+
+import { Ticket } from "@/redux/tickets/ticketType";
 
 interface TicketListProps {
-    ticketList: CardTicketProps[]
+  ticketList: Ticket[];
 }
 
-const TicketListHorization: React.FC<TicketListProps> = ({ticketList}) => {
+const TicketListHorization: React.FC<TicketListProps> = ({ ticketList }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   let { width } = Dimensions.get("window");
   width = Math.floor((width - 45) / 2);
@@ -17,21 +18,21 @@ const TicketListHorization: React.FC<TicketListProps> = ({ticketList}) => {
     setCurrentIndex(index);
   };
   return (
-    <View style={{paddingLeft: 11}}>
-      <FlatList 
+    <View style={{ paddingLeft: 11 }}>
+      <FlatList
         data={ticketList}
-        renderItem={({item}) => <TicketCard {...item} />}
-        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <TicketCard ticket={item} />}
+        keyExtractor={(item) => item.ticketId}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
-        ItemSeparatorComponent={() => <View style={{width: 10}} />}
+        ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
       />
     </View>
-  )
-}
+  );
+};
 
-export default TicketListHorization
+export default TicketListHorization;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

@@ -9,7 +9,7 @@ import {
   LogBox,
 } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { useNavigation } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import BackNavigation from "@/components/navigation/BackNavigation";
 import SlideList from "@/components/slider";
 import { SliderList } from "@/constants/Sider";
@@ -25,43 +25,38 @@ import DescriptionTour from "@/components/tour/DescriptionTour";
 import TourNote from "@/components/tour/TourNote";
 import TourListHorization from "@/components/tour/TourListHorization";
 import { CardTourPropsListData } from "@/constants/Tour";
+import { useSelector } from "react-redux";
+import SlideImage from "@/components/tour/tour_detail/image_list";
 
 let { width, height } = Dimensions.get("window");
 
-const tour = {
-  id: "1",
-  name: "Tour Động Phong Nha",
-  image: "https://phongnhacavestour.com/wp-content/uploads/2016/10/3.jpg",
-  type: "Beach",
-  evaluation: 4.5,
-  evaluationCount: 120,
-  booking: 80,
-  price: 200,
-  sale: 150,
-  isWhislist: true,
-  delevery: "Xe đạp",
-  timeStart: "7:00",
+const tourService = {
+  delevery: "Ô tô",
+  timeStart: "8:00",
   timeEnd: "17:00",
   servicePackage: [
     "Vé tham quan",
     "Hướng dẫn viên",
     "Bữa trưa",
-    "Bảo hiểm",
-    "Xe đạp",
+    "Bảo hiểm an toàn khi tham gia tour",
+    "Di chuyển bằng thuyền",
   ],
 };
 
-const DetailTour: React.FC = () => {
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
+LogBox.ignoreAllLogs()
+
+const DetailTour: React.FC = (a) => {
+
+  const { id } = useLocalSearchParams();
+  const tours = useSelector((state: any) => state.tours.tours);
+  const tour = tours.find((tour: any) => tour.id === id);
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={styles.imageContainer}>
-          <BackNavigation />
-          <SlideList isFullScreen={true} dataList={SliderList} />
+          <BackNavigation tourId={id.toString()} />
+          <SlideImage isFullScreen={true} dataList={tour.image} />
         </View>
 
         <View style={styles.contentContaier}>
@@ -150,10 +145,10 @@ const DetailTour: React.FC = () => {
             <Text style={styles.labelText}>Các gói dịch vụ</Text>
           </View>
           <ServicePackage
-            servicePackage={tour.servicePackage}
-            delevery={tour.delevery}
-            timeStart={tour.timeStart}
-            timeEnd={tour.timeEnd}
+            servicePackage={tourService.servicePackage}
+            delevery={tourService.delevery}
+            timeStart={tourService.timeStart}
+            timeEnd={tourService.timeEnd}
           />
 
           {/* evaluation */}
@@ -168,16 +163,6 @@ const DetailTour: React.FC = () => {
           </View>
           <EvaluationList />
 
-          {/* description */}
-          <View style={styles.labelContainer}>
-            <MaterialIcons
-              name="brightness-7"
-              size={24}
-              color={Colors.light.primary_01}
-            />
-            <Text style={styles.labelText}>Về dịch vụ này</Text>
-          </View>
-          <DescriptionTour />
 
           {/* note */}
           <View style={styles.labelContainer}>
@@ -186,7 +171,7 @@ const DetailTour: React.FC = () => {
               size={24}
               color={Colors.light.primary_01}
             />
-            <Text style={styles.labelText}>Về dịch vụ này</Text>
+            <Text style={styles.labelText}>Những điều cần lưu ý</Text>
           </View>
           <TourNote />
 
@@ -199,12 +184,11 @@ const DetailTour: React.FC = () => {
             />
             <Text style={styles.labelText}>Bạn có thẻ thích</Text>
           </View>
-          <TourListHorization tourList={CardTourPropsListData} />
-
+          <TourListHorization tourList={tours} />
         </View>
       </ScrollView>
 
-      <BottomBooking price={tour.price} sale={tour.sale} />
+      <BottomBooking  tour={tour}/>
     </View>
   );
 };
@@ -212,9 +196,10 @@ const DetailTour: React.FC = () => {
 export default DetailTour;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
   imageContainer: {
-    width: width,
     height: Math.floor(height / 2.5),
   },
   contentContaier: {

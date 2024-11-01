@@ -14,7 +14,7 @@ const ForgetPassword = () => {
     // Add your authentication logic here (e.g. API call)
     // If successful, navigate to HomeScreen
     // const navigation = useNavigation();
-    console.log(email);
+
     router.navigate("/otp");
   };
   return (

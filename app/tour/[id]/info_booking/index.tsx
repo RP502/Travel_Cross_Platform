@@ -6,15 +6,62 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Colors } from "@/constants/Colors";
 import ParticipantInformation from "@/components/tour/ParticipantInformation";
-import TourBooker from "@/components/tour/TourBooker";
+import TourBookerInfo from "@/components/tour/TourBooker";
 import ApplyDiscount from "@/components/tour/ApplyDiscount";
-import { router } from "expo-router";
+import { Href, router, useLocalSearchParams } from "expo-router";
+import { useSelector } from "react-redux";
+import { TourBooker } from "@/model/tourBooker";
+import { Participant } from "@/model/participant";
 
 const InfoBooking = () => {
+  let { id, totalPrice, adult, child, date } = useLocalSearchParams();
+  const tours = useSelector((state: any) => state.tours.tours);
+  const tour = tours.find((tour: any) => tour.id === id);
+
+  const [tourBooker, setTourBooker] = useState<TourBooker>({
+    fullName: "",
+    dateOfBirth: "",
+    email: "",
+    phoneNumber: "",
+  });
+
+  const [participantList, setParticipantList] = useState<Participant[]>([]);
+  const [discount, setDiscount] = useState(0);
+
+  const handlePayment = () => {
+    if (
+      tourBooker.fullName === "" ||
+      tourBooker.dateOfBirth === "" ||
+      tourBooker.email === "" ||
+      tourBooker.phoneNumber === ""
+    ) {
+      alert("Vui lòng nhập tên người đặt tour");
+      return;
+    }
+    if (participantList.length === 0) {
+      alert("Vui lòng nhập thông tin người tham gia");
+      return;
+    }
+    if (participantList.length !== Number(adult) + Number(child)) {
+      alert("Số lượng người tham gia không đúng");
+      return;
+    }
+
+    router.push({
+      pathname: `/tour/${id}/payment`,
+      params: {
+        id: id,
+        totalPrice: (Number(totalPrice) - discount).toString(),
+        participantList: JSON.stringify(participantList),
+        tourBooker: JSON.stringify(tourBooker),
+      },
+    } as Href);
+  };
+
   return (
     <View
       style={{
@@ -38,7 +85,7 @@ const InfoBooking = () => {
                   color: Colors.light.text,
                 }}
               >
-                Tour name
+                {tour.name}
               </Text>
               <Text
                 style={{
@@ -47,7 +94,7 @@ const InfoBooking = () => {
                   color: Colors.light.text_secondary,
                 }}
               >
-                16/10/2024
+                {date}
               </Text>
               <Text
                 style={{
@@ -56,7 +103,7 @@ const InfoBooking = () => {
                   color: Colors.light.text_secondary,
                 }}
               >
-                Người lớn x 1
+                Người lớn x {adult}
               </Text>
               <Text
                 style={{
@@ -65,7 +112,7 @@ const InfoBooking = () => {
                   color: Colors.light.text_secondary,
                 }}
               >
-                Trẻ em x 0
+                Trẻ em x {child}
               </Text>
               <Text
                 style={{
@@ -74,7 +121,7 @@ const InfoBooking = () => {
                   color: Colors.light.text,
                 }}
               >
-                650, 000 vnd
+                đ {Number(totalPrice).toLocaleString("vi-VN")}
               </Text>
 
               <Text
@@ -88,14 +135,24 @@ const InfoBooking = () => {
               </Text>
             </View>
             {/* TourBooker */}
-            <TourBooker />
+            <TourBookerInfo
+              tourBooker={tourBooker}
+              setTourBooker={setTourBooker}
+            />
 
             {/* ParticipantInformation */}
-            <ParticipantInformation />
+            <ParticipantInformation
+              participantList={participantList}
+              setParticipantList={setParticipantList}
+            />
 
             {/* coupon */}
 
-            <ApplyDiscount />
+            <ApplyDiscount
+              totalPrice={Number(totalPrice)}
+              discount={discount}
+              setDiscount={setDiscount}
+            />
 
             <View
               style={{
@@ -152,10 +209,10 @@ const InfoBooking = () => {
               color: Colors.light.red,
             }}
           >
-            1000 vnđ
+            đ {(Number(totalPrice) - discount).toLocaleString("vi-VN")}
           </Text>
         </View>
-        <TouchableOpacity style={[styles.btn]} onPress={() => router.push('/tour/[id]/payment')}>
+        <TouchableOpacity style={[styles.btn]} onPress={handlePayment}>
           <Text style={styles.btnText}>Thanh toán</Text>
         </TouchableOpacity>
       </View>

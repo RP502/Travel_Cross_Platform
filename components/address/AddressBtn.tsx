@@ -1,23 +1,24 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { AddressProps } from "@/constants/Address";
+import { Address } from "@/redux/locations/locationType";
+import { Colors } from "@/constants/Colors";
 
-const AddressBtn: React.FC<AddressProps> = (item: AddressProps) => {
+const AddressBtn: React.FC<Address> = (item: Address) => {
   return (
     <TouchableOpacity
       style={[
         styles.container,
         {
           backgroundColor: item.isActived
-            ? item.backgroundBtnActive
-            : item.backgroudBtnNormal,
+            ? Colors.light.green
+            : Colors.light.addressNormal,
         },
       ]}
     >
       <Text
         style={[
           styles.text,
-          { color: item.isActived ? item.textColorActive : item.textColor },
+          { color: item.isActived ? Colors.light.white : Colors.light.text },
         ]}
       >
         {item.name}

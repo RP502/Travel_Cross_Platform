@@ -7,17 +7,15 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import Search from "@/components/Search";
 import Categories from "@/components/categories";
 import { Colors } from "@/constants/Colors";
 import Slider from "@/components/slider";
 import SlideList from "@/components/slider";
 import Label from "@/components/Label";
-import { AddressListData, AddressListDataTicket } from "@/constants/Address";
 import AddressList from "@/components/address/AddressList";
 import { CardTourPropsListData } from "@/constants/Tour";
-import { CardHotelPropsListData } from "@/constants/Hotel";
 import { CardTicketPropsListData } from "@/constants/Ticket";
 import { CardVr360PropsListData } from "@/constants/Vr360";
 import TourListHorization from "@/components/tour/TourListHorization";
@@ -25,15 +23,58 @@ import HotelListHorization from "@/components/hotel/HotelListHorization";
 import TicketListHorization from "@/components/ticket/TicketListHorization";
 import VrCardListVertical from "@/components/vr360/VrCardVerticalList";
 import { SliderList } from "@/constants/Sider";
+import { auth } from "@/firebaseConfig";
+import { useSelector, useDispatch } from "react-redux";
+// Import the AppDispatch type
+import { fetchSlidersAsync } from "@/redux/sliders/slidersSlice";
+import { AppDispatch, RootState } from "@/redux/store";
+import { fetchToursAsync } from "@/redux/tours/toursSlice";
+import { fetchLocationsAsync } from "@/redux/locations/locationsSlice";
+import { fetchHotelsAsync } from "@/redux/hotels/hotelsSlice";
+import { fetchTicketsAsync } from "@/redux/tickets/ticketsSlice";
+import { fetchCartsAsync } from "@/redux/cart/cartsSlice";
+import Loader from "@/components/common/Loader";
+import { fetchWishListAsync } from "@/redux/wishlist/wishilistSlice";
 
 const Home = () => {
+  const userId = auth.currentUser?.uid;
+
+  // Use the AppDispatch type
+  const dispatch = useDispatch<AppDispatch>();
+  const { sliders, status, error } = useSelector((state: any) => state.sliders);
+  const tours = useSelector((state: any) => state.tours.tours);
+  const { addressList } = useSelector((state: any) => state.locations);
+  const hotels = useSelector((state: any) => state.hotels.hotels);
+  const tickets = useSelector((state: any) => state.tickets.tickets);
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchSlidersAsync());
+      dispatch(fetchToursAsync());
+      dispatch(fetchLocationsAsync());
+      dispatch(fetchHotelsAsync());
+      dispatch(fetchTicketsAsync());
+      dispatch(fetchCartsAsync(userId as string));
+      dispatch(fetchWishListAsync(userId as string));
+    }
+  }, [status, dispatch]);
+
+
+  if (status === "loading") return <Loader />;
+  if (status === "failed")
+    return (
+      <View>
+        <Text>Errror</Text>
+      </View>
+    );
+
   return (
     <SafeAreaView style={[styles.container]}>
       <Search />
       <ScrollView style={styles.container}>
         <View style={styles.topContainer}>
           <Categories />
-          <SlideList dataList={SliderList} />
+          <SlideList dataList={sliders} />
         </View>
         <View style={styles.contenContainer}>
           <View style={styles.tourContainer}>
@@ -43,8 +84,8 @@ const Home = () => {
               iconColor={Colors.light.primary_01}
               textColor={Colors.light.text}
             />
-            <AddressList addresList={AddressListData} />
-            <TourListHorization tourList={CardTourPropsListData} />
+            <AddressList addresList={addressList} />
+            <TourListHorization tourList={tours} />
           </View>
 
           <View style={styles.hotelContainer}>
@@ -54,8 +95,8 @@ const Home = () => {
               iconColor={Colors.light.primary_01}
               textColor={Colors.light.text}
             />
-            <AddressList addresList={AddressListData} />
-            <HotelListHorization hotelList={CardHotelPropsListData} />
+            <AddressList addresList={addressList} />
+            <HotelListHorization hotelList={hotels} />
           </View>
 
           <View style={styles.ticketContainer}>
@@ -65,8 +106,8 @@ const Home = () => {
               iconColor={Colors.light.red}
               textColor={Colors.light.red}
             />
-            <AddressList addresList={AddressListDataTicket} />
-            <TicketListHorization ticketList={CardTicketPropsListData} />
+            <AddressList addresList={addressList} />
+            <TicketListHorization ticketList={tickets} />
           </View>
 
           <View style={styles.vrContainer}>

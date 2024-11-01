@@ -13,18 +13,17 @@ import VourcherCard, {
   VourcherCardProps,
 } from "@/components/discount/VourcherCard";
 import SlideList from "@/components/slider";
-import { SliderList } from "@/constants/Sider";
 import { MasonryFlashList } from "@shopify/flash-list";
-
-import { CardTourPropsListData } from "@/constants/Tour";
 import TourCard from "@/components/tour/TourCard";
+import { useSelector } from "react-redux";
+import { Tour } from "@/redux/tours/tourType";
 
-const loremData: VourcherCardProps[] = [
+const initData: VourcherCardProps[] = [
   {
     discoutnCode: "SAVE10",
     discountValue: 10,
     discountType: "percentage",
-    isSave: true,
+    isSave: false,
     condition: "Áp dụng cho đơn hàng từ 100k",
   },
   {
@@ -38,7 +37,7 @@ const loremData: VourcherCardProps[] = [
     discoutnCode: "SAVE30",
     discountValue: 30,
     discountType: "percentage",
-    isSave: true,
+    isSave: false,
     condition: "Áp dụng cho đơn hàng từ 300k",
   },
 ];
@@ -52,6 +51,26 @@ const Discount = () => {
     });
   }, []);
 
+  const [saleList, setSaleList] = React.useState<VourcherCardProps[]>(initData);
+
+  const { sliders, status, error } = useSelector((state: any) => state.sliders);
+  const tours: Tour[] = useSelector((state: any) => state.tours.tours);
+
+  const handleSaveVourcher = (discoutnCode: string) => {
+    setSaleList((pre) =>
+      pre.map((item) => {
+        if (item.discoutnCode === discoutnCode) {
+          return {
+            ...item,
+            isSave: !item.isSave,
+          };
+        }
+        return item;
+      })
+    );
+    alert("Đã lưu mã ưu đãi");
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.labelContainer}>
@@ -59,8 +78,8 @@ const Discount = () => {
       </View>
       <View style={styles.vourcherContainer}>
         <FlatList
-          data={loremData}
-          renderItem={({ item }) => <VourcherCard {...item} />}
+          data={saleList}
+          renderItem={({ item }) => <VourcherCard {...item} handleSaveVourcher={handleSaveVourcher} />}
           keyExtractor={(item) => item.discoutnCode}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -69,7 +88,7 @@ const Discount = () => {
       </View>
 
       <View style={styles.bannerContainer}>
-        <SlideList dataList={SliderList} />
+        <SlideList dataList={sliders} />
       </View>
 
       <View style={styles.labelContainer}>
@@ -77,9 +96,11 @@ const Discount = () => {
       </View>
       <View style={styles.vourcherContainer}>
         <MasonryFlashList
-          data={CardTourPropsListData}
+          data={tours}
           numColumns={2}
-          renderItem={({ item, index }) => <TourCard {...item} isMinWidth={true} />}
+          renderItem={({ item, index }) => (
+            <TourCard tour={item} isMinWidth={true} />
+          )}
           keyExtractor={(item, index) => index.toString()}
           estimatedItemSize={100}
           ItemSeparatorComponent={() => <View style={{ width: 10 }} />}

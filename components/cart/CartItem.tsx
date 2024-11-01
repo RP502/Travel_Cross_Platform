@@ -11,48 +11,86 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
-import {
-  ALERT_TYPE,
-  Dialog,
-  AlertNotificationRoot,
-  Toast,
-} from "react-native-alert-notification";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import Feather from "@expo/vector-icons/Feather";
 import { Colors } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
+import { Cart, TourCart } from "@/redux/cart/cartsType";
+import { Alert } from "react-native";
+import Loader from "../common/Loader";
+import CartEdit from "./CartEdit";
+import { updateCart } from "@/api/cart";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { fetchCartsAsync } from "@/redux/cart/cartsSlice";
+import { auth } from "@/firebaseConfig";
 
-export interface CartItemProps {
-  id: string;
-  name: string;
-  image: string;
-  price: number;
-  date: string;
-  shortDescription: string;
-  adultQuantity: number;
-  childQuantity: number;
+export interface Props {
+  cart: Cart;
+  handleSelect: (cartId: string) => void;
+  handleDelete: (cartId: string) => void;
 }
 
 let { width, height } = Dimensions.get("window");
 
-const CartItem: React.FC<CartItemProps> = (cart: CartItemProps) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+const CartItem: React.FC<Props> = ({ cart, handleSelect, handleDelete }) => {
+
+  const dispatch = useDispatch<AppDispatch>();
+  const userId = auth.currentUser?.uid;
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [tour, setTour] = useState<TourCart>(cart.tour as TourCart);
+
+  const deleteCart = async () => {
+    Alert.alert("Xác nhận", "Bạn có chắc chắn muốn xóa sản phẩm này?", [
+      {
+        text: "Hủy",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "Xác nhận",
+        onPress: async () => {
+          setIsLoading(true);
+          await handleDelete(cart.cartId);
+          setIsLoading(false);
+        },
+      },
+    ]);
+  };
+
+  const handleUpdateCart = async () => {
+
+    setIsLoading(true);
+    const newCart = { ...cart, tour: tour, totalPrice: tour.totalPrice };
+    await updateCart(newCart);
+    setIsLoading(false);
+    setIsEdit(false);
+    dispatch(fetchCartsAsync(userId as string));
+    alert("Cập nhật thành công");
+  };
+
   return (
-    <AlertNotificationRoot theme="light">
+    <>
+      <Loader isLoading={isLoading} setIsLoading={setIsLoading} />
       <View style={{ flexDirection: "row", gap: 10, marginVertical: 10 }}>
-        <TouchableOpacity onPress={() => setIsChecked(!isChecked)}>
+        <TouchableOpacity onPress={() => handleSelect(cart.cartId)}>
           <MaterialCommunityIcons
-            name={isChecked ? "checkbox-marked" : "checkbox-blank-outline"}
+            name={
+              cart.isSelecting ? "checkbox-marked" : "checkbox-blank-outline"
+            }
             size={24}
             color={
-              isChecked ? Colors.light.primary_01 : Colors.light.text_secondary
+              cart.isSelecting
+                ? Colors.light.primary_01
+                : Colors.light.text_secondary
             }
           />
         </TouchableOpacity>
         <Image
-          source={{ uri: cart.image }}
+          source={{ uri: cart.tour?.tourImage }}
           style={{ width: 80, height: 80, borderRadius: 10 }}
         />
         <View style={{ flex: 1, flexDirection: "column", gap: 5 }}>
@@ -65,7 +103,7 @@ const CartItem: React.FC<CartItemProps> = (cart: CartItemProps) => {
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {cart.name}
+            {cart.tour?.tourName}
           </Text>
           <View>
             <Text
@@ -73,17 +111,18 @@ const CartItem: React.FC<CartItemProps> = (cart: CartItemProps) => {
               numberOfLines={2}
               ellipsizeMode="tail"
             >
-              {cart.shortDescription}
+              {cart.tour?.tourShortDesc}
             </Text>
-            <Text style={styles.descText}>{cart.date}</Text>
-            {cart.adultQuantity > 0 && (
-              <Text style={styles.descText}>
-                {cart.adultQuantity} x Người lơn
-              </Text>
-            )}
-            {cart.childQuantity > 0 && (
-              <Text style={styles.descText}>{cart.childQuantity} x Trẻ em</Text>
-            )}
+            <Text style={styles.descText}>{cart.tour?.date}</Text>
+
+            <Text style={styles.descText}>
+              {(cart.tour?.adult as number) > 0 ? cart.tour?.adult : 0} x Người
+              lơn
+            </Text>
+
+            <Text style={styles.descText}>
+              {(cart.tour?.child as number) > 0 ? cart.tour?.child : 0} x Trẻ em
+            </Text>
           </View>
           <View
             style={{
@@ -99,19 +138,19 @@ const CartItem: React.FC<CartItemProps> = (cart: CartItemProps) => {
                 color: Colors.light.red,
               }}
             >
-              đ {cart.price}
+              đ {cart.totalPrice.toLocaleString("vi-VN")}
             </Text>
             <View style={{ flexDirection: "row", gap: 10 }}>
               <TouchableOpacity
-                onPress={() =>
-                  Dialog.show({
-                    type: ALERT_TYPE.WARNING,
-                    title: "Xác nhận",
-                    textBody: "Bạn có chắc chắn muốn xóa sản phẩm này?",
-                    button: "Xác nhận",
-                    autoClose: 300,
-                  })
-                }
+                onPress={deleteCart}
+                // Dialog.show({
+                //   type: ALERT_TYPE.WARNING,
+                //   title: "Xác nhận",
+                //   textBody: "Bạn có chắc chắn muốn xóa sản phẩm này?",
+                //   button: "Xác nhận",
+                //   autoClose: 300,
+                //   onPressButton: () => handleDelete(cart.cartId),
+                // })
               >
                 <Feather name="trash" size={24} color="black" />
               </TouchableOpacity>
@@ -124,40 +163,14 @@ const CartItem: React.FC<CartItemProps> = (cart: CartItemProps) => {
       </View>
 
       {/* edit form */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isEdit}
-        onRequestClose={() => {
-          setIsEdit((pre) => !pre);
-        }}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalView}>
-            <View
-              style={[
-                styles.flexStyle,
-                {
-                  borderBottomColor: Colors.light.neutral_04,
-                  borderBottomWidth: 1,
-                  paddingBottom: 10,
-                },
-              ]}
-            >
-              <Text style={styles.modalTitle}>Tùy chỉnh sản phẩm</Text>
-              <TouchableOpacity onPress={() => setIsEdit(!setIsEdit)}>
-                <AntDesign name="close" size={24} color="black" />
-              </TouchableOpacity>
-            </View>
-            <ScrollView style={styles.editContent}></ScrollView>
-
-            <TouchableOpacity style={[styles.btn, { marginVertical: 10 }]}>
-              <Text style={styles.btnText}>Hoàn tất</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-    </AlertNotificationRoot>
+      <CartEdit
+        isDisPlay={isEdit}
+        setIsDisPlay={setIsEdit}
+        tour={tour as TourCart}
+        setTour={setTour}
+        saveEdit={handleUpdateCart}
+      />
+    </>
   );
 };
 

@@ -9,7 +9,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Colors } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
@@ -17,15 +17,41 @@ import { AntDesign } from "@expo/vector-icons";
 let { width, height } = Dimensions.get("window");
 
 interface ApplyDiscountProps {
-   
+  totalPrice: number;
+  discount: number;
+  setDiscount: any;
 }
 
-const ApplyDiscount: React.FC<ApplyDiscountProps> = () => {
+interface Coupon {
+  code: string;
+  discount: number;
+}
+const coupons: Coupon[] = [
+  { code: "040", discount: 10 },
+  { code: "HP335", discount: 20 },
+  { code: "ADGC39", discount: 30 },
+];
+const ApplyDiscount: React.FC<ApplyDiscountProps> = ({
+  totalPrice,
+  discount,
+  setDiscount,
+}) => {
+  const [coupon, setCoupon] = useState<Coupon>({
+    code: "",
+    discount,
+  });
 
+  const handleApplyCoupon = () => {
+    const foundCoupon = coupons.find((c) => c.code === coupon.code);
+    if (foundCoupon) {
+      setCoupon(foundCoupon);
+    }
+  };
 
-    const [coupon, setCoupon] = useState<string>("");
+  useEffect(() => {
+    setDiscount((totalPrice * coupon.discount) / 100);
+  }, [coupon]);
 
-   
   return (
     <>
       <View
@@ -80,9 +106,8 @@ const ApplyDiscount: React.FC<ApplyDiscountProps> = () => {
               }}
               placeholder="Nhập mã giảm giá"
               placeholderTextColor={Colors.light.neutral_04}
-              value={coupon}
-                onChangeText={(text) => setCoupon(text)}
-                
+              value={coupon.code}
+              onChangeText={(text) => setCoupon({ ...coupon, code: text })}
             />
             <TouchableOpacity
               style={{
@@ -94,6 +119,7 @@ const ApplyDiscount: React.FC<ApplyDiscountProps> = () => {
                 justifyContent: "center",
                 alignItems: "center",
               }}
+              onPress={handleApplyCoupon}
             >
               <Text
                 style={{
@@ -132,7 +158,7 @@ const ApplyDiscount: React.FC<ApplyDiscountProps> = () => {
                 color: Colors.light.red,
               }}
             >
-              1000 vnđ
+              đ {((totalPrice * coupon.discount) / 100).toLocaleString("vi-VN")}
             </Text>
           </View>
         </View>

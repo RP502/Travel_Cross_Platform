@@ -23,6 +23,8 @@ const IMAGES = {
   MAP: require("./map.jpg"),
   EMPTY_CART: require("./empty_cart.png"),
   FORGET_PASSWORD: require("./forget_password.jpg"),
+  LOADING: require("./loading.gif"),
+  SUCCESS: require("./success.jpg"),
 };
 
 export default IMAGES;

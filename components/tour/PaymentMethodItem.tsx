@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { Colors } from "@/constants/Colors";
 
@@ -6,15 +6,17 @@ export interface PaymentMethodItemProps {
   title: string;
   image: string;
   isChecked: boolean;
+  hanhdleSelectPaymentMethod: (title: string) => void;
 }
 
 const PaymentMethodItem: React.FC<PaymentMethodItemProps> = ({
   title,
   image,
   isChecked,
+  hanhdleSelectPaymentMethod,
 }) => {
   return (
-    <View
+    <TouchableOpacity
       style={{
         flexDirection: "row",
         alignItems: "center",
@@ -22,8 +24,11 @@ const PaymentMethodItem: React.FC<PaymentMethodItemProps> = ({
         padding: 10,
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: Colors.light.primary_01,
+        borderColor: isChecked === true
+          ? Colors.light.primary_01
+          : Colors.light.text_secondary,
       }}
+      onPress={() => hanhdleSelectPaymentMethod(title)}
     >
       <View style={{ flexDirection: "row", gap: 5 }}>
         <Image source={{ uri: image }} style={styles.image} />
@@ -47,7 +52,7 @@ const PaymentMethodItem: React.FC<PaymentMethodItemProps> = ({
             : Colors.light.text_secondary,
         }}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 

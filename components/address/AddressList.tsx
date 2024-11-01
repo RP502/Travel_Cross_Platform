@@ -1,10 +1,10 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { AddressProps } from "@/constants/Address";
 import AddressBtn from "./AddressBtn";
+import { Address } from "@/redux/locations/locationType";
 
 interface AddressListProps {
-  addresList: AddressProps[];
+  addresList: Address[];
 }
 
 const AddressList: React.FC<AddressListProps> = ({ addresList }) => {

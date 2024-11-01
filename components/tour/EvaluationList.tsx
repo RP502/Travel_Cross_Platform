@@ -12,30 +12,33 @@ import { Colors } from "@/constants/Colors";
 const EvaluationListData = [
   {
     id: 1,
-    userName: "John Doe",
-    date: "12/12/2021",
+    userName: "Hoàng Hà",
+    date: "23/12/2023",
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc.",
-    evaluate: 3,
-    image: "https://phongnhacavestour.com/wp-content/uploads/2016/10/3.jpg",
+      "Chuyến đi rất tuyệt vời! Cảnh quan thiên nhiên đẹp không thể tả, hướng dẫn viên thân thiện và nhiệt tình. Mình rất hài lòng với dịch vụ!",
+    evaluate: 5,
+    image:
+      "https://res.cloudinary.com/dcp33adrf/image/upload/v1730277180/travel-app/tours/phong%20nha/download_y5takw.jpg",
   },
   {
     id: 2,
-    userName: "John Doe",
-    date: "12/12/2021",
+    userName: "Lê Ngọc Ánh",
+    date: "01/05/2024",
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc.",
+      "Một ngày trải nghiệm đầy thú vị và đáng nhớ! Các điểm đến được sắp xếp hợp lý, bữa trưa ngon miệng và phong cảnh tuyệt đẹp. Sẽ giới thiệu cho bạn bè!",
     evaluate: 4,
-    image: "https://phongnhacavestour.com/wp-content/uploads/2016/10/3.jpg",
+    image:
+      "https://res.cloudinary.com/dcp33adrf/image/upload/v1730277159/travel-app/tours/phong%20nha/download_gbqqbq.jpg",
   },
   {
-    id: 3,
-    userName: "John Doe",
-    date: "12/12/2021",
+    id: 5,
+    userName: "Vũ Hưng",
+    date: "09/08/2024",
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc.",
+      "Tour rất chuyên nghiệp, động Phong Nha và Thiên Đường đẹp đến ngỡ ngàng. Xe đưa đón đúng giờ, hướng dẫn viên nhiệt tình và vui vẻ. Rất đáng giá!",
     evaluate: 5,
-    image: "https://phongnhacavestour.com/wp-content/uploads/2016/10/3.jpg",
+    image:
+      "https://res.cloudinary.com/dcp33adrf/image/upload/v1730277214/travel-app/tours/phong%20nha/download_nngatp.jpg",
   },
 ];
 

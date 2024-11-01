@@ -54,7 +54,7 @@ const TourSchedule = () => {
 
           <View style={styles.rightContainer}>
             <Text style={{ fontSize: 16, fontFamily: "Poppins-Bold" }}>
-              14:15 - Khởi hành
+              8:00 - Khởi hành tại ga Đồng Hới
             </Text>
             <Text
               style={{

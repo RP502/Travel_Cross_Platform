@@ -3,6 +3,7 @@ import React from 'react'
 import {CategoryProps }  from '@/constants/Category'
 import { Colors } from '@/constants/Colors'
 import { router, Href } from 'expo-router'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const CatItem: React.FC<CategoryProps> = (cat: CategoryProps) => {
 
@@ -17,7 +18,9 @@ const CatItem: React.FC<CategoryProps> = (cat: CategoryProps) => {
               }}
               style={styles.image}
         />
-      <Text style={styles.title}>{cat.name}</Text>
+       
+      <Text style={styles.title} numberOfLines={1}
+          ellipsizeMode="tail">{cat.name}</Text>
     </TouchableOpacity>
   )
 }
@@ -28,10 +31,12 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "column",
         gap: 6,
+        justifyContent: "center",
+        alignItems: "center",
     },
     image: {
-        width: '100%',
-        height: 36,
+        width: 48,
+        height: 48,
     },
     title: {
         fontFamily: "Poppins-Medium",

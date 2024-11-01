@@ -8,44 +8,44 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import Slider from "react-native-a11y-slider";
+import React, { useCallback, useEffect, useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import InputRange from "@/components/common/InputRange";
-
+import { Tour } from "@/redux/tours/tourType";
+import { useSelector } from "react-redux";
+import Slider from "@react-native-community/slider";
 let { width, height } = Dimensions.get("window");
 
 interface MoneyFillterProps {
   isShowMoneyFillter: boolean;
   setIsShowMoneyFillter: (value: boolean) => void;
+  toursList: Tour[];
+  setToursList: (value: Tour[]) => void;
+  handleFilterPrice: (value: number) => void;
 }
 
 const MoneyFillter: React.FC<MoneyFillterProps> = ({
   isShowMoneyFillter,
   setIsShowMoneyFillter,
+  toursList,
+  setToursList,
+  handleFilterPrice,
 }) => {
-  const [min, setMin] = useState<number>(0);
-  const [max, setMax] = useState<number>(100000);
-  const [numberOfTour, setNumberOfTour] = useState<number>(0);
+  const tours: Tour[] = useSelector((state: any) => state.tours.tours);
 
-  // get value from api
+  const filterList = useState<any>(null);
+  const [maxPrice, setMaxPrice] = useState<number>(0);
+  const [minPrice, setMinPrice] = useState<number>(0);
+  const [price, setPrice] = useState<number>(0);
+
   useEffect(() => {
-    // fetch data
-    const fetchData = async () => {
-      setMin(0);
-      setMax(100000);
-      setNumberOfTour(10);
-    };
-    fetchData();
-  }, []);
-
-  const handelWhenChangeValue = async (values: any) => {
-    //  handel when change value
-    const numericValues = values.map((value: any) => Number(value));
-    console.log(numericValues[0]);
-  };
+    if (tours) {
+      const maxPrice = Math.max(...tours.map((tour) => tour.price));
+      setMaxPrice(maxPrice);
+    }
+  }, [tours]);
 
   return (
     <Modal
@@ -71,24 +71,28 @@ const MoneyFillter: React.FC<MoneyFillterProps> = ({
 
           <View style={{ flex: 1, paddingHorizontal: 30, marginTop: 10 }}>
             <Slider
-              min={min}
-              max={max}
-              values={[min, max]}
-              increment={1}
-              markerColor={Colors.light.green}
-              style={{
-                backgroundColor: Colors.light.white,
-              }}
-              labelStyle={{
-                backgroundColor: "#1d5bbf",
-                borderRadius: 10,
-              }}
-              labelTextStyle={{
-                color: Colors.light.white,
-                fontFamily: "Poppins-Bold",
-              }}
-              onChange={handelWhenChangeValue}
+              style={{ width: "100%", height: 40 }}
+              minimumValue={0}
+              maximumValue={maxPrice}
+              minimumTrackTintColor={Colors.light.primary_01}
+              maximumTrackTintColor={Colors.light.neutral_04}
+              thumbTintColor={Colors.light.green}
+              onValueChange={(value) => setPrice(value)}
             />
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 5,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={styles.textPrice}>{minPrice}</Text>
+              <Text style={styles.textPrice}>-</Text>
+              <Text style={styles.textPrice}>
+                {price.toLocaleString("vi-VN")} đ
+              </Text>
+            </View>
           </View>
 
           <View
@@ -125,15 +129,17 @@ const MoneyFillter: React.FC<MoneyFillterProps> = ({
               style={[styles.btn, { marginVertical: 10 }]}
               onPress={() => {
                 setIsShowMoneyFillter(false);
-                router.push("/tour/[id]/info_booking");
+                handleFilterPrice(price);
+                setPrice(0);
               }}
+             
             >
               <Text
                 style={styles.btnText}
                 numberOfLines={1}
                 ellipsizeMode="tail"
               >
-                Xem {numberOfTour} kết quả
+                Xem kết quả
               </Text>
             </TouchableOpacity>
           </View>
@@ -194,5 +200,10 @@ const styles = StyleSheet.create({
   scrollView: {
     marginVertical: 10,
     flex: 1,
+  },
+  textPrice: {
+    fontSize: 16,
+    fontFamily: "Poppins-Bold",
+    color: Colors.light.text,
   },
 });

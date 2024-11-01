@@ -5,10 +5,25 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Criteria from "./Criteria";
 import MoneyFillter from "./MoneyFillter";
 import Arrange from "./Arrange";
-const Fillter = () => {
+import { Tour } from "@/redux/tours/tourType";
+import { useSelector } from "react-redux";
+
+interface Props {
+  toursList: Tour[];
+  setToursList: (value: Tour[]) => void;
+}
+
+const Fillter: React.FC<Props> = ({ toursList, setToursList }) => {
+
+  const tours: Tour[] = useSelector((state: any) => state.tours.tours);
   const [isShowCriteria, setIsShowCriteria] = useState<boolean>(false);
   const [isShowMoneyFillter, setIsShowMoneyFillter] = useState<boolean>(false);
   const [isShowArrange, setIsShowArrange] = useState<boolean>(false);
+
+  const handleFilterPrice = (value: number) => {
+    console.log(value);
+    setToursList(tours.filter((tour) => tour.price <= value));
+  };
 
   return (
     <>
@@ -44,6 +59,9 @@ const Fillter = () => {
       <MoneyFillter
         isShowMoneyFillter={isShowMoneyFillter}
         setIsShowMoneyFillter={setIsShowMoneyFillter}
+        toursList={toursList}
+        setToursList={setToursList}
+        handleFilterPrice={handleFilterPrice}
       />
       <Arrange
         isShowArrange={isShowArrange}

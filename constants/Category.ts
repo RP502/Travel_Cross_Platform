@@ -7,38 +7,26 @@ export interface CategoryProps {
 export const CategoryList: CategoryProps[] = [
   {
     image:
-      "https://www.sicilyrentcar.it/wp-content/uploads/2023/12/SRC-Rent-Car-prenotazione-noleggio-auto-01-ricerca.png",
-    name: "Thuê xe",
+      "https://res.cloudinary.com/dcp33adrf/image/upload/v1730187750/travel-app/categories/tour_guide_travel_agent-512_no2hd9.webp",
+    name: "Tour",
     router: "/tour",
   },
   {
     image:
-      "https://www.sicilyrentcar.it/wp-content/uploads/2023/12/SRC-Rent-Car-prenotazione-noleggio-auto-01-ricerca.png",
-    name: "Thuê xe",
+      "https://res.cloudinary.com/dcp33adrf/image/upload/v1730187808/travel-app/categories/Service_Filled_Outline_-122-64_cwfvqq.webp",
+    name: "Khách sạn",
     router: "helo",
   },
   {
     image:
-      "https://www.sicilyrentcar.it/wp-content/uploads/2023/12/SRC-Rent-Car-prenotazione-noleggio-auto-01-ricerca.png",
-    name: "Thuê xe",
+      "https://res.cloudinary.com/dcp33adrf/image/upload/v1730187844/travel-app/categories/19-game-ticket-sports-buy-64_mo6lcg.webp",
+    name: "Vé tham quan",
     router: "helo",
   },
   {
     image:
-      "https://www.sicilyrentcar.it/wp-content/uploads/2023/12/SRC-Rent-Car-prenotazione-noleggio-auto-01-ricerca.png",
-    name: "Thuê xe",
-    router: "helo",
-  },
-  {
-    image:
-      "https://www.sicilyrentcar.it/wp-content/uploads/2023/12/SRC-Rent-Car-prenotazione-noleggio-auto-01-ricerca.png",
-    name: "Thuê xe",
-    router: "helo",
-  },
-  {
-    image:
-      "https://www.sicilyrentcar.it/wp-content/uploads/2023/12/SRC-Rent-Car-prenotazione-noleggio-auto-01-ricerca.png",
-    name: "Thuê xe",
+      "https://res.cloudinary.com/dcp33adrf/image/upload/v1730187909/travel-app/categories/3631704_kr4y92.png",
+    name: "Vr 360",
     router: "helo",
   },
 ];

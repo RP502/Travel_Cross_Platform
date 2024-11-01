@@ -5,9 +5,10 @@ import { Colors } from "@/constants/Colors";
 interface FillterItemProps {
   name: string;
   isActive: boolean;
+  handleFilter: (name: string) => void;
 }
 
-const FillterItem: React.FC<FillterItemProps> = ({ name, isActive }) => {
+const FillterItem: React.FC<FillterItemProps> = ({ name, isActive, handleFilter }) => {
   return (
     <TouchableOpacity
       style={[
@@ -20,6 +21,7 @@ const FillterItem: React.FC<FillterItemProps> = ({ name, isActive }) => {
           borderColor: Colors.light.neutral_04,
         },
       ]}
+      onPress={() => handleFilter(name)}
     >
       <Text
         style={{
