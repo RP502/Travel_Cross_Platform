@@ -13,5 +13,6 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
+    
 , "app/(auth)/login.tsx", "app/(tabs)/notification", "app/(tabs)/notification/index.tsx", "app/(auth)/otp/index.jsx", "utils/addData.js"  ]
 }
