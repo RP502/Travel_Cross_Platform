@@ -35,6 +35,7 @@ import { fetchTicketsAsync } from "@/redux/tickets/ticketsSlice";
 import { fetchCartsAsync } from "@/redux/cart/cartsSlice";
 import Loader from "@/components/common/Loader";
 import { fetchWishListAsync } from "@/redux/wishlist/wishilistSlice";
+import { fetchBookingsAsync } from "@/redux/bookings/bookingsSlice";
 
 const Home = () => {
   const userId = auth.currentUser?.uid;
@@ -56,9 +57,9 @@ const Home = () => {
       dispatch(fetchTicketsAsync());
       dispatch(fetchCartsAsync(userId as string));
       dispatch(fetchWishListAsync(userId as string));
+      dispatch(fetchBookingsAsync(userId as string));
     }
   }, [status, dispatch]);
-
 
   if (status === "loading") return <Loader />;
   if (status === "failed")

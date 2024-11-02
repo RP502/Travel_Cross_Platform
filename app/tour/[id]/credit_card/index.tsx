@@ -27,14 +27,19 @@ import {
 } from "react-native-credit-card-input";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { generateRandomId } from "@/utils/generateRamdomId";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { fetchBookingsAsync } from "@/redux/bookings/bookingsSlice";
 
 LogBox.ignoreAllLogs();
 
 const CreditCard = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const userId = auth.currentUser?.uid;
   const toStatusIcon = (status?: ValidationState) =>
     status === "valid" ? "✅" : status === "invalid" ? "❌" : "❓";
 
-  const { id, totalPrice, participantList, tourBooker, typeCard } =
+  const { id, totalPrice, participantList, tourBooker, typeCard, date } =
     useLocalSearchParams();
 
   const [useLiteInput, setUseLiteInput] = useState(false);
@@ -73,11 +78,13 @@ const CreditCard = () => {
       booker: booker,
       participants: participants,
       creditCard: creditCard,
-      status: "pending",
+      status: "Đã thanh toán",
+      dateStart: date.toString(),
     };
 
     const response = await createBooking(inforBooking);
     setIsLoading(false);
+    dispatch(fetchBookingsAsync(userId as string));
     router.replace("/success");
   };
 

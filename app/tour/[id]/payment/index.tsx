@@ -26,7 +26,7 @@ const initialData: PaymentMethod[] = [
 LogBox.ignoreAllLogs();
 
 const Payment = () => {
-  const { id, totalPrice, participantList, tourBooker } = useLocalSearchParams<{ id: string, totalPrice: string, participantList: string, tourBooker: string }>();
+  const { id, totalPrice, participantList, tourBooker, date } = useLocalSearchParams<any>();
   const [paymentMethodList, setPaymentMethodList] = useState<PaymentMethod[]>(initialData);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>("");
 
@@ -48,7 +48,7 @@ const Payment = () => {
   const handlePaymentNow = () => {
     router.push({
       pathname: `/tour/${id}/credit_card`,
-      params: { id, totalPrice, participantList, tourBooker, typeCard: selectedPaymentMethod },
+      params: { id, totalPrice, participantList, tourBooker, typeCard: selectedPaymentMethod, date },
     } as Href);
   };
 
