@@ -25,8 +25,8 @@ export const CategoryList: CategoryProps[] = [
   },
   {
     image:
-      "https://res.cloudinary.com/dcp33adrf/image/upload/v1730187909/travel-app/categories/3631704_kr4y92.png",
-    name: "Vr 360",
-    router: "helo",
+      "https://res.cloudinary.com/dcp33adrf/image/upload/v1730516869/travel-app/categories/map-128_aw9olm.webp",
+    name: "Map",
+    router: "/travel_map",
   },
 ];
