@@ -13,9 +13,9 @@ export default function Map() {
 
   const initialLocation = {
     latitude: 17.3, 
-    longitude: 106.5, 
-    latitudeDelta: 2.0, 
-    longitudeDelta: 1.5, 
+    longitude: 106.5, // Trung tâm giữa Quảng Bình và Quảng Trị
+    latitudeDelta: 2.0, // Đủ lớn để bao phủ toàn bộ hai tỉnh
+    longitudeDelta: 1.5, // Đủ lớn để bao phủ toàn bộ hai tỉnh
   };
 
   const locations = [

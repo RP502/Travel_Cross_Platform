@@ -6,22 +6,23 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import IMAGES from "@/assets/images/index";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
+import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
 const Search = () => {
+  const [selectedItem, setSelectedItem] = useState<any>(null);
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TouchableOpacity>
           <Feather name="search" size={24} color="black" />
         </TouchableOpacity>
-
         <TextInput
           placeholder="Tìm kiếm..."
           style={styles.textInput}
