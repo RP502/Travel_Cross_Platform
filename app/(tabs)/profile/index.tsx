@@ -43,7 +43,7 @@ const Profile: React.FC = () => {
         >
           <Image
             source={{
-              uri: user?.photoURL || "",
+              uri: "https://res.cloudinary.com/dcp33adrf/image/upload/v1730506810/travel-app/download_pdd6ku.png",
             }}
             style={{ width: 50, height: 50, borderRadius: 999 }}
           />
@@ -57,7 +57,7 @@ const Profile: React.FC = () => {
             {user?.displayName}
           </Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.navigate("/chatbot")}>
           <AntDesign name="message1" size={24} color={Colors.light.white} />
         </TouchableOpacity>
       </View>
@@ -68,7 +68,7 @@ const Profile: React.FC = () => {
             icon="receipt"
             title="Đơn hàng"
             description="Xem lịch sử đơn hàng"
-            onPress={() => {}}
+            onPress={() => {router.navigate("/profile/order_history")}}
           />
           <Sperater />
 

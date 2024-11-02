@@ -58,6 +58,7 @@ const InfoBooking = () => {
         totalPrice: (Number(totalPrice) - discount).toString(),
         participantList: JSON.stringify(participantList),
         tourBooker: JSON.stringify(tourBooker),
+        date: date,
       },
     } as Href);
   };

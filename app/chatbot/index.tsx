@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -7,12 +7,21 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  Platform,
+  Keyboard,
 } from "react-native";
 import * as Speech from "expo-speech";
 import * as GoogleGenerativeAI from "@google/generative-ai";
-import { FontAwesome } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import FlashMessage, { showMessage } from "react-native-flash-message";
+import { useNavigation } from "expo-router";
+import { backNavigationOption } from "@/utils/BackNavigation";
+import { Colors } from "@/constants/Colors";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Loader from "@/components/common/Loader";
 
 type Message = {
   text: string;
@@ -20,9 +29,17 @@ type Message = {
 };
 
 const GeminiChat = () => {
+  const navigation = useNavigation();
+  useLayoutEffect(() => {
+    navigation.setOptions(backNavigationOption("Chat box"));
+  }, []);
+
+  const inputRef = useRef<any>(null);
+  const listRef = useRef<FlatList>(null);
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [userInput, setUserInput] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showStopIcon, setShowStopIcon] = useState(false);
 
@@ -51,9 +68,17 @@ const GeminiChat = () => {
           user: false,
         },
       ]);
+      setLoading(false);
     };
     startChat();
   }, []);
+
+  // load message
+  useEffect(() => {
+    setTimeout(() => {
+      listRef.current?.scrollToEnd({ animated: true });
+    }, 300);
+  }, [messages]);
 
   const sendMessage = async () => {
     setLoading(true);
@@ -73,6 +98,7 @@ const GeminiChat = () => {
     if (text && !isSpeaking) {
       setShowStopIcon(true);
     }
+    Keyboard.dismiss()
   };
 
   const ClearMessage = () => {
@@ -87,51 +113,95 @@ const GeminiChat = () => {
         item.user ? styles.userMessageContainer : styles.botMessageContainer,
       ]}
     >
-      <Text style={[styles.messageText, item.user && styles.userMessage]}>
-        {item.text}
-      </Text>
+      <Text style={[styles.messageText]}>{item.text}</Text>
     </View>
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={messages}
-        renderItem={renderMessage}
-        keyExtractor={(item) => item.text}
-      />
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Hãy nhập tin nhắn của bạn..."
-          onChangeText={setUserInput}
-          value={userInput}
-          onSubmitEditing={sendMessage}
-          style={styles.input}
-          placeholderTextColor="#ccc"
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <Loader isLoading={loading} setIsLoading={setLoading} />
+      <KeyboardAvoidingView
+        style={{ flex: 1, backgroundColor: "#F8F5EA" }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 105}
+      >
+        <FlatList
+          data={messages}
+          renderItem={renderMessage}
+          keyExtractor={(item) => item.text}
+          ref={listRef}
         />
-        {showStopIcon && (
-          <TouchableOpacity style={styles.stopIcon} onPress={ClearMessage}>
-            <Entypo name="controller-stop" size={24} color="white" />
+        <View style={styles.inputContainer}>
+          <TextInput
+            ref={inputRef}
+            placeholder="Hãy nhập tin nhắn của bạn..."
+            onChangeText={setUserInput}
+            value={userInput}
+            style={styles.input}
+            placeholderTextColor="#ccc"
+          />
+          <TouchableOpacity style={styles.button}>
+            <AntDesign name="plus" size={16} color="white" />
           </TouchableOpacity>
-        )}
-        {loading && <ActivityIndicator size="large" color="#4CAF50" />}
-      </View>
-    </View>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              {
+                paddingHorizontal: 20,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              },
+            ]}
+            onPress={sendMessage}
+          >
+            <FontAwesome name="send-o" size={24} color="white" />
+          </TouchableOpacity>
+
+          {/* {showStopIcon && (
+            <TouchableOpacity style={styles.stopIcon} onPress={ClearMessage}>
+              <Entypo name="controller-stop" size={24} color="white" />
+            </TouchableOpacity>
+          )}
+          {loading && <ActivityIndicator size="large" color="#4CAF50" />} */}
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#ffff", marginTop: 50 },
-  messageContainer: { padding: 10, marginVertical: 5 },
-  messageText: { fontSize: 16 },
-  inputContainer: { flexDirection: "row", alignItems: "center", padding: 10 },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.light.background,
+  },
+  messageContainer: {
+    padding: 20,
+    borderRadius: 10,
+    marginTop: 10,
+    marginHorizontal: 0,
+    maxWidth: "80%",
+  },
+  messageText: {
+    fontSize: 16,
+    fontFamily: "Poppins-Regular",
+    flexWrap: "wrap",
+    color: Colors.light.white,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    width: "100%",
+    backgroundColor: "#fff",
+    paddingTop: 20,
+    paddingHorizontal: 10,
+  },
   input: {
     flex: 1,
-    padding: 10,
-    backgroundColor: "#131314",
+    borderWidth: 1,
+    borderColor: Colors.light.text_secondary,
     borderRadius: 10,
-    height: 50,
-    color: "white",
+    padding: 10,
+    backgroundColor: "#fff",
   },
   micIcon: {
     padding: 10,
@@ -153,29 +223,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: 3,
   },
-  messageContainer: {
-    padding: 16,
-    marginVertical: 8,
-    maxWidth: "70%",
-    borderRadius: 16,
-  },
   userMessageContainer: {
+    backgroundColor: "#791363",
     alignSelf: "flex-end",
-    backgroundColor: "#ddd",
   },
   botMessageContainer: {
+    backgroundColor: "#191299",
     alignSelf: "flex-start",
-    backgroundColor: "#333",
-  },
-  messageText: {
-    color: "#fff",
-    fontSize: 16,
   },
   timestamp: {
     fontSize: 12,
     color: "#ccc",
     alignSelf: "flex-end",
     marginTop: 4,
+  },
+  button: {
+    backgroundColor: "#EEA217",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10,
+    paddingHorizontal: 10,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
+    paddingHorizontal: 30,
   },
 });
 

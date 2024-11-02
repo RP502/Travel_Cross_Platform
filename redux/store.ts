@@ -7,6 +7,7 @@ import hotelsReducer from "./hotels/hotelsSlice";
 import ticketsReducer from "./tickets/ticketsSlice";
 import cartsReducer from "./cart/cartsSlice";
 import wishlistReducer from "./wishlist/wishilistSlice";
+import bookingsReducer from "./bookings/bookingsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     tickets: ticketsReducer,
     carts: cartsReducer,
     wishlist: wishlistReducer,
+    bookings: bookingsReducer,
   },
 });
 

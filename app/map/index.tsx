@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, View } from "react-native";
+import { useNavigation } from "expo-router";
+import { backNavigationOption } from "@/utils/BackNavigation";
 
-export default function App() {
+export default function Map() {
+  const navigation = useNavigation();
+  useLayoutEffect(() => {
+    navigation.setOptions(backNavigationOption("Vị trí của bạn"));
+  }, []);
   const location = {
     latitude: 15.9755,
     longitude: 108.2511,

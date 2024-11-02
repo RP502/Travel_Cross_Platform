@@ -7,7 +7,7 @@ import {
   MaterialIcons,
   Feather,
 } from "@expo/vector-icons";
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { Colors } from "../../constants/Colors";
 import IMAGES from "../../assets/images"; // Ensure this is the correct path
@@ -15,7 +15,7 @@ import IMAGES from "../../assets/images"; // Ensure this is the correct path
 const TabLayout = () => {
   return (
     <Tabs
-      screenOptions={({route}) => ({
+      screenOptions={({ route }) => ({
         tabBarActiveTintColor: Colors.light.primary_01,
         tabBarLabelStyle: {
           fontSize: 12,
@@ -24,7 +24,7 @@ const TabLayout = () => {
         tabBarStyle: {
           height: 85,
           backgroundColor: Colors.light.white,
-        }
+        },
       })}
     >
       <Tabs.Screen
@@ -32,15 +32,16 @@ const TabLayout = () => {
         options={{
           headerShown: false,
           title: "Trang chủ",
-          
+
           tabBarIcon: ({ color, focused }) => (
             <Image
-            source={focused ? IMAGES.HOME_ACTIVE :IMAGES.HOME} // Ensure this points to the correct image
-            style={{
-              width: 24, // Updated for correct size
-              height: 24,
-              // Apply the color to the image
-            }} />
+              source={focused ? IMAGES.HOME_ACTIVE : IMAGES.HOME} // Ensure this points to the correct image
+              style={{
+                width: 24, // Updated for correct size
+                height: 24,
+                // Apply the color to the image
+              }}
+            />
           ),
         }}
       />
@@ -51,14 +52,15 @@ const TabLayout = () => {
           title: "Ưu đãi",
           tabBarIcon: ({ color, focused }) => (
             <Image
-            source={focused ? IMAGES.SALES_ACTIVE :IMAGES.SALES}// Ensure this points to the correct image
-            style={{
-              width: 24, // Updated for correct size
-              height: 24,
-              // Apply the color to the image
-            }} />
+              source={focused ? IMAGES.SALES_ACTIVE : IMAGES.SALES} // Ensure this points to the correct image
+              style={{
+                width: 24, // Updated for correct size
+                height: 24,
+                // Apply the color to the image
+              }}
+            />
           ),
-          headerStyle: { backgroundColor: Colors.light.primary_01},
+          headerStyle: { backgroundColor: Colors.light.primary_01 },
           headerTintColor: Colors.light.white,
         }}
       />
@@ -69,15 +71,15 @@ const TabLayout = () => {
           title: "Yêu thích",
           tabBarIcon: ({ color, focused }) => (
             <Image
-            source={focused ? IMAGES.WISHLIST_ACTIVE :IMAGES.WISHLIST} // Ensure this points to the correct image
-            style={{
-              width: 24, // Updated for correct size
-              height: 24,
-              // Apply the color to the image
-            }}
-          />
+              source={focused ? IMAGES.WISHLIST_ACTIVE : IMAGES.WISHLIST} // Ensure this points to the correct image
+              style={{
+                width: 24, // Updated for correct size
+                height: 24,
+                // Apply the color to the image
+              }}
+            />
           ),
-          headerStyle: { backgroundColor: Colors.light.primary_01},
+          headerStyle: { backgroundColor: Colors.light.primary_01 },
           headerTintColor: Colors.light.white,
         }}
       />
@@ -86,9 +88,11 @@ const TabLayout = () => {
         name="notification/index"
         options={{
           title: "Thông báo",
-          tabBarIcon: ({ color, focused  }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Image
-            source={focused ? IMAGES.NOTIFICATION_ACTIVE :IMAGES.NOTIFICATION} // Ensure this points to the correct image
+              source={
+                focused ? IMAGES.NOTIFICATION_ACTIVE : IMAGES.NOTIFICATION
+              } // Ensure this points to the correct image
               style={{
                 width: 24, // Updated for correct size
                 height: 24,
@@ -96,7 +100,7 @@ const TabLayout = () => {
               }}
             />
           ),
-          headerStyle: { backgroundColor: Colors.light.primary_01},
+          headerStyle: { backgroundColor: Colors.light.primary_01 },
           headerTintColor: Colors.light.white,
         }}
       />
@@ -107,7 +111,11 @@ const TabLayout = () => {
           headerShown: false,
           title: "Tài khoản",
           tabBarIcon: ({ color, focused }) => (
-            <MaterialCommunityIcons name="account-circle-outline" size={24} color={focused ? Colors.light.primary_01 : '#2E2E5D'} />
+            <MaterialCommunityIcons
+              name="account-circle-outline"
+              size={24}
+              color={focused ? Colors.light.primary_01 : "#2E2E5D"}
+            />
           ),
         }}
       />
