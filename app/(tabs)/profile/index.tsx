@@ -16,6 +16,7 @@ import Sperater from "@/components/profile/Sperater";
 import { router } from "expo-router";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
+import { FontAwesome } from "@expo/vector-icons";
 
 const Profile: React.FC = () => {
   const logoutUser = async () => {
@@ -87,6 +88,15 @@ const Profile: React.FC = () => {
             description="Xem vị trí của bạn"
             onPress={() => {
               router.navigate("/map");
+            }}
+          />
+
+          <ProfileOption
+            icon="cloud"
+            title="Thời tiết"
+            description="Xem dự báo thời tiết"
+            onPress={() => {
+              router.navigate("/weather");
             }}
           />
         </View>
