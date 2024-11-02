@@ -39,9 +39,9 @@ import { fetchBookingsAsync } from "@/redux/bookings/bookingsSlice";
 
 const Home = () => {
   const userId = auth.currentUser?.uid;
-
   // Use the AppDispatch type
   const dispatch = useDispatch<AppDispatch>();
+
   const { sliders, status, error } = useSelector((state: any) => state.sliders);
   const tours = useSelector((state: any) => state.tours.tours);
   const { addressList } = useSelector((state: any) => state.locations);

@@ -13,7 +13,7 @@ export default function App() {
     navigation.setOptions(backNavigationOption("Thời tiết"));
   }, []);
 
-  const [weatherData, setWeatherData] = useState(null);
+  const [weatherData, setWeatherData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

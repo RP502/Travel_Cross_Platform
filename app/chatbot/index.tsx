@@ -81,10 +81,8 @@ const GeminiChat = () => {
   }, [messages]);
 
   const sendMessage = async () => {
-    setLoading(true);
     const userMessage = { text: userInput, user: true };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
-
     const genAI = new GoogleGenerativeAI.GoogleGenerativeAI(API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const prompt = userMessage.text;
@@ -92,13 +90,12 @@ const GeminiChat = () => {
     const response = result.response;
     const text = response.text();
     setMessages((prevMessages) => [...prevMessages, { text, user: false }]);
-    setLoading(false);
     setUserInput("");
 
     if (text && !isSpeaking) {
       setShowStopIcon(true);
     }
-    Keyboard.dismiss()
+    Keyboard.dismiss();
   };
 
   const ClearMessage = () => {

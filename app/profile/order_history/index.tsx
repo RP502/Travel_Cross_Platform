@@ -45,7 +45,6 @@ const Order = () => {
 
   const [filterList, setFilterList] = useState<Fillter[]>(initFilter);
   const [filter, setFilter] = useState<string>("Tất cả");
-
   const [orderList, setOrderList] = useState<InforBooking[]>([]);
 
   useLayoutEffect(() => {
