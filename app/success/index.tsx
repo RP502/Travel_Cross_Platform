@@ -6,6 +6,7 @@ import IMAGES from "@/assets/images";
 
 const Success = () => {
   const navigation = useNavigation();
+  
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
